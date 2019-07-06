@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="图像分类时，系统已经清楚了一些确定的分类或标签的集合，计算机的任务是看图片，分配一些图像标签。 图像的边缘对于计算机视觉十分重要。但这种算法的识别效果并不是可拓展的，对于其他对象需要推倒重写。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS231n Lecture2 笔记">
+<meta property="og:url" content="https://www.hotheat.top/archives/20e493a8.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="图像分类时，系统已经清楚了一些确定的分类或标签的集合，计算机的任务是看图片，分配一些图像标签。 图像的边缘对于计算机视觉十分重要。但这种算法的识别效果并不是可拓展的，对于其他对象需要推倒重写。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181011/i8HflEh69c.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181012/685b8K1I55.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181012/e63Ffahkl8.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181012/1aELCKE6A9.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top//blog/181012/h5gbjdLckd.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181012/GE8C1ACEiI.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181012/49F8G3fdFd.png">
+<meta property="og:image" content="c:/Users/guojiao1/AppData/Roaming/Typora/typora-user-images/1539313154671.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181012/mek4JG2je7.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181015/L826Dhgege.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181015/ll3FLAh2k0.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/cfcb46408daa5353c38cb37e9bb6eb01_hd.jpg">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/181015/Ch62kii7bl.png">
+<meta property="og:image" content="https://pic3.zhimg.com/80/3c69a5c87a43bfb07e2b59bfcbd2f149_hd.jpg">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CS231n Lecture2 笔记">
+<meta name="twitter:description" content="图像分类时，系统已经清楚了一些确定的分类或标签的集合，计算机的任务是看图片，分配一些图像标签。 图像的边缘对于计算机视觉十分重要。但这种算法的识别效果并不是可拓展的，对于其他对象需要推倒重写。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/181011/i8HflEh69c.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/20e493a8.html">
+
+
+
+
+
+  <title>CS231n Lecture2 笔记 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/20e493a8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CS231n Lecture2 笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-26T21:43:25+08:00">
+                2018-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DeepLearning/" itemprop="url" rel="index">
+                    <span itemprop="name">DeepLearning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DeepLearning/CS231n/" itemprop="url" rel="index">
+                    <span itemprop="name">CS231n</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>图像分类时，系统已经清楚了一些确定的分类或标签的集合，计算机的任务是看图片，分配一些图像标签。</p>
+<p>图像的边缘对于计算机视觉十分重要。但这种算法的识别效果并不是可拓展的，对于其他对象需要推倒重写。</p>
+<a id="more"></a>
+<p>所以，现在是数据驱动，不需要具体的分类规则来识别，抓取大量的不同类别数据集，训练机器，生成模型，总结出不同分类对象的核心知识要素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">()</span>:</span></span><br><span class="line">    ...</span><br><span class="line">  	<span class="keyword">return</span> models</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">()</span>:</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> test_labels</span><br></pre></td></tr></table></figure>
+<p>K 近邻几乎是最简单的分类器，训练过程只需要单纯的存储数据，预测时，只需要找到与新图片最相似的图片，给出一个标签。</p>
+<p>机器学习中常用的图片数据集 CIFAR10，32 x 32 像素的图片。</p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><h2 id="如何比较两张图片的相似度呢？"><a href="#如何比较两张图片的相似度呢？" class="headerlink" title="如何比较两张图片的相似度呢？"></a>如何比较两张图片的相似度呢？</h2><p>常用的欧式距离计算方式是先平方再开方的形式，称为二范式（L2）。</p>
+<script type="math/tex; mode=display">
+d = \sqrt{(x_1^{(1)}-x_1^{(2)})^2 + (x_2^{(1)}-x_2^{(2)})^2+ ... + (x_n^{(1)}-x_n^{(2)})^2}
+=||x^{(1)} - x^{(2)}||_2</script><p>如果是一范式，那就称为曼哈顿距离（L1 距离），在每个维度上差的绝对值的加和，像曼哈顿街区。</p>
+<script type="math/tex; mode=display">
+d = |x_1^{(1)}-x_1^{(2)}| + |x_2^{(1)}-x_2^{(2)}|+ ... + |x_n^{(1)}-x_n^{(2)}|</script><p><img src="http://qnpic.sijihaiyang.top/blog/181011/i8HflEh69c.png" alt="mark"></p>
+<h2 id="训练速度和预测速度问题"><a href="#训练速度和预测速度问题" class="headerlink" title="训练速度和预测速度问题"></a>训练速度和预测速度问题</h2><p>假设有 n 个样本，KNN (K Nearest Neighbor) 在训练时的复杂度是 $O(1)$，因为只需要存储数据，而预测时的复杂度是 $O(n)$。这并不是我们想要的，理想情况是训练时可以与样本数量有关，可以花更多的时间，而预测速度需要更快，分类器需要更快的执行。代码表示 K=1 时的情况（NN）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NN</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, X, y)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        X 是 N x D 的样本，每行代表一个样本</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.xtr = X</span><br><span class="line">        self.ytr = y</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        sample_n = self.xtr.shape[<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># 存储每个样本的预测结果</span></span><br><span class="line">        y_prd = np.zeros(sample_n)</span><br><span class="line">        <span class="comment"># 遍历每个样本</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(sample_n):</span><br><span class="line">            distance = np.sum(np.abs(self.xtr - X[i, :]), axis=<span class="number">1</span>)</span><br><span class="line">            min_dst = np.argmin(distance)</span><br><span class="line">            y_prd[i] = self.ytr[min_dst]</span><br><span class="line">        <span class="keyword">return</span> y_prd</span><br></pre></td></tr></table></figure>
+<h2 id="K-的取值"><a href="#K-的取值" class="headerlink" title="K 的取值"></a>K 的取值</h2><p>根据空间位置分类效果并不是很好，有分类错误的点，绿色中的黄色点周围都会被划分成黄色，这就造成较高的错误率，同时失真信号或噪声比较明显。</p>
+<p>噪声的出现因为在这个区域附近离绿点是最近的，所以才会被预测成绿色。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181012/685b8K1I55.png" alt="mark"></p>
+<p>更多情况，会选择前 k 个距离最近的点，采用多数投票的方法决定属于哪个分类，这样，黄色周围的点不会被划分成黄色了，决策边界也更加平滑，对噪声也有更好的鲁棒性。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181012/e63Ffahkl8.png" alt="mark"></p>
+<p>白色区域代表在这些区域的附近没有距离最近的点，也就是在投票时两个以上分类的票数相同。</p>
+<p>低 k 值更容易过拟合，更高的 k 值可以让分类的效果更平滑，使得分类器对于异常值更有抵抗力。</p>
+<h2 id="L1-和-L2-距离"><a href="#L1-和-L2-距离" class="headerlink" title="L1 和 L2 距离"></a>L1 和 L2 距离</h2><p><img src="http://qnpic.sijihaiyang.top/blog/181012/1aELCKE6A9.png" alt="mark"></p>
+<p>L1 中，方形上的每个点与原点在 L1 上等距的，因为 L1 的计算是每个维度上差的绝对值的加和，$|x_1^{(1)} - 0| + |x_2^{(2)} - 0|$。</p>
+<p>L2 则表现的像个圆。</p>
+<h3 id="L1-距离取决于坐标系统"><a href="#L1-距离取决于坐标系统" class="headerlink" title="L1 距离取决于坐标系统"></a>L1 距离取决于坐标系统</h3><p>L1 距离依赖于你的坐标系统，如果转动坐标轴，将改变点与点的 L1 距离，对 L2 距离毫无影响，L2 距离是确定的。</p>
+<p>如果输入的特征向量有些重要的意义，比如对员工进行分类时的薪资，工作年限等特征，L1 可能更适合；如果只是空间中的通用向量，实际代表的含义未知，可能 L2 更适合些。最好的方法是两种都尝试一下，看哪个效果好。</p>
+<p><img src="http://qnpic.sijihaiyang.top//blog/181012/h5gbjdLckd.png" alt="mark"></p>
+<h3 id="其他距离"><a href="#其他距离" class="headerlink" title="其他距离"></a>其他距离</h3><p>通过指定不同的距离计算方式，就可以更好的将这个算法应用到不同的领域。</p>
+<h2 id="K-和-距离度量的选择"><a href="#K-和-距离度量的选择" class="headerlink" title="K 和 距离度量的选择"></a>K 和 距离度量的选择</h2><p>K 的个数和距离度量这些没办法直接从数据中学习得到的参数称为超参数。</p>
+<p>选择不同的超参数，看哪个效果好：</p>
+<ul>
+<li><p>并不是选择在训练数据上的预测效果最好的超参；</p>
+</li>
+<li><p>同样也不是测试集上预测效果最好的超参。这组参数只是反映了在这组测试集上的表现，在从未见过的全新数据上的表现仍未知，很可能出现测试集<strong>过拟合</strong>，实际部署效果会差很多。</p>
+</li>
+</ul>
+<p>这两种超参选择的方式都不推荐。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181012/GE8C1ACEiI.png" alt="mark"></p>
+<p>更好的方式是用训练集的一部分数据训练好参数，用另一部分数据做验证集，选择效果最好的参数，再拿到测试集上跑。</p>
+<blockquote>
+<p>测试数据集只使用一次，即在训练完成后评价最终的模型时使用。</p>
+</blockquote>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181012/49F8G3fdFd.png" alt="mark"></p>
+<p>交叉验证在小数据集上常用，在深度学习中并不常用，将训练集分成若干份，轮流让每一份做验证集，最后取所有 k 次验证结果的平均值作为验证结果。深度学习中，训练过程消耗很大的计算能力，这种方法并不常用。</p>
+<p><img src="C:\Users\guojiao1\AppData\Roaming\Typora\typora-user-images\1539313154671.png" alt="1539313154671"></p>
+<p>假设所有的数据都是独立的，服从同一概率分布，但现实并非如此，测试集也不能代表真实的时间。实践中常常采用对数据集进行随机划分。</p>
+<h2 id="图像分类中的做法"><a href="#图像分类中的做法" class="headerlink" title="图像分类中的做法"></a>图像分类中的做法</h2><p>图像分类中常常不采用交叉验证</p>
+<ul>
+<li>计算量太大</li>
+<li>L1 和 L2 距离不适合用在比较图像上，这种向量化的距离函数不适合表示图像间视觉的相似度。</li>
+</ul>
+<p>KNN 的劣势</p>
+<ul>
+<li>KNN 实际上是由背景主导的，这也是非常大的劣势。</li>
+<li>KNN 没有参数，每接受一个测试数据，都需要与全部的训练数据做计算，时间非常久。</li>
+</ul>
+<h2 id="维度灾难"><a href="#维度灾难" class="headerlink" title="维度灾难"></a>维度灾难</h2><p>K 近邻需要将空间划分成不同的部分，要求训练数据在空间中能够密集分布，否则待测数据可能离训练数据的实际距离特别远，相似性没那么高。因此在高维空间里，常常需要指数倍的增加数据，比如在二维空间中，需要 $4^2$ 个覆盖整个空间，在三维空间中，则需要 $4^3$ 个覆盖空间…，但实际的图片集数量可能没那么大。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181012/mek4JG2je7.png" alt="mark"></p>
+<h2 id="决策边界"><a href="#决策边界" class="headerlink" title="决策边界"></a>决策边界</h2><p>KNN 的决策边界是非线性的，取决于 K 的样本中出现次数最多的类别。</p>
+<h1 id="线性分类"><a href="#线性分类" class="headerlink" title="线性分类"></a>线性分类</h1><p>网络中最基本的构建块，基础模块</p>
+<h2 id="模型参数"><a href="#模型参数" class="headerlink" title="模型参数"></a>模型参数</h2><p>输入图像，经 $f(x, W)$，输出属于某个分类的得分情况。</p>
+<p>KNN 中是没有参数的，在测试时需要所有的训练数据，而线性分类在测试时只需要参数即可。</p>
+<script type="math/tex; mode=display">
+F(x, W) = Wx + b\\ 
+(10, 1) = (10, 3072) \times (3072, 1) + (10, 1)</script><p>输出 10 个分类中每个分类的得分情况。$b$ 仅代表针对某一类的偏好值，不与训练数据交互。不平衡数据中，可以对某一分类权重增加。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181015/L826Dhgege.png" alt="mark"></p>
+<h2 id="模版匹配"><a href="#模版匹配" class="headerlink" title="模版匹配"></a>模版匹配</h2><p>权重矩阵 $W$ 的每一行对应图像的每个元素，然后做点积，最终再加上偏移量 $b$，得到最终的分类。$W$ 也可以认为是从输入图像 $x$ 到最终分类的映射函数。</p>
+<p>如果已经有了线性分类器，$f(x, W) = Wx + b$，就可以得到权重矩阵的行向量对应每个类别的可视化结果。</p>
+<p>行向量时如何对应到每个类别的？</p>
+<p>在训练过程中，我们指定矩阵的某个行向量对应到某个已知的分类上。</p>
+<h2 id="线性分类器问题"><a href="#线性分类器问题" class="headerlink" title="线性分类器问题"></a>线性分类器问题</h2><p>每个类别只能学习一个模版（行向量），每次使用一个单独的模版去识别其中的每个类别，如果出现不同的变体，那么它将去这些变体的平均值。而神经网络模型则没有限制。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/181015/ll3FLAh2k0.png" alt="mark"></p>
+<p>下方是经过训练得到的每个类别的模糊图像，怎么画出来的？</p>
+<p>将权重矩阵的一行看作是一个不同的分类，在一行中，每个值代表图像像素值的不同权重，将这一行 normalize 到 [0, 1]，再乘以 255，就可以得到针对某个类别的可视化图像（上图最后一行图像）。</p>
+<p>从另一个角度讲，线性分类也可以看作是 KNN，只不过现在每个类别只有一张图片（训练好的行向量），使用内积来计算每个分类与图片向量的距离，而非使用 L1 或 L2 距离。</p>
+<h2 id="高维空间"><a href="#高维空间" class="headerlink" title="高维空间"></a>高维空间</h2><p>每个分类的划分都是将当前分类与除该分类之外的其他分类作对比，这正是 Softmax 的思想。以红线为例，所有红线右侧的是正例，所有红线左侧的是负例。</p>
+<p>对于 $W$ 的几何解释：如果改变 $W$ 的某一行，那么行对应的分类器的直线将进行旋转，如果改变 $b$，分类器对应的直线将平移。</p>
+<p><img src="https://pic1.zhimg.com/80/cfcb46408daa5353c38cb37e9bb6eb01_hd.jpg" alt></p>
+<h4 id="无法划分"><a href="#无法划分" class="headerlink" title="无法划分"></a>无法划分</h4><p><img src="http://qnpic.sijihaiyang.top/blog/181015/Ch62kii7bl.png" alt="mark"></p>
+<p>奇数和偶数的划分（相反的象限），多分类问题（最右侧），蓝色出现在不同的象限。</p>
+<p>多模态数据是线性分类使用受限的地方。</p>
+<h2 id="偏差处理的技巧"><a href="#偏差处理的技巧" class="headerlink" title="偏差处理的技巧"></a>偏差处理的技巧</h2><p><img src="https://pic3.zhimg.com/80/3c69a5c87a43bfb07e2b59bfcbd2f149_hd.jpg" alt></p>
+<p>将 $W$ 和 $b$ 合并成一个矩阵，这样只需要学习一个权重矩阵就行。</p>
+<h2 id="图像数据预处理"><a href="#图像数据预处理" class="headerlink" title="图像数据预处理"></a>图像数据预处理</h2><p>零均值的中心化</p>
+<ol>
+<li>计算出<strong>所有训练集</strong>图像的平均值</li>
+<li>每个图像减去这个平均值，数据分布由 $[0, 255]$ 变成 $[-127, 127]$</li>
+<li>使数值分布区间变为 $[-1, 1]$。</li>
+</ol>
+<h2 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h2><p>交叉验证的目的是为了得到更好的超参数，比如学习率，迭代次数和 batch size 等。</p>
+<p>如果数据集大，一般不做 k-fold cross validation，只取一份固定的验证集，直接保存测试效果最好的模型和超参数；</p>
+<p>如果数据集不大，通过 k fold 得到最好的超参后，重新在整个训练集上训练模型，保存测试效果最好的模型作为预测。</p>
+<p>如果预测的超参数很多，那么需要更大的验证集来有效的估计，如果验证集太小，会出现很大的随机性，这也是为什么 k fold cross validation 需要取平均来表示该超参数下模型的性能。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/ae6b944b.html" rel="next" title="CS231n Lecture1 笔记">
+                <i class="fa fa-chevron-left"></i> CS231n Lecture1 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/ec4e9336.html" rel="prev" title="CS231n Lecture3 笔记">
+                CS231n Lecture3 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#KNN"><span class="nav-number">1.</span> <span class="nav-text">KNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何比较两张图片的相似度呢？"><span class="nav-number">1.1.</span> <span class="nav-text">如何比较两张图片的相似度呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练速度和预测速度问题"><span class="nav-number">1.2.</span> <span class="nav-text">训练速度和预测速度问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-的取值"><span class="nav-number">1.3.</span> <span class="nav-text">K 的取值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1-和-L2-距离"><span class="nav-number">1.4.</span> <span class="nav-text">L1 和 L2 距离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L1-距离取决于坐标系统"><span class="nav-number">1.4.1.</span> <span class="nav-text">L1 距离取决于坐标系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他距离"><span class="nav-number">1.4.2.</span> <span class="nav-text">其他距离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-和-距离度量的选择"><span class="nav-number">1.5.</span> <span class="nav-text">K 和 距离度量的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像分类中的做法"><span class="nav-number">1.6.</span> <span class="nav-text">图像分类中的做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#维度灾难"><span class="nav-number">1.7.</span> <span class="nav-text">维度灾难</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策边界"><span class="nav-number">1.8.</span> <span class="nav-text">决策边界</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型参数"><span class="nav-number">2.1.</span> <span class="nav-text">模型参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模版匹配"><span class="nav-number">2.2.</span> <span class="nav-text">模版匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类器问题"><span class="nav-number">2.3.</span> <span class="nav-text">线性分类器问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高维空间"><span class="nav-number">2.4.</span> <span class="nav-text">高维空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无法划分"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">无法划分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏差处理的技巧"><span class="nav-number">2.5.</span> <span class="nav-text">偏差处理的技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像数据预处理"><span class="nav-number">2.6.</span> <span class="nav-text">图像数据预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉验证"><span class="nav-number">2.7.</span> <span class="nav-text">交叉验证</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="np.nan/float(‘nan’)Typenp.nan 的返回类型是 float，float(‘nan’) 的返回类型是 nan。这里对 float(‘nan’) 的理解是一个不可变的没有值的数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="np.nan&#x2F;float(nan)&#x2F;None 区别">
+<meta property="og:url" content="https://www.hotheat.top/archives/17d2768e.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="np.nan/float(‘nan’)Typenp.nan 的返回类型是 float，float(‘nan’) 的返回类型是 nan。这里对 float(‘nan’) 的理解是一个不可变的没有值的数。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181221/J7FwpoywETGT.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.302Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="np.nan&#x2F;float(nan)&#x2F;None 区别">
+<meta name="twitter:description" content="np.nan/float(‘nan’)Typenp.nan 的返回类型是 float，float(‘nan’) 的返回类型是 nan。这里对 float(‘nan’) 的理解是一个不可变的没有值的数。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20181221/J7FwpoywETGT.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/17d2768e.html">
+
+
+
+
+
+  <title>np.nan/float(nan)/None 区别 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/17d2768e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">np.nan/float(nan)/None 区别</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T10:03:42+08:00">
+                2018-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/Numpy/" itemprop="url" rel="index">
+                    <span itemprop="name">Numpy</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="np-nan-float-‘nan’"><a href="#np-nan-float-‘nan’" class="headerlink" title="np.nan/float(‘nan’)"></a>np.nan/float(‘nan’)</h1><h2 id="Type"><a href="#Type" class="headerlink" title="Type"></a>Type</h2><p>np.nan 的返回类型是 float，float(‘nan’) 的返回类型是 nan。这里对 float(‘nan’) 的理解是一个不可变的没有值的数。</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(type(np.nan))</span><br><span class="line">print(float(<span class="string">'nan'</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;class &#39;float&#39;&gt;
+nan
+</code></pre><p>判断是否是 nan 的方法，有下面三种。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line">print(math.isnan(float(<span class="string">'nan'</span>)))</span><br><span class="line">print(np.isnan(float(<span class="string">'nan'</span>)))</span><br><span class="line">print(pd.isnull(float(<span class="string">'nan'</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>True
+True
+True
+</code></pre><h2 id="id-是否相同"><a href="#id-是否相同" class="headerlink" title="id 是否相同"></a>id 是否相同</h2><p>既然不可变，每次 float(‘nan’) 都生成不同的 id。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nans = [float(<span class="string">'nan'</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br><span class="line">print(list(map(id, nans)))</span><br><span class="line">print(nans)</span><br></pre></td></tr></table></figure>
+<pre><code>[163139752, 163045336]
+[nan, nan]
+</code></pre><p>math.nan 和 numpy.nan 是库中 unique 的 nan，每次的 id 都是相同的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nans = [np.nan <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br><span class="line">print(list(map(id, nans)))</span><br><span class="line">print(nans)</span><br></pre></td></tr></table></figure>
+<pre><code>[78245056, 78245056]
+[nan, nan]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nans = [math.nan <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br><span class="line">print(list(map(id, nans)))</span><br><span class="line">print(nans)</span><br></pre></td></tr></table></figure>
+<pre><code>[3942944, 3942944]
+[nan, nan]
+</code></pre><p>但是每次产生的 float(‘nan’) 与 np.nan 的 id 并不相同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list(map(id, [float(<span class="string">'nan'</span>), np.nan]))</span><br></pre></td></tr></table></figure>
+<pre><code>[163139752, 78245056]
+</code></pre><h2 id="比较操作均返回-False"><a href="#比较操作均返回-False" class="headerlink" title="比较操作均返回 False"></a>比较操作均返回 False</h2><p>因为 nan 的值不存在，== 判断对于 float(‘nan’) 和 np.nan 均返回 False。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(float(<span class="string">'nan'</span>) == float(<span class="string">'nan'</span>))</span><br><span class="line">print(np.nan == np.nan)</span><br></pre></td></tr></table></figure>
+<pre><code>False
+False
+</code></pre><h2 id="is-对二者返回值不同"><a href="#is-对二者返回值不同" class="headerlink" title="is 对二者返回值不同"></a>is 对二者返回值不同</h2><p>因为 float(‘nan’) 每次返回的 id 不同，is 操作自然返回 False；np.nan 返回的 id 相同，is 操作返回 True.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(float(<span class="string">'nan'</span>) <span class="keyword">is</span> float(<span class="string">'nan'</span>))</span><br><span class="line">print(np.nan <span class="keyword">is</span> np.nan)</span><br></pre></td></tr></table></figure>
+<pre><code>False
+True
+</code></pre><h2 id="in-操作可以看出二者不同"><a href="#in-操作可以看出二者不同" class="headerlink" title="in 操作可以看出二者不同"></a>in 操作可以看出二者不同</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nans = [np.nan <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br><span class="line">print(np.nan <span class="keyword">in</span> nans)</span><br></pre></td></tr></table></figure>
+<pre><code>True
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nans = [float(<span class="string">'nan'</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br><span class="line">print(float(<span class="string">'nan'</span>) <span class="keyword">in</span> nans)</span><br></pre></td></tr></table></figure>
+<pre><code>False
+</code></pre><p>总结一下，判断一个值是否是 nan 时，有三种方法，分别是 np.isnan(), math.isnan(), pd.isnull()；<br>判断 np.nan 是否相等时用 is；<br>== 对于 np.nan 和 float(‘nan’) 都返回 False.<br>网上也有解释，</p>
+<blockquote>
+<p>np.nan 重载了“==” 运算符，dir(np.nan)就能看到”_<em>eq_</em>“</p>
+</blockquote>
+<p>更具体的参考<a href="https://www.cnblogs.com/willowj/p/6553126.html" target="_blank" rel="noopener">链接1</a>，<a href="https://stackoverflow.com/questions/20320022/why-in-numpy-nan-nan-is-false-while-nan-in-nan-is-true" target="_blank" rel="noopener">链接2</a>。</p>
+<h2 id="不产生-np-nan-的方法"><a href="#不产生-np-nan-的方法" class="headerlink" title="不产生 np.nan 的方法"></a>不产生 np.nan 的方法</h2><h3 id="series-astype-str"><a href="#series-astype-str" class="headerlink" title="series.astype(str)"></a><code>series.astype(str)</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s = pd.Series([np.nan, float(<span class="string">'nan'</span>)])</span><br><span class="line">s = s.astype(str)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line">    print(type(i), i)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;class &#39;str&#39;&gt; nan
+&lt;class &#39;str&#39;&gt; nan
+</code></pre><h3 id="StringIO"><a href="#StringIO" class="headerlink" title="StringIO"></a>StringIO</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pandas.compat <span class="keyword">import</span> StringIO</span><br><span class="line">df = pd.read_csv(StringIO(temp),  names=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], keep_default_na=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="通过-na-values-参数指定特定字符为-nan-值"><a href="#通过-na-values-参数指定特定字符为-nan-值" class="headerlink" title="通过 na_values 参数指定特定字符为 nan 值"></a>通过 na_values 参数指定特定字符为 nan 值</h3><p><code>df = pd.read_csv(StringIO(temp),  names=[0,1,2,3,4], keep_default_na=False, na_values=[&#39;NA&#39;])</code></p>
+<p>参考<a href="https://stackoverflow.com/questions/44128033/pandas-reading-null-as-a-nan-float-instead-of-str" target="_blank" rel="noopener">链接</a></p>
+<h1 id="np-nan-与-None-的比较"><a href="#np-nan-与-None-的比较" class="headerlink" title="np.nan 与 None 的比较"></a>np.nan 与 None 的比较</h1><p><a href="https://junjiecai.github.io/posts/2016/Oct/20/none_vs_nan/#Series.map" target="_blank" rel="noopener">这篇文章</a>介绍的很详细。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181221/J7FwpoywETGT.png?imageslim" alt="mark"></p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>None 是一个 python 特殊的数据类型， 但是 NaN 却是用一个特殊的 float。</p>
+<h2 id="np-nan-和-None-都能作为字典的-key"><a href="#np-nan-和-None-都能作为字典的-key" class="headerlink" title="np.nan 和 None 都能作为字典的 key"></a>np.nan 和 None 都能作为字典的 key</h2><p>float(‘nan’) 同样也可以作为 key，但新建的 float(‘nan’) 值与 id 与原来的并不相同，在原字典中查找不到 key，而 np.nan 和 None 在原字典中可以查找到。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a, b, c = float(<span class="string">'nan'</span>), np.nan, <span class="literal">None</span></span><br><span class="line">d = &#123;a: <span class="number">1</span>, b:<span class="number">2</span>, c:<span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(d)</span><br><span class="line">print(d[np.nan])</span><br><span class="line">print(d[<span class="literal">None</span>])</span><br><span class="line">print(d[float(<span class="string">'nan'</span>)])</span><br></pre></td></tr></table></figure>
+<pre><code>{nan: 1, nan: 2, None: 3}
+2
+3
+
+---------------------------------------------------------------------------
+
+KeyError                                  Traceback (most recent call last)
+
+&lt;ipython-input-17-d4f95daf40c7&gt; in &lt;module&gt;
+      2 print(d[np.nan])
+      3 print(d[None])
+----&gt; 4 print(d[float(&#39;nan&#39;)])
+
+
+KeyError: nan
+</code></pre><h2 id="Series-函数中的表现"><a href="#Series-函数中的表现" class="headerlink" title="Series 函数中的表现"></a>Series 函数中的表现</h2><ul>
+<li>用 Series.map 对 None 进行替换时，会“顺便”把 NaN 也一起替换掉；NaN 也会顺便把 None 替换掉。</li>
+<li>在 Series.replace 中的表现与 map 类似。</li>
+</ul>
+<h2 id="对函数的支持"><a href="#对函数的支持" class="headerlink" title="对函数的支持"></a>对函数的支持</h2><p>numpy 和 pandas 有不少函数可以自动处理 np.NaN，但是不支持 None。如 np.nansum()，pd.cut() 等。</p>
+<h2 id="对容器数据类型的影响"><a href="#对容器数据类型的影响" class="headerlink" title="对容器数据类型的影响"></a>对容器数据类型的影响</h2><ul>
+<li>混入 None，会使 dtype 变成  object；</li>
+<li>混入 np.nan, np.NaN 会将原本的 int 类型转成 float；<br><strong>pandas 会自动将 None 替换成了 np.NaN</strong>，而且，Series 只能用  object 类型容纳，都是 None 及都是 bool 类型时，不会进行转化。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(pd.Series([<span class="number">1</span>, <span class="literal">None</span>]).dtype)</span><br><span class="line">print(pd.Series([<span class="number">1</span>, np.nan]).dtype)</span><br><span class="line">print(pd.Series([<span class="string">'a'</span>, np.nan]).dtype)</span><br><span class="line">print(pd.Series([<span class="literal">True</span>, np.nan]).dtype)</span><br><span class="line">print(pd.Series([<span class="literal">None</span>, np.nan]).dtype)</span><br></pre></td></tr></table></figure>
+<pre><code>float64
+float64
+object
+object
+float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(np.array([<span class="number">1</span>, <span class="literal">None</span>]).dtype)</span><br><span class="line">print(np.array([<span class="number">1</span>, np.nan]).dtype)</span><br></pre></td></tr></table></figure>
+<pre><code>object
+float64
+</code></pre><h2 id="等值性比较"><a href="#等值性比较" class="headerlink" title="等值性比较"></a>等值性比较</h2><p><code>np.nan == np.nan</code> 返回 False<br><code>None == None</code> 返回 True</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">None</span> == <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<pre><code>True
+</code></pre><p><strong>None 在 Series 中的基准会不一致</strong>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.Series([<span class="literal">None</span>, <span class="number">1</span>]) == pd.Series([<span class="literal">None</span>, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>0    False
+1     True
+dtype: bool
+</code></pre><p>专门的基准判断函数<br><code>numpy.testing.assert_equals()</code><br><code>Series.equals(Series)</code></p>
+<h2 id="df-merge"><a href="#df-merge" class="headerlink" title="df.merge()"></a>df.merge()</h2><p>df.merge() 中，如果一列中不一致，会以左侧列为准。</p>
+<h2 id="df-groupby"><a href="#df-groupby" class="headerlink" title="df.groupby()"></a>df.groupby()</h2><p><strong>DataFrame.groupby会忽略分组列中含有 None 或者 NaN 的记录</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(&#123;<span class="string">'A'</span>:[<span class="literal">None</span>, np.nan, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>], </span><br><span class="line">                   <span class="string">'B'</span>:[<span class="string">'a'</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'b'</span>]&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>a</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>b</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.0</td>
+      <td>b</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.groupby([<span class="string">'A'</span>, <span class="string">'B'</span>]).apply(len)</span><br></pre></td></tr></table></figure>
+<pre><code>A    B
+1.0  a    1
+     b    1
+2.0  b    1
+dtype: int64
+</code></pre><h2 id="导入数据库需要将-np-nan-替换成-None"><a href="#导入数据库需要将-np-nan-替换成-None" class="headerlink" title="导入数据库需要将 np.nan 替换成 None"></a>导入数据库需要将 np.nan 替换成 None</h2><p><code>s.where(s.notnull(), None)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = pd.Series([np.nan, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+<pre><code>0    NaN
+1    1.0
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.where(s.notnull(), <span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>0    None
+1       1
+dtype: object
+</code></pre><p><code>s[s.isnull()] = None</code> 和 <code>s.replace([NaN], None)</code> 会自动把 None 替换成了 NaN。使用时需要注意。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s[s.isnull()] = <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s</span><br></pre></td></tr></table></figure>
+<pre><code>0    NaN
+1    1.0
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.replace([np.nan], <span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>0    NaN
+1    1.0
+dtype: float64
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/96be41c1.html" rel="next" title="合并列表的方法">
+                <i class="fa fa-chevron-left"></i> 合并列表的方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/1a9e9ddf.html" rel="prev" title="使用 python -m module">
+                使用 python -m module <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#np-nan-float-‘nan’"><span class="nav-number">1.</span> <span class="nav-text">np.nan/float(‘nan’)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Type"><span class="nav-number">1.1.</span> <span class="nav-text">Type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#id-是否相同"><span class="nav-number">1.2.</span> <span class="nav-text">id 是否相同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较操作均返回-False"><span class="nav-number">1.3.</span> <span class="nav-text">比较操作均返回 False</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-对二者返回值不同"><span class="nav-number">1.4.</span> <span class="nav-text">is 对二者返回值不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in-操作可以看出二者不同"><span class="nav-number">1.5.</span> <span class="nav-text">in 操作可以看出二者不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不产生-np-nan-的方法"><span class="nav-number">1.6.</span> <span class="nav-text">不产生 np.nan 的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#series-astype-str"><span class="nav-number">1.6.1.</span> <span class="nav-text">series.astype(str)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StringIO"><span class="nav-number">1.6.2.</span> <span class="nav-text">StringIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-na-values-参数指定特定字符为-nan-值"><span class="nav-number">1.6.3.</span> <span class="nav-text">通过 na_values 参数指定特定字符为 nan 值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-nan-与-None-的比较"><span class="nav-number">2.</span> <span class="nav-text">np.nan 与 None 的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">2.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#np-nan-和-None-都能作为字典的-key"><span class="nav-number">2.2.</span> <span class="nav-text">np.nan 和 None 都能作为字典的 key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Series-函数中的表现"><span class="nav-number">2.3.</span> <span class="nav-text">Series 函数中的表现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对函数的支持"><span class="nav-number">2.4.</span> <span class="nav-text">对函数的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对容器数据类型的影响"><span class="nav-number">2.5.</span> <span class="nav-text">对容器数据类型的影响</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等值性比较"><span class="nav-number">2.6.</span> <span class="nav-text">等值性比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#df-merge"><span class="nav-number">2.7.</span> <span class="nav-text">df.merge()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#df-groupby"><span class="nav-number">2.8.</span> <span class="nav-text">df.groupby()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入数据库需要将-np-nan-替换成-None"><span class="nav-number">2.9.</span> <span class="nav-text">导入数据库需要将 np.nan 替换成 None</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

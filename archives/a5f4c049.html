@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python,book,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="9~14 章主要讨论了 一些简单的算法，比如搜索、排序（选择排序和归并排序）、贪心算法（背包问题）、图论（DFS 和 BFS）、动态规划等。">
+<meta name="keywords" content="python,book">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-编程导论（第-2-版）读书笔记-9-10-章（搜索与排序）">
+<meta property="og:url" content="https://www.hotheat.top/archives/a5f4c049.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="9~14 章主要讨论了 一些简单的算法，比如搜索、排序（选择排序和归并排序）、贪心算法（背包问题）、图论（DFS 和 BFS）、动态规划等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181219/T0NPptfxgqaD.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181219/O8xo6NKXUouW.png?imageslim">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ganzhi001.jpg/200px-Ganzhi001.jpg">
+<meta property="og:image" content="http://www.ahathinking.com/wp-content/uploads/2012/05/merge1.jpg">
+<meta property="og:image" content="http://www.ahathinking.com/wp-content/uploads/2012/05/merge2.jpg">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181220/lM5KtvDvz9NK.png?imageslim">
+<meta property="og:image" content="http://s9.51cto.com/wyfs02/M00/1A/00/wKioL1MUSNWg3HhPAAAfgmnJY0E832.jpg">
+<meta property="og:image" content="http://s3.51cto.com/wyfs02/M00/1A/00/wKioL1MUSNbjWRw9AAAfljx73DY807.jpg">
+<meta property="og:image" content="http://s9.51cto.com/wyfs02/M00/19/FF/wKiom1MUSP7gBX4VAAAaPLt4QB0783.jpg">
+<meta property="og:image" content="http://s7.51cto.com/wyfs02/M00/19/FF/wKiom1MUSQCzWy0UAAAe9Ihqgcs108.jpg">
+<meta property="og:image" content="http://s7.51cto.com/wyfs02/M01/19/FF/wKiom1MUSQOCyGOFAAAbW4sRFRs031.jpg">
+<meta property="og:image" content="http://s2.51cto.com/wyfs02/M01/19/FF/wKiom1MUSQWiPameAAAawpa4u98529.jpg">
+<meta property="og:image" content="http://s3.51cto.com/wyfs02/M02/19/FF/wKiom1MUSQizZS4AAAAg4BoYKU8539.jpg">
+<meta property="og:image" content="http://s3.51cto.com/wyfs02/M00/19/FF/wKiom1MUSQqSkSkpAAAchtx6GUg755.jpg">
+<meta property="og:image" content="http://bbs.ahalei.com/data/attachment/forum/201402/25/232129ogop8gk0r8y7l70k.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6083675-1dc0dfa0235a8354?imageMogr2/auto-orient/strip%7CimageView2/2/w/683/format/webp">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python-编程导论（第-2-版）读书笔记-9-10-章（搜索与排序）">
+<meta name="twitter:description" content="9~14 章主要讨论了 一些简单的算法，比如搜索、排序（选择排序和归并排序）、贪心算法（背包问题）、图论（DFS 和 BFS）、动态规划等。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20181219/T0NPptfxgqaD.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/a5f4c049.html">
+
+
+
+
+
+  <title>Python-编程导论（第-2-版）读书笔记-9-10-章（搜索与排序） | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/a5f4c049.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Python-编程导论（第-2-版）读书笔记-9-10-章（搜索与排序）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-28T10:52:54+08:00">
+                2018-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Books/" itemprop="url" rel="index">
+                    <span itemprop="name">Books</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Books/python-编程导论/" itemprop="url" rel="index">
+                    <span itemprop="name">python 编程导论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>9~14 章主要讨论了 一些简单的算法，比如搜索、排序（选择排序和归并排序）、贪心算法（背包问题）、图论（DFS 和 BFS）、动态规划等。</p>
+<a id="more"></a>
+<h1 id="chapter-9"><a href="#chapter-9" class="headerlink" title="chapter 9"></a>chapter 9</h1><p>本章主要内容是如何用大 O 表示法估计程序的复杂度。</p>
+<h2 id="思考计算复杂度"><a href="#思考计算复杂度" class="headerlink" title="思考计算复杂度"></a>思考计算复杂度</h2><h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>我们常使用程序执行的基本步骤来度量算法的效率。一般情况下，考虑三种情形：</p>
+<ul>
+<li><p>最佳情形：给定输入规模时的<strong>最短</strong>运行时间。</p>
+<p>对于线性搜索，最佳情形的运行时间与列表长度无关，只要保证待查找元素位于列表第一个位置，只需要一步即可返回结果。</p>
+</li>
+<li><p>最差情形：给定输入规模时的<strong>最长</strong>运行时间。</p>
+<p>我们通常<strong>最关注</strong>最差情形，它给出了运行时间的上界。在大多数时间内满足的条件通常不令人满意。</p>
+</li>
+<li><p>平均情形：给定输入规模时的<strong>平均</strong>运行时间。</p>
+<p>如果输入值的分布有先验信息，这种先验信息也应考虑在内。比如快速排序中，如果基准值的选择随机时，快排平均情形下的时间复杂度便是 $O(log_n)$，最差情形是 $O(n^2)$。</p>
+</li>
+</ul>
+<h3 id="渐进表示法"><a href="#渐进表示法" class="headerlink" title="渐进表示法"></a>渐进表示法</h3><p>在比较不同算法时，常常忽略加法中的常数和乘法中的常数。渐进输入法则是用来描述输入规模无穷大时的算法复杂度。</p>
+<ul>
+<li>如果运行时间是多项式，保留增长速度最快的项</li>
+<li>如果保留项是个乘积，去掉常数</li>
+</ul>
+<p>常用大 O 表示法，暗示渐进<strong>最差情形</strong>运行时间的上界，代表运行时间的增速。</p>
+<h2 id="重要的复杂度"><a href="#重要的复杂度" class="headerlink" title="重要的复杂度"></a>重要的复杂度</h2><p>常用的复杂度有：$O(1)$、$O(log_n)$、$O(n)$、$O(nlog_n)$、$O(n^k)$、$O(c^n)$。</p>
+<h3 id="常数复杂度-O-1"><a href="#常数复杂度-O-1" class="headerlink" title="常数复杂度 $O(1)$"></a>常数复杂度 $O(1)$</h3><p>复杂度与输入规模无关，但并不意味着没有循环或递归调用，只是循环或递归与输入规模无关。</p>
+<h3 id="对数复杂度"><a href="#对数复杂度" class="headerlink" title="对数复杂度"></a>对数复杂度</h3><p>运行时间是某个数的对数，但是这个对数与底数无关，无非是通过换底公式将原来底数的对数乘以常数。</p>
+<p>举个栗子，$执行时间（步数） = log_x^n$，$x^{执行时间（步数）} = n$，也就是底数的时间复杂度次幂等于 $n$，在二分查找中，执行 $2^{时间复杂度}$ 次达到 $high - low$。</p>
+<p>常见的对数复杂度有二分查找，及下面将整数数字转换成字符串函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">3</span>]: <span class="function"><span class="keyword">def</span> <span class="title">int_to_str</span><span class="params">(i)</span>:</span></span><br><span class="line">   ...:     digits = <span class="string">'0123456789'</span></span><br><span class="line">   ...:     <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">   ...:         <span class="keyword">return</span> <span class="string">'0'</span></span><br><span class="line">   ...:     result = <span class="string">''</span></span><br><span class="line">   ...:     <span class="keyword">while</span> i &gt; <span class="number">0</span>:</span><br><span class="line">   ...:         result = digits[i % <span class="number">10</span>] + result</span><br><span class="line">   ...:         i = i // <span class="number">10</span></span><br><span class="line">   ...:     <span class="keyword">return</span> result</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: int_to_str(<span class="number">456</span>)</span><br><span class="line">Out[<span class="number">4</span>]: <span class="string">'456'</span></span><br></pre></td></tr></table></figure>
+<h3 id="线性复杂度"><a href="#线性复杂度" class="headerlink" title="线性复杂度"></a>线性复杂度</h3><p>对序列中每个元素都进行常数次处理，并非只有循环语句具有线性复杂度，递归也有可能具有线性复杂度，比如</p>
+<p>下面的阶乘函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">5</span>]: <span class="function"><span class="keyword">def</span> <span class="title">factorial</span><span class="params">(x)</span>:</span></span><br><span class="line">   ...:     <span class="keyword">if</span> x == <span class="number">1</span>:</span><br><span class="line">   ...:         <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">   ...:     <span class="keyword">else</span>:</span><br><span class="line">   ...:         <span class="keyword">return</span> x * factorial(x - <span class="number">1</span>)</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">6</span>]: factorial(<span class="number">5</span>)</span><br><span class="line">Out[<span class="number">6</span>]: <span class="number">120</span></span><br></pre></td></tr></table></figure>
+<p>上述函数每次递归调用都会将内存空间分配一个新的栈帧，这个栈帧会一直占用内存，直至调用返回。所以这里的空间复杂度也是 $O(n)$。</p>
+<p>多数情况下，线性复杂度的算法是完全可以接受的。</p>
+<h3 id="对数线性复杂度"><a href="#对数线性复杂度" class="headerlink" title="对数线性复杂度"></a>对数线性复杂度</h3><p>归并排序，堆排序，快速排序的平均情况的复杂度都是 $O(log_n)$。</p>
+<h3 id="多项式复杂度"><a href="#多项式复杂度" class="headerlink" title="多项式复杂度"></a>多项式复杂度</h3><p>常见的是平方复杂度，比如对两个列表进行嵌套的遍历时，可能涉及平方复杂度。</p>
+<h3 id="指数复杂度"><a href="#指数复杂度" class="headerlink" title="指数复杂度"></a>指数复杂度</h3><p>所需时间随着输入规模呈指数增长。对于指数复杂度问题，可以使用某种算法找出近似解，或对于这些问题中的某些特殊实例，可以求出最优解。</p>
+<p>像集合覆盖问题中，比如每个广播台都覆盖特定的区域，不同广播台的覆盖区域可能重叠。如何找出覆盖全美 50 个州的最小广播台集合呢？如果有 n 个广播台，每个广播台都有选或不选两种选择，列出每种可能便是类似下面代码展示的幂集问题，复杂度为 $O(2^n)$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">9</span>]: <span class="function"><span class="keyword">def</span> <span class="title">get_binary_rep</span><span class="params">(n, array_lenhth)</span>:</span></span><br><span class="line">   ...:     <span class="comment"># result 为 0 和 1 组成的字符串</span></span><br><span class="line">   ...:     result = <span class="string">''</span></span><br><span class="line">   ...:     <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">   ...:         result = str(n % <span class="number">2</span>) + result</span><br><span class="line">   ...:         n //= <span class="number">2</span></span><br><span class="line">   ...:     <span class="comment"># 用 0 在前面补齐至 array_length</span></span><br><span class="line">   ...:     <span class="keyword">for</span> i <span class="keyword">in</span> range(array_lenhth - len(result)):</span><br><span class="line">   ...:         result = <span class="string">'0'</span> + result</span><br><span class="line">   ...:     <span class="keyword">return</span> result</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">10</span>]: <span class="function"><span class="keyword">def</span> <span class="title">gen_power_set</span><span class="params">(L)</span>:</span></span><br><span class="line">    ...:     powerset = []</span><br><span class="line">    ...:     <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span> ** len(L)):</span><br><span class="line">    ...:         bin_str = get_binary_rep(i, len(L))</span><br><span class="line">    ...:         subset = []</span><br><span class="line">    ...:</span><br><span class="line">    ...:         <span class="keyword">for</span> i <span class="keyword">in</span> range(len(bin_str)):</span><br><span class="line">    ...:             <span class="keyword">if</span> bin_str[i] == <span class="string">'1'</span>:</span><br><span class="line">    ...:                 subset.append(L[i])</span><br><span class="line">    ...:</span><br><span class="line">    ...:         powerset.append(subset)</span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">return</span> powerset</span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: L = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">12</span>]: gen_power_set(L)</span><br><span class="line">Out[<span class="number">12</span>]: [[], [<span class="number">3</span>], [<span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>], [<span class="number">1</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]]</span><br></pre></td></tr></table></figure>
+<h2 id="NP-问题"><a href="#NP-问题" class="headerlink" title="NP 问题"></a>NP 问题</h2><p>我们把时间复杂度为非多项量级的算法问题称为 NP 问题，像 $O(2^n)$ 和 $O(n!) $ 等。</p>
+<p>像 NP 完全问题，必须考虑所有组合的情况，不能将问题分解成子问题，比如集合覆盖问题（$O(2^n)$）和旅行商问题（$O(n!)​$），随着元素数量增加，运行时间会变得非常慢，这类问题的最佳算法是使用近似算法。</p>
+<h1 id="chapter-10"><a href="#chapter-10" class="headerlink" title="chapter 10"></a>chapter 10</h1><p>程序效率的关键是好的算法，而不是靠小聪明在编码时耍花招。</p>
+<p>在面对具体问题时，我们需要：</p>
+<ul>
+<li>理解问题的内在复杂度</li>
+<li>思考如何将问题分解为多个子问题</li>
+<li>将子问题与已有高效算法的其他问题联系起来</li>
+</ul>
+<h2 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h2><h3 id="线性搜索"><a href="#线性搜索" class="headerlink" title="线性搜索"></a>线性搜索</h3><p>复杂度至多与列表长度 L 成线性关系。</p>
+<p>Python 中的列表由表示列表长度的整数及固定长度的对象指针序列构成，下图的列表包含 4 个元素，最左侧方块则存储了指向整数的指针。因为列表中目标元素的引用（指针）是连续存储，这也使得访问列表中的元素可以在常数时间内完成。支持随机访问也使得数组区别于链表、栈和对列。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181219/T0NPptfxgqaD.png?imageslim" alt="mark"></p>
+<h3 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h3><p>假设是有序排列的，不论是列表有序还是数值固有的有序性，都可以采用二分查找的方法进行搜索。可以显著改善最差情形下的复杂度。在每次调用时，<code>high</code> - <code>low</code>的值都被减半，直至达到 <code>high = low</code> 。复杂度为 $O(log_n)$。</p>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">13</span>]: <span class="function"><span class="keyword">def</span> <span class="title">bsearch</span><span class="params">(arr, item)</span>:</span></span><br><span class="line">    ...:     <span class="keyword">if</span> len(arr) == <span class="number">0</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    ...:     <span class="keyword">else</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> binary_search(arr, item, <span class="number">0</span>, len(arr) - <span class="number">1</span>)</span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">14</span>]: <span class="function"><span class="keyword">def</span> <span class="title">binary_search</span><span class="params">(arr, item, low, high)</span>:</span></span><br><span class="line">    ...:     mid = (low + high) // <span class="number">2</span></span><br><span class="line">    ...:     <span class="keyword">if</span> low == high:</span><br><span class="line">    ...:         <span class="keyword">if</span> arr[low] == item:</span><br><span class="line">    ...:             <span class="keyword">return</span> mid</span><br><span class="line">    ...:         <span class="keyword">else</span>:</span><br><span class="line">    ...:             <span class="keyword">return</span> arr[low] == item</span><br><span class="line">    ...:     <span class="keyword">if</span> arr[mid] == item:</span><br><span class="line">    ...:         <span class="keyword">return</span> mid</span><br><span class="line">    ...:     <span class="keyword">elif</span> arr[mid] &gt; item:</span><br><span class="line">    ...:         <span class="keyword">if</span> low == mid: <span class="comment"># nothing left to search</span></span><br><span class="line">    ...:             <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    ...:         <span class="keyword">return</span> binary_search(arr, item, low, mid - <span class="number">1</span>)</span><br><span class="line">    ...:     <span class="keyword">else</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> binary_search(arr, item, mid + <span class="number">1</span>, high)</span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">15</span>]: arr = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">13</span>, <span class="number">23</span>, <span class="number">34</span>, <span class="number">45</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: bsearch(arr, <span class="number">22</span>)</span><br><span class="line">Out[<span class="number">16</span>]: <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">20</span>]: <span class="function"><span class="keyword">def</span> <span class="title">binary_search</span><span class="params">(list, item)</span>:</span></span><br><span class="line">    ...:     low = <span class="number">0</span></span><br><span class="line">    ...:     high = len(list) - <span class="number">1</span></span><br><span class="line">    ...:     <span class="keyword">while</span> low &lt;= high:</span><br><span class="line">    ...:         mid = int((low + high) / <span class="number">2</span>)</span><br><span class="line">    ...:         guess = list[mid]</span><br><span class="line">    ...:         <span class="keyword">if</span> guess == item:</span><br><span class="line">    ...:             <span class="keyword">return</span> guess</span><br><span class="line">    ...:         <span class="keyword">if</span> guess &gt; item:</span><br><span class="line">    ...:             high = mid - <span class="number">1</span></span><br><span class="line">    ...:         <span class="keyword">else</span>:</span><br><span class="line">    ...:             low = mid + <span class="number">1</span></span><br><span class="line">    ...:     <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: arr = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">13</span>, <span class="number">23</span>, <span class="number">34</span>, <span class="number">45</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: binary_search(arr, <span class="number">9</span>)</span><br><span class="line">Out[<span class="number">22</span>]: <span class="number">9</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用-mid-1-而非-mid-的原因"><a href="#使用-mid-1-而非-mid-的原因" class="headerlink" title="使用 mid-1 而非 mid 的原因"></a>使用 <code>mid-1</code> 而非 <code>mid</code> 的原因</h4><p><img src="http://qnpic.sijihaiyang.top/blog/20181219/O8xo6NKXUouW.png?imageslim" alt="mark"></p>
+<p>当被查找元素不在列表中时，<code>low</code> 和 <code>high</code> 永远不会相遇，会无限循环下去</p>
+<h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><p>k 次查找乱序列表时，常常先对列表进行排序，然后采用 k 次二分查找的方式，而非直接进行 k 次线性搜索。</p>
+<p>常用的排序算法复杂度为 $O(nlog_n)$，当 k 越来越大时，$O(nlog_n) + k \times O(log_n)$ 远小于 $k \times O(n)$。</p>
+<h3 id="牛顿-拉弗森算法"><a href="#牛顿-拉弗森算法" class="headerlink" title="牛顿-拉弗森算法"></a>牛顿-拉弗森算法</h3><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Ganzhi001.jpg/200px-Ganzhi001.jpg" alt></p>
+<p>每次更新值 $x$ 的坐标是穿过点 $(x_0, f(x_0))$ 并且斜率为 $f’(x_0)$ 的直线与 $x$ 轴的交点。也就是如下方程的解：</p>
+<p>$0 = (x - x_0)f’(x_0) + f(x_0)$</p>
+<p>$x_{n+1} = x_n - \frac{f(x_n)}{f’(x_n)}$</p>
+<p>下降速度快。</p>
+<h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>原理是维持循环不变式，将列表分成前缀部分（L[0: i]）和后缀部分（L[i+1: len(L)]），前缀部分已经排好序。开始时前缀部分是空列表，后缀部分是整个列表；结束时前缀部分是整个列表，后缀部分是空的。复杂度为 $O(n^2)$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: <span class="function"><span class="keyword">def</span> <span class="title">sel_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">   ...:     <span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)):</span><br><span class="line">   ...:         <span class="keyword">for</span> j <span class="keyword">in</span> range(i, len(arr)):</span><br><span class="line">   ...:             <span class="keyword">if</span> arr[i] &lt; arr[j]:</span><br><span class="line">   ...:                 arr[i], arr[j] = arr[j], arr[i]</span><br><span class="line">   ...:     <span class="keyword">return</span> arr</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">2</span>]: arr = np.random.randint(<span class="number">30</span>, size=(<span class="number">20</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">3</span>]: arr</span><br><span class="line">Out[<span class="number">3</span>]:</span><br><span class="line">array([ <span class="number">6</span>, <span class="number">27</span>, <span class="number">29</span>, <span class="number">25</span>, <span class="number">26</span>, <span class="number">26</span>,  <span class="number">7</span>, <span class="number">28</span>, <span class="number">27</span>, <span class="number">25</span>,  <span class="number">0</span>,  <span class="number">3</span>,  <span class="number">1</span>, <span class="number">26</span>, <span class="number">28</span>,  <span class="number">0</span>, <span class="number">25</span>,</span><br><span class="line">       <span class="number">15</span>,  <span class="number">3</span>, <span class="number">25</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">4</span>]: sel_sort(arr)</span><br><span class="line">Out[<span class="number">4</span>]:</span><br><span class="line">array([<span class="number">29</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">27</span>, <span class="number">27</span>, <span class="number">26</span>, <span class="number">26</span>, <span class="number">26</span>, <span class="number">25</span>, <span class="number">25</span>, <span class="number">25</span>, <span class="number">25</span>, <span class="number">15</span>,  <span class="number">7</span>,  <span class="number">6</span>,  <span class="number">3</span>,  <span class="number">3</span>,</span><br><span class="line">        <span class="number">1</span>,  <span class="number">0</span>,  <span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><h4 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h4><p>利用分治思想，先找到初始问题的简单实例的解，再将这些解组合起来作为初始问题的解。</p>
+<ul>
+<li>列表长度为 0 或 1 时，认为已经排好序了</li>
+<li>如果多于 1 个元素，将其分成两个列表，利用归并排序法排序</li>
+<li>合并结果</li>
+</ul>
+<h4 id="普通归并排序"><a href="#普通归并排序" class="headerlink" title="普通归并排序"></a>普通归并排序</h4><p>前提是两个有序的列表，比较两个列表中的第一个元素，将较小的值追加至目标列表。当其中一个列表为空时，将另一个列表中的剩余元素追加至目标列表。</p>
+<p>每一层 需要<code>merge</code> 的元素总数都是 <code>len(L)</code>，时间复杂度为 $O(n)$，共有 $log_2^{len(L)}$ 层，时间复杂度为 $O(nlog_n)$。</p>
+<p>普通归并排序需要复制列表，空间复杂度为 $O(n)$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">20</span>]: <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(left, right)</span>:</span></span><br><span class="line">    ...:     <span class="comment"># left, right 都是已排序好的</span></span><br><span class="line">    ...:     results = []</span><br><span class="line">    ...:     i, j = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    ...:     <span class="keyword">while</span> i &lt; len(left) <span class="keyword">and</span> j &lt; len(right):</span><br><span class="line">            	<span class="comment"># 等号保证了排序的稳定性</span></span><br><span class="line">    ...:         <span class="keyword">if</span> left[i] &lt;= right[j]:</span><br><span class="line">    ...:             results.append(left[i])</span><br><span class="line">    ...:             i += <span class="number">1</span></span><br><span class="line">    ...:         <span class="keyword">else</span>:</span><br><span class="line">    ...:             results.append(right[j])</span><br><span class="line">    ...:             j += <span class="number">1</span></span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="comment"># 排序结束后, 把未完成的排序加进去</span></span><br><span class="line">    ...:     <span class="keyword">while</span> i &lt; len(left):</span><br><span class="line">    ...:         results.append(left[i])</span><br><span class="line">    ...:         i += <span class="number">1</span></span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">while</span> j &lt; len(right):</span><br><span class="line">    ...:         results.append(right[j])</span><br><span class="line">    ...:         j += <span class="number">1</span></span><br><span class="line">    ...:     <span class="keyword">return</span> results</span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: <span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    ...:     <span class="keyword">if</span> len(arr) &lt; <span class="number">2</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> arr</span><br><span class="line">    ...:     <span class="keyword">else</span>:</span><br><span class="line">    ...:         mid = len(arr) // <span class="number">2</span></span><br><span class="line">    ...:         left = merge_sort(arr[:mid])</span><br><span class="line">    ...:         right = merge_sort(arr[mid:])</span><br><span class="line">    ...:         <span class="keyword">return</span> merge(left, right)</span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: arr = [<span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: merge_sort(arr)</span><br><span class="line">Out[<span class="number">23</span>]: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="原地归并排序"><a href="#原地归并排序" class="headerlink" title="原地归并排序"></a>原地归并排序</h4><p>利用手摇算法可以实现原地归并排序，空间复杂度为 $O(1)$，但同时牺牲了时间复杂度。</p>
+<ol>
+<li>手摇算法</li>
+</ol>
+<p>可以通过三次逆序交换的手段实现从 <code>ABCDEF</code> 到 <code>CDEFAB</code></p>
+<ul>
+<li>BACDEF（反转后一段）</li>
+<li>BAFEDC（反转前一段）</li>
+<li>CDEFAB（反转整体）</li>
+</ul>
+<ol>
+<li>原地归并排序</li>
+</ol>
+<p>开始时，<code>i = 0, j = mid + 1</code>，使 <code>i</code> 前进；</p>
+<p>当 <code>L[i] &gt; L[j]</code> 时，使 <code>j</code> 前进，直至 <code>L[j] &lt;L[i]</code>；</p>
+<p>对 <code>L[i: index]</code> 和 <code>L[index: j+1]</code> 利用手摇算法进行交换</p>
+<p><img src="http://www.ahathinking.com/wp-content/uploads/2012/05/merge1.jpg" alt></p>
+<p><img src="http://www.ahathinking.com/wp-content/uploads/2012/05/merge2.jpg" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">8</span>]: <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(A, start, end)</span>:</span></span><br><span class="line">   ...:     <span class="string">"""</span></span><br><span class="line"><span class="string">   ...:     将长度为 n 的数组逆序</span></span><br><span class="line"><span class="string">   ...:     """</span></span><br><span class="line">   ...:     <span class="keyword">while</span> start &lt; end:</span><br><span class="line">   ...:         A[start], A[end - <span class="number">1</span>] = A[end - <span class="number">1</span>], A[start]</span><br><span class="line">   ...:         start += <span class="number">1</span></span><br><span class="line">   ...:         end -= <span class="number">1</span></span><br><span class="line">   ...:</span><br><span class="line">   ...:</span><br><span class="line">   ...: <span class="function"><span class="keyword">def</span> <span class="title">exchange</span><span class="params">(A, index, i, j)</span>:</span></span><br><span class="line">   ...:     <span class="string">"""</span></span><br><span class="line"><span class="string">   ...:     三次逆序</span></span><br><span class="line"><span class="string">   ...:     """</span></span><br><span class="line">   ...:     reverse(A, i, index)</span><br><span class="line">   ...:     reverse(A, index, j)</span><br><span class="line">   ...:     reverse(A, i, j)</span><br><span class="line">   ...:</span><br><span class="line">   ...:</span><br><span class="line">   ...: <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(A, begin, mid, end)</span>:</span></span><br><span class="line">   ...:     <span class="comment"># print(begin, mid, end, A)</span></span><br><span class="line">   ...:     i, j, k = begin, mid, end</span><br><span class="line">   ...:     <span class="keyword">while</span> i &lt; j &lt;= k:</span><br><span class="line">   ...:         step = <span class="number">0</span></span><br><span class="line">   ...:         index = j</span><br><span class="line">   ...:         <span class="keyword">while</span> i &lt; j <span class="keyword">and</span> A[i] &lt;= A[j]:</span><br><span class="line">   ...:             i += <span class="number">1</span></span><br><span class="line">   ...:         <span class="keyword">while</span> j &lt;= k <span class="keyword">and</span> A[j] &lt; A[i]:</span><br><span class="line">   ...:             j += <span class="number">1</span></span><br><span class="line">   ...:             step += <span class="number">1</span></span><br><span class="line">   ...:         exchange(A, index, i, j)</span><br><span class="line">   ...:</span><br><span class="line">   ...:</span><br><span class="line">   ...: <span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(A, l, r)</span>:</span></span><br><span class="line">   ...:     <span class="keyword">if</span> l &lt; r:</span><br><span class="line">   ...:         mid = (l + r) // <span class="number">2</span></span><br><span class="line">   ...:         merge_sort(A, l, mid)</span><br><span class="line">   ...:         merge_sort(A, mid + <span class="number">1</span>, r)</span><br><span class="line">   ...:         merge(A, l, mid + <span class="number">1</span>, r)</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">9</span>]: <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">   ...:     <span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">   ...:     <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">   ...:         A = np.random.randint(<span class="number">0</span>, <span class="number">100</span>, size=<span class="number">100</span>)</span><br><span class="line">   ...:         merge_sort(A, <span class="number">0</span>, len(A) - <span class="number">1</span>)</span><br><span class="line">    			<span class="comment"># 检查是否已排序好</span></span><br><span class="line">   ...:         <span class="keyword">assert</span> (np.diff(A) &gt;= <span class="number">0</span>).all()</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">10</span>]: test() <span class="comment"># 没有引起 AssertionError</span></span><br></pre></td></tr></table></figure>
+<h4 id="扩展—函数作为实参"><a href="#扩展—函数作为实参" class="headerlink" title="扩展—函数作为实参"></a>扩展—函数作为实参</h4><p>在普通归并排序中，可以自定义排序规则，只需要将表示排序规则的函数作为实参传入 <code>merge</code> 函数，在比较时调用这个函数即可。可以应用按不同规则对字符串进行排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">15</span>]: <span class="function"><span class="keyword">def</span> <span class="title">merge</span><span class="params">(left, right, compare)</span>:</span></span><br><span class="line">    ...:     i, j = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    ...:     result = []</span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">while</span> i &lt; len(left) <span class="keyword">and</span> j &lt; len(right):</span><br><span class="line">    ...:         <span class="keyword">if</span> compare(left[i], right[j]):</span><br><span class="line">    ...:             result.append(left[i])</span><br><span class="line">    ...:             i += <span class="number">1</span></span><br><span class="line">    ...:         <span class="keyword">else</span>:</span><br><span class="line">    ...:             result.append(right[j])</span><br><span class="line">    ...:             j += <span class="number">1</span></span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">while</span> i &lt; len(left):</span><br><span class="line">    ...:         result.append(left[i])</span><br><span class="line">    ...:         i += <span class="number">1</span></span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">while</span> j &lt; len(right):</span><br><span class="line">    ...:         result.append(right[j])</span><br><span class="line">    ...:         j += <span class="number">1</span></span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">return</span> result</span><br><span class="line">    ...:</span><br><span class="line">    ...:</span><br><span class="line">    ...: <span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(arr, compare)</span>:</span></span><br><span class="line">    ...:     <span class="keyword">if</span> len(arr) &lt; <span class="number">2</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> arr[:]</span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">else</span>:</span><br><span class="line">    ...:         mid = len(arr) // <span class="number">2</span></span><br><span class="line">    ...:         left = merge_sort(arr[:mid], compare)</span><br><span class="line">    ...:         right = merge_sort(arr[mid:], compare)</span><br><span class="line">    ...:         <span class="keyword">return</span> merge(left, right, compare)</span><br><span class="line">    ...:</span><br><span class="line">    ...:</span><br><span class="line">    ...: <span class="function"><span class="keyword">def</span> <span class="title">lastname_firstname</span><span class="params">(name1, name2)</span>:</span></span><br><span class="line">    ...:     spl_n1 = name1.split()</span><br><span class="line">    ...:     spl_n2 = name2.split()</span><br><span class="line">    ...:</span><br><span class="line">    ...:     <span class="keyword">if</span> spl_n1[<span class="number">1</span>] == spl_n2[<span class="number">1</span>]:</span><br><span class="line">    ...:         <span class="keyword">return</span> spl_n1[<span class="number">0</span>] &lt; spl_n2[<span class="number">0</span>]</span><br><span class="line">    ...:     <span class="keyword">else</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> spl_n1[<span class="number">1</span>] &lt; spl_n2[<span class="number">1</span>]</span><br><span class="line">    ...:</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: left = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">17</span>]: merge_sort(left, compare=<span class="keyword">lambda</span> x, y: x &lt; y)</span><br><span class="line">Out[<span class="number">17</span>]: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">18</span>]: s = [<span class="string">'Chris Terman'</span>, <span class="string">'Tom Brady'</span>, <span class="string">'Eric Grimson'</span>]</span><br><span class="line"></span><br><span class="line">In [<span class="number">19</span>]: merge_sort(s, lastname_firstname) <span class="comment"># 先对 lastname 排序，随后对 firstname 排序</span></span><br><span class="line">Out[<span class="number">19</span>]: [<span class="string">'Tom Brady'</span>, <span class="string">'Eric Grimson'</span>, <span class="string">'Chris Terman'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><h4 id="分治思想"><a href="#分治思想" class="headerlink" title="分治思想"></a>分治思想</h4><ul>
+<li>选择一个基准值</li>
+<li>将数组划分成两个子数组，小于基准值的元素和大于基准值的元素</li>
+<li>对这两个子数组进行快速排序</li>
+</ul>
+<p>我们认为如果是空数组或只含一个元素的数组是已经排序好的数组。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181220/lM5KtvDvz9NK.png?imageslim" alt="mark"></p>
+<p>下面这种快排的方法的空间复杂度是 $O(n)$，并非原地排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">10</span>]: <span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    ...:     <span class="keyword">if</span> len(arr) &lt; <span class="number">2</span>:</span><br><span class="line">    ...:         <span class="keyword">return</span> arr</span><br><span class="line">    ...:     <span class="keyword">else</span>:</span><br><span class="line">    ...:         less, greater = [], []</span><br><span class="line">    ...:         pivot = arr[<span class="number">0</span>]</span><br><span class="line">    ...:         <span class="keyword">for</span> i <span class="keyword">in</span> arr[<span class="number">1</span>:]:</span><br><span class="line">    ...:             <span class="keyword">if</span> i &lt; pivot:</span><br><span class="line">    ...:                 less.append(i)</span><br><span class="line">    ...:             <span class="keyword">else</span>:</span><br><span class="line">    ...:                 greater.append(i)</span><br><span class="line">    ...:         <span class="keyword">return</span> quicksort(less) + [pivot] + quicksort(greater)</span><br><span class="line">    ...:</span><br><span class="line">        </span><br><span class="line">In [<span class="number">21</span>]: quicksort([<span class="number">10</span>, <span class="number">5</span>, <span class="number">12</span>, <span class="number">2</span>, <span class="number">5</span>])</span><br><span class="line">Out[<span class="number">21</span>]: [<span class="number">2</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">12</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="快速排序（小兵移动）"><a href="#快速排序（小兵移动）" class="headerlink" title="快速排序（小兵移动）"></a>快速排序（小兵移动）</h4><p>选择序列最左侧的数作为基准值，从右边寻找小于基准值的数，从左边寻找大于基准值的数<br><img src="http://s9.51cto.com/wyfs02/M00/1A/00/wKioL1MUSNWg3HhPAAAfgmnJY0E832.jpg" alt="1"></p>
+<p>因为基准值在左侧，<strong>必须是右边</strong>的哨兵先向左移动。当找到比基准值小的数时，暂停移动。这时左边的哨兵向右移动，当找到比基准值大的数时，暂停移动。交换数据。<br><img src="http://s3.51cto.com/wyfs02/M00/1A/00/wKioL1MUSNbjWRw9AAAfljx73DY807.jpg" alt="2"><br><img src="http://s9.51cto.com/wyfs02/M00/19/FF/wKiom1MUSP7gBX4VAAAaPLt4QB0783.jpg" alt="3"><br><img src="http://s7.51cto.com/wyfs02/M00/19/FF/wKiom1MUSQCzWy0UAAAe9Ihqgcs108.jpg" alt="4"><br><img src="http://s7.51cto.com/wyfs02/M01/19/FF/wKiom1MUSQOCyGOFAAAbW4sRFRs031.jpg" alt="5"></p>
+<p>当左右两边的哨兵相遇时，这一次的探测结束，我们将基数与它们相遇的数据交换位置<br><img src="http://s2.51cto.com/wyfs02/M01/19/FF/wKiom1MUSQWiPameAAAawpa4u98529.jpg" alt="6"><br><img src="http://s3.51cto.com/wyfs02/M02/19/FF/wKiom1MUSQizZS4AAAAg4BoYKU8539.jpg" alt="7"><br><img src="http://s3.51cto.com/wyfs02/M00/19/FF/wKiom1MUSQqSkSkpAAAchtx6GUg755.jpg" alt="8"></p>
+<p>这时，6 左边的数据都是小于 6，右边的数据都是大于 6。快排的目的也是使小于基准值的位于基准值左边，大于基准值的位于基准值右边。随后用同样的方法再对基准值 6 左侧和右侧的序列分别进行快排。</p>
+<p><img src="http://bbs.ahalei.com/data/attachment/forum/201402/25/232129ogop8gk0r8y7l70k.png" width="600" height="700" alt="图片名称" align="center"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(arr, start, end)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> start &gt;= end:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    low = start</span><br><span class="line">    high = end</span><br><span class="line">    mid = arr[start]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> low &lt; high:</span><br><span class="line">        <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> arr[high] &gt; mid:</span><br><span class="line">            high -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> arr[low] &lt;= mid:</span><br><span class="line">            low += <span class="number">1</span></span><br><span class="line">        <span class="comment"># 小兵相遇交换位置</span></span><br><span class="line">        arr[high], arr[low] = arr[low], arr[high]</span><br><span class="line">	<span class="comment"># 交换相遇位置与基准值</span></span><br><span class="line">    arr[start], arr[low] = arr[low], arr[start]</span><br><span class="line">	<span class="comment"># 对基准值左侧的序列快排</span></span><br><span class="line">    quick_sort(arr, start, low - <span class="number">1</span>)</span><br><span class="line">    <span class="comment"># 对基准值右侧的序列快排</span></span><br><span class="line">    quick_sort(arr, low + <span class="number">1</span>, end)</span><br></pre></td></tr></table></figure>
+<h4 id="快速排序（小兵移动）优化"><a href="#快速排序（小兵移动）优化" class="headerlink" title="快速排序（小兵移动）优化"></a>快速排序（小兵移动）优化</h4><p>三数取中法优化快速排序：排序时，不选择最左侧的值作为枢纽值，而是取序列中最左侧元素，中间元素和最右侧元素中的中间值作为枢纽值以优化快速排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sorted_short</span><span class="params">(arr, low, high)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    对三值进行排序, 并把枢纽值放到倒数第二位</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    mid = (low + high) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> arr[low] &gt; arr[high]:</span><br><span class="line">        arr[low], arr[high] = arr[high], arr[low]</span><br><span class="line">    <span class="keyword">if</span> arr[low] &gt; arr[mid]:</span><br><span class="line">        arr[low], arr[mid] = arr[mid], arr[low]</span><br><span class="line">    <span class="keyword">if</span> arr[mid] &gt; arr[high]:</span><br><span class="line">        arr[high], arr[mid] = arr[mid], arr[high]</span><br><span class="line"></span><br><span class="line">    arr[high - <span class="number">1</span>], arr[mid] = arr[mid], arr[high - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(arr, start, end)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> start &gt;= end:</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    low, high = start, end</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> low &lt; high:</span><br><span class="line">        sorted_short(arr, low, high)</span><br><span class="line">        pivot = arr[high - <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">while</span> low &lt; high:</span><br><span class="line">            <span class="comment"># 参考值在右侧, 先从左侧开始判断</span></span><br><span class="line">            <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> arr[low] &lt; pivot:</span><br><span class="line">                low += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> low &lt; high <span class="keyword">and</span> arr[high] &gt;= pivot:</span><br><span class="line">                high -= <span class="number">1</span></span><br><span class="line">            arr[high], arr[low] = arr[low], arr[high]</span><br><span class="line"></span><br><span class="line">    arr[low], arr[end - <span class="number">1</span>] = arr[end - <span class="number">1</span>], arr[low]</span><br><span class="line">    quick_sort(arr, start, low - <span class="number">1</span>)</span><br><span class="line">    quick_sort(arr, low + <span class="number">1</span>, end)</span><br></pre></td></tr></table></figure>
+<p>C 语言标准库中的函数 <code>qsort</code> 使用的是快速排序，而 Python 中的 <code>sort()</code> 与 <code>sorted()</code> 函数使用的是 <code>timesort</code>，利用很多数据集中数据已部分有序的事实，最差情形下的性能与归并排序一样，平均性能远超归并排序。</p>
+<p>下图是不同排序方法的比较</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/6083675-1dc0dfa0235a8354?imageMogr2/auto-orient/strip%7CimageView2/2/w/683/format/webp" alt></p>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列表可以由数组和散列函数构成，散列函数指出在数组中的存储位置，数组则用来存储值。下面代码中取余操作 <code>key % self.num_buckets</code> 可以看作一个散列函数。</p>
+<h3 id="散列函数特性"><a href="#散列函数特性" class="headerlink" title="散列函数特性"></a>散列函数特性</h3><ol>
+<li><p>散列函数必须是一致的。对于同样的输入，每次都映射到相同的索引，比如取余操作。</p>
+</li>
+<li><p>散列表要知道数组的大小，只返回有效索引，而非返回超过数组大小的索引。</p>
+</li>
+<li><p>最理想情况下，对于不同的输入，散列表映射到不同的索引。如果两个键映射到同一位置，那么在这个位置上存储一个链表，这种情况称为冲突（碰撞）。</p>
+</li>
+<li><p>好的散列函数很重要，会使键均匀的分布在散列表的不同位置，而不是使散列表中的链表变得很长，在查找时十分低效。</p>
+</li>
+<li><p>填装因子是评价散列表的另一指标。由于散列表使用数组存储数据，数组中有些位置填充上数据，有些位置是空的，填装因子等于散列表中的元素数/位置总数。</p>
+<p>通常情况，一旦填装因子大于 0.7 时，需要调整散列表的长度，需要创建一个更长的数组。</p>
+</li>
+<li><p>由于散列函数直接映射到数组索引上，理想情况下，散列表的查询，插入和删除复杂度都是 $O(1)$。但是，最糟情况下，所有的键都映射到同一链表中，使得查询，插入和删除的复杂度变成 $O(n)​$。</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntDict</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num_buckets)</span>:</span></span><br><span class="line">        self.buckets = []</span><br><span class="line">        self.num_buckets = num_buckets</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(num_buckets):</span><br><span class="line">            self.buckets.append([])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_entry</span><span class="params">(self, key, dict_val)</span>:</span></span><br><span class="line">        hash_bucket = self.buckets[key % self.num_buckets]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(hash_bucket)):</span><br><span class="line">            <span class="comment"># 如果 key 已经存在，则更新值</span></span><br><span class="line">            <span class="keyword">if</span> hash_bucket[i][<span class="number">0</span>] == key:</span><br><span class="line">                hash_bucket[i] = (key, dict_val)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        hash_bucket.append((key, dict_val))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_value</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        hash_bucket = self.buckets[self.num_buckets % key]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(hash_bucket)):</span><br><span class="line">            <span class="keyword">if</span> hash_bucket[i][<span class="number">0</span>] == key:</span><br><span class="line">                <span class="keyword">return</span> hash_bucket[i][<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        result = <span class="string">'&#123;'</span></span><br><span class="line">        <span class="keyword">for</span> b <span class="keyword">in</span> self.buckets:</span><br><span class="line">            <span class="keyword">for</span> e <span class="keyword">in</span> b:</span><br><span class="line">                result += str(e[<span class="number">0</span>]) + <span class="string">':'</span> + str(e[<span class="number">1</span>]) + <span class="string">','</span></span><br><span class="line">        <span class="keyword">return</span> result[:<span class="number">-1</span>] + <span class="string">'&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>参考文章</p>
+<p><a href="https://blog.csdn.net/ltyqljhwcm/article/details/52155097" target="_blank" rel="noopener">https://blog.csdn.net/ltyqljhwcm/article/details/52155097</a></p>
+<p><a href="https://www.cnblogs.com/Yogurshine/archive/2013/05/02/3054329.html" target="_blank" rel="noopener">https://www.cnblogs.com/Yogurshine/archive/2013/05/02/3054329.html</a></p>
+<p><a href="https://blog.csdn.net/yangquanhui1991/article/details/52070777" target="_blank" rel="noopener">https://blog.csdn.net/yangquanhui1991/article/details/52070777</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/book/" rel="tag"># book</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/7830505c.html" rel="next" title="3Blue1Brown-微积分的本质读书笔记">
+                <i class="fa fa-chevron-left"></i> 3Blue1Brown-微积分的本质读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/4985cd57.html" rel="prev" title="Anychart export to PNG JPG SVG">
+                Anychart export to PNG JPG SVG <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-9"><span class="nav-number">1.</span> <span class="nav-text">chapter 9</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思考计算复杂度"><span class="nav-number">1.1.</span> <span class="nav-text">思考计算复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number">1.1.1.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渐进表示法"><span class="nav-number">1.1.2.</span> <span class="nav-text">渐进表示法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的复杂度"><span class="nav-number">1.2.</span> <span class="nav-text">重要的复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常数复杂度-O-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">常数复杂度 $O(1)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对数复杂度"><span class="nav-number">1.2.2.</span> <span class="nav-text">对数复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线性复杂度"><span class="nav-number">1.2.3.</span> <span class="nav-text">线性复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对数线性复杂度"><span class="nav-number">1.2.4.</span> <span class="nav-text">对数线性复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多项式复杂度"><span class="nav-number">1.2.5.</span> <span class="nav-text">多项式复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指数复杂度"><span class="nav-number">1.2.6.</span> <span class="nav-text">指数复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NP-问题"><span class="nav-number">1.3.</span> <span class="nav-text">NP 问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chapter-10"><span class="nav-number">2.</span> <span class="nav-text">chapter 10</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索算法"><span class="nav-number">2.1.</span> <span class="nav-text">搜索算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线性搜索"><span class="nav-number">2.1.1.</span> <span class="nav-text">线性搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分搜索"><span class="nav-number">2.1.2.</span> <span class="nav-text">二分搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#递归"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-mid-1-而非-mid-的原因"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">使用 mid-1 而非 mid 的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优势"><span class="nav-number">2.1.2.4.</span> <span class="nav-text">优势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#牛顿-拉弗森算法"><span class="nav-number">2.1.3.</span> <span class="nav-text">牛顿-拉弗森算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法"><span class="nav-number">2.2.</span> <span class="nav-text">排序算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择排序"><span class="nav-number">2.2.1.</span> <span class="nav-text">选择排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并排序"><span class="nav-number">2.2.2.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本思想"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">基本思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#普通归并排序"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">普通归并排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原地归并排序"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">原地归并排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展—函数作为实参"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">扩展—函数作为实参</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速排序"><span class="nav-number">2.2.3.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分治思想"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">分治思想</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序（小兵移动）"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">快速排序（小兵移动）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速排序（小兵移动）优化"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">快速排序（小兵移动）优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列表"><span class="nav-number">2.3.</span> <span class="nav-text">散列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#散列函数特性"><span class="nav-number">2.3.1.</span> <span class="nav-text">散列函数特性</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

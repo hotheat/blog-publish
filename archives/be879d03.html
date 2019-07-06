@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装环境 Node.js Git">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 Hexo，GitHub page 和 Coding.net 搭建博客">
+<meta property="og:url" content="https://www.hotheat.top/archives/be879d03.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="安装环境 Node.js Git">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/DpbqPqV4abzF.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/LjBOEjXAIR0S.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/2TDYCoLzxDi7.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/x5fE61P7NMbK.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190628/9BQvlYLE6jVv.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/qdgD296p07HH.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/GqGwLBJ3wSVP.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/zszG0aq5IjUq.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/3F9ddCquDgm8.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181227/m29Xc6Fdil6v.png?imageslim">
+<meta property="og:updated_time" content="2019-07-06T09:24:48.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用 Hexo，GitHub page 和 Coding.net 搭建博客">
+<meta name="twitter:description" content="安装环境 Node.js Git">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20181227/DpbqPqV4abzF.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/be879d03.html">
+
+
+
+
+
+  <title>利用 Hexo，GitHub page 和 Coding.net 搭建博客 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/be879d03.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">利用 Hexo，GitHub page 和 Coding.net 搭建博客</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-16T23:25:21+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/使用教程/" itemprop="url" rel="index">
+                    <span itemprop="name">使用教程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h1><ul>
+<li><strong>Node.js</strong></li>
+<li><strong>Git</strong></li>
+</ul>
+<a id="more"></a>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><h2 id="初次运行-Git"><a href="#初次运行-Git" class="headerlink" title="初次运行 Git"></a>初次运行 Git</h2><p><code>git config --global user.email &quot;Your email &quot;</code></p>
+<p><code>git config --global user.name &quot;Your name&quot;</code></p>
+<h2 id="Hexo-常用命令"><a href="#Hexo-常用命令" class="headerlink" title="Hexo 常用命令"></a>Hexo 常用命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo g       # 生成网页</span><br><span class="line">hexo s       # 启动本地服务</span><br><span class="line">hexo d       # 将网站递交到远程仓库</span><br><span class="line">hexo s -g    # 组合命令，生成网页并启动本地服务</span><br><span class="line">hexo d -g    # 组合命令，生成网页并递交到远程仓库</span><br><span class="line">hexo clean   # 清除刚生成的网页</span><br></pre></td></tr></table></figure>
+<h2 id="安装-Hexo-及相关组件"><a href="#安装-Hexo-及相关组件" class="headerlink" title="安装 Hexo 及相关组件"></a>安装 Hexo 及相关组件</h2><h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><p>新建 Blog 目录，必须是空目录，否则 <code>hexo init</code> 报错。</p>
+<p><code>npm install -g hexo-cli</code></p>
+<h3 id="生成-Hexo-项目"><a href="#生成-Hexo-项目" class="headerlink" title="生成 Hexo 项目"></a>生成 Hexo 项目</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init   # 初始化 blog 目录</span><br><span class="line">npm install hexo-deployer-git --save  # 安装上传组件</span><br></pre></td></tr></table></figure>
+<h3 id="本地调试运行"><a href="#本地调试运行" class="headerlink" title="本地调试运行"></a>本地调试运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>此时，在浏览器输入「localhost:4000」可以看到 Hello world 页面。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">├── .deploy</span><br><span class="line">├── public</span><br><span class="line">├── scaffolds</span><br><span class="line">|   ├── draft.md</span><br><span class="line">|   ├── page.md</span><br><span class="line">|   └── post.md</span><br><span class="line">├── scripts</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">├── themes</span><br><span class="line">├── _config.yml</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>scaffolds 目录</p>
+<p>新建页面的模板，执行新建命令时，是根据这里的模板页来完成的。</p>
+</li>
+<li><p>主要配置文件</p>
+<p>_config.yml 站点配置文件</p>
+<p>themes/*/_config.yml 主题配置文件</p>
+</li>
+</ol>
+<h2 id="安装-next-主题"><a href="#安装-next-主题" class="headerlink" title="安装 next 主题"></a>安装 next 主题</h2><ol>
+<li><p>next <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">官方网站</a>上下载</p>
+<p><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code></p>
+<p>新版本的 NexT 6.x 还对部分功能的使用做了优化。把很多功能比如字数统计，顶部进度条等放到了主分支里。具体可以参考<a href="https://xian6ge.cn/posts/5b8c41e7/" target="_blank" rel="noopener">Hexo NexT 主题6.x版本的使用配置与美化</a>。</p>
+</li>
+<li><p>修改站点配置文件中的 themes 字段为 next</p>
+</li>
+<li><p>使用组合命令运行</p>
+<p><code>hexo s -g</code></p>
+</li>
+</ol>
+<h2 id="添加文章"><a href="#添加文章" class="headerlink" title="添加文章"></a>添加文章</h2><ol>
+<li><p>添加文章</p>
+<p><code>hexo new &quot;文章名&quot;</code></p>
+</li>
+<li><p>添加内容</p>
+<p>在 blog/source/_post 文件夹下有<code>文章名.md</code>文件。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">利用</span> <span class="string">Hexo</span> <span class="string">和</span> <span class="string">Gitpage</span> <span class="string">搭建博客</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2018</span><span class="bullet">-09</span><span class="bullet">-16</span> <span class="number">10</span><span class="string">:47:55</span></span><br><span class="line"><span class="attr">tags:</span> <span class="string">Hexo</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<p>将要写的内容添加到 <code>---</code> 下</p>
+</li>
+<li><p>本地提交</p>
+<p><code>hexo s -g</code></p>
+<p>刷新浏览器可以看到刚写的文章了</p>
+</li>
+</ol>
+<h2 id="利用-Github-Pages-实现远程访问"><a href="#利用-Github-Pages-实现远程访问" class="headerlink" title="利用 Github Pages 实现远程访问"></a>利用 Github Pages 实现远程访问</h2><h3 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h3><ol>
+<li><p>在 github 中创建新仓库，仓库名字格式「username.github.io」，勾选用初始化 README</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/DpbqPqV4abzF.png?imageslim" alt="mark"></p>
+</li>
+<li><p>在 Setting 页面的 Github Pages 中，Source 显示为 master branch</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/LjBOEjXAIR0S.png?imageslim" alt="mark"></p>
+</li>
+</ol>
+<h3 id="绑定-SSH-Key"><a href="#绑定-SSH-Key" class="headerlink" title="绑定 SSH Key"></a>绑定 SSH Key</h3><ol>
+<li>在本地找到 id_rsa.pub 文件，进入 github，Settings $\rightarrow$ SSH and GPG keys $\rightarrow$ New SSH key，将 ssh key 粘贴进去</li>
+<li><code>ssh -T git@github.com</code>验证 ssh key 是否添加成功</li>
+</ol>
+<h3 id="部署网站"><a href="#部署网站" class="headerlink" title="部署网站"></a>部署网站</h3><ol>
+<li><p>修改 Blog 目录下站点配置文件，repository 改为自己的仓库名</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> <span class="string">git@github.com:hotheat/hotheat.github.io.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>repository 使用 ssh 方式进行复制</li>
+<li>每个冒号后面都有空格</li>
+</ul>
+</li>
+<li><p>执行命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">hexo d -g # 部署网站</span><br></pre></td></tr></table></figure>
+<p>在浏览器中输入「hotheat.github.io」即可访问</p>
+</li>
+</ol>
+<blockquote>
+<p>有时本地文件会出错，执行 <code>hexo clean</code> 即可清除 public 文件夹，再重新提交</p>
+</blockquote>
+<h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><ol>
+<li><p>注册域名，推荐 godaddy.com 和「万网」，开始时注册的腾讯云域名，在同时绑定 coding.net 后子域名负载均衡超限需要花钱</p>
+</li>
+<li><p>添加主机记录 www， 记录类型 CNAME，记录值仓库名：hotheat.github.io，保存</p>
+</li>
+<li><p>再添加主机记录 @， 记录类型 CNAME，记录值仓库名：hotheat.github.io，保存</p>
+</li>
+<li><p>Github setting 里 Github page 页面中填入新的域名。保存后，此时仓库中会多出 CNAME 文件，里面是域名信息</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/2TDYCoLzxDi7.png?imageslim" alt="mark"></p>
+</li>
+<li><p>下次执行 <code>hexo d</code> 时，CNAME 文件会被删掉。需要本地在 source 目录中新建 CNAME 文件，里面写上域名地址 「www.hotheat.top」，下次执行 <code>hexo d</code> 时会自动复制到 post 文件夹下</p>
+</li>
+</ol>
+<h2 id="同时部署到-Coding-net"><a href="#同时部署到-Coding-net" class="headerlink" title="同时部署到 Coding.net"></a>同时部署到 Coding.net</h2><p>因为 Github 屏蔽了百度的爬虫，国内流量的解析到 Coding，国外的解析到 Github。Coding.net 在国内的访问速度也比较快。</p>
+<p>注册 Coding.net $\rightarrow$ 绑定 ssh 证书 $\rightarrow$ 站点配置文件中配置 deploy 方式（添加内容如下） $\rightarrow$ <code>hexo d -g</code> 推送 $\rightarrow$ 绑定域名（主机记录同样填写 www 和 @）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> </span><br><span class="line"><span class="attr">    github:</span> <span class="string">git@github.com:hotheat/hotheat.github.io.git</span></span><br><span class="line"><span class="attr">    coding:</span> <span class="string">git@git.coding.net:HotHeat/hotheat.coding.me.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/x5fE61P7NMbK.png?imageslim" alt="mark"></p>
+<ol>
+<li><p>Coding.net 绑定腾讯云后免费升级到银牌会员，可以像 Github Page 一样对自定义域名进行绑定了</p>
+</li>
+<li><p><strong>在 Coding Pages 里申请 SSL 证书时，会同时解析国外线路和国内线路，当解析到国外线路时，申请证书无法通过，需要将 <code>github.io</code> 线路暂停，待申请通过后再启用。DNS 有缓存，修改后约有 5 分钟生效时间。在域名解析时尤其不能心急</strong></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190628/9BQvlYLE6jVv.png?imageslim" alt="mark"></p>
+</li>
+<li><p>不需要选中「强制 HTTPS 访问」</p>
+</li>
+<li><p>coding.me 跳转页的广告删除请参考文章 <a href="http://stevenshi.me/2017/12/22/hexo-codingNet/" target="_blank" rel="noopener">http://stevenshi.me/2017/12/22/hexo-codingNet/</a>。再点击头像右下角，切换旧版，勾选 <code>已放置 Hosted By Coding Pages</code> 提交审核。</p>
+</li>
+</ol>
+<h1 id="next-主题优化配置"><a href="#next-主题优化配置" class="headerlink" title="next 主题优化配置"></a>next 主题优化配置</h1><h2 id="设置语言和网站信息"><a href="#设置语言和网站信息" class="headerlink" title="设置语言和网站信息"></a>设置语言和网站信息</h2><p>在站点配置文件中 Site 模块设置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hotheat</span></span><br><span class="line"><span class="attr">subtitle:</span> <span class="string">Hotheat</span> <span class="string">Home</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">Studying</span> <span class="string">and</span> <span class="string">Processing</span></span><br><span class="line"><span class="attr">keywords:</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">Hotheat</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-Hans</span> <span class="comment">## 中文</span></span><br><span class="line"><span class="attr">timezone:</span></span><br></pre></td></tr></table></figure>
+<h2 id="菜单设置"><a href="#菜单设置" class="headerlink" title="菜单设置"></a>菜单设置</h2><p>在主题配置文件 Menu 中，将需要的菜单取消注释。相应的按钮会在网站上显示。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line"><span class="attr">  home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line"><span class="attr">  tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">  categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">th</span></span><br><span class="line"><span class="attr">  archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">archive</span></span><br><span class="line"><span class="attr">  about:</span> <span class="string">/about/</span> <span class="string">||</span> <span class="string">user</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
+<h3 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ol>
+<li><p>执行命令</p>
+<p><code>hexo new page categories</code></p>
+</li>
+<li><p>在提示生成的 index.md 中添加 type: “categories”</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">categories</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2018</span><span class="bullet">-09</span><span class="bullet">-16</span> <span class="number">13</span><span class="string">:11:19</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">"categories"</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在要添加分类的文章 Header 中添加 categories 属性值。一篇文章只能属于一个分类，如果在下一行添加 -xxx，那么 -xxx 将属于上一个分类的子类</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">利用</span> <span class="string">Hexo</span> <span class="string">和</span> <span class="string">Gitpage</span> <span class="string">搭建博客</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2018</span><span class="bullet">-09</span><span class="bullet">-16</span> <span class="number">10</span><span class="string">:47:55</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">Hexo</span></span><br><span class="line"><span class="attr">categories:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">使用教程</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h4><ol>
+<li><p>标签和分类同样的设置，执行 <code>hexo new page tags</code></p>
+</li>
+<li><p>在 index.md 中添加 type: “tags”</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2018</span><span class="bullet">-09</span><span class="bullet">-16</span> <span class="number">14</span><span class="string">:24:24</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">"tags"</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在要添加分类的文章 Header 中添加 tags 属性值。与 categories 不同，一篇文章可以有多个 tags</p>
+</li>
+</ol>
+<h4 id="新建文章时自动生成-categories"><a href="#新建文章时自动生成-categories" class="headerlink" title="新建文章时自动生成 categories"></a>新建文章时自动生成 categories</h4><p>在 scaffold/post.md 中的 tags: 上面加入 categories:，在 <code>hexo new &quot;文章名&quot;</code>时，就可以自动添加 categories 项。</p>
+<h3 id="关于（About）"><a href="#关于（About）" class="headerlink" title="关于（About）"></a>关于（About）</h3><ol>
+<li><p>执行</p>
+<p><code>hexo new page about</code></p>
+</li>
+<li><p>在主题配置文件中将 About 取消注释，在 source\about\index.md 编辑 About 内容</p>
+</li>
+</ol>
+<h3 id="LocalSearch-搜索"><a href="#LocalSearch-搜索" class="headerlink" title="LocalSearch 搜索"></a>LocalSearch 搜索</h3><ol>
+<li><p>安装 hexo-generator-searchdb</p>
+<p><code>npm install hexo-generator-searchdb --save</code></p>
+</li>
+<li><p>编辑站点配置文件，添加</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编辑主题配置文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Local search</span><br><span class="line">local_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="algolia-search"><a href="#algolia-search" class="headerlink" title="algolia search"></a>algolia search</h3><p>参考文章 <a href="https://arstead.github.io/%E6%8A%80%E6%9C%AF/Hexo/How_to_add_algolia_into_hexo/https://arstead.github.io/%E6%8A%80%E6%9C%AF/Hexo/How_to_add_algolia_into_hexo/。" target="_blank" rel="noopener">hexo Next 主题配置—-补充—-Algolia 搜索</a></p>
+<h2 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h2><h3 id="首页只显示部分内容"><a href="#首页只显示部分内容" class="headerlink" title="首页只显示部分内容"></a>首页只显示部分内容</h3><p>在 .md 文章内容中加上 <code>&lt;!--more--&gt;</code>，首页展示的就是  <code>&lt;!--more--&gt;</code> 之前的文字 。</p>
+<h3 id="修改文章内链接文本样式"><a href="#修改文章内链接文本样式" class="headerlink" title="修改文章内链接文本样式"></a>修改文章内链接文本样式</h3><p>修改文件 <code>themes\next\source\css\_common\components\post\post.styl</code>，在末尾添加如下 css 样式</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 文章内链接文本样式</span><br><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  border-bottom: 1px solid #0593d3;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #fc6423;</span><br><span class="line">    border-bottom: none;</span><br><span class="line">    border-bottom: 1px solid #fc6423;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置代码高亮"><a href="#设置代码高亮" class="headerlink" title="设置代码高亮"></a>设置代码高亮</h3><p>在主题配置文件中修改，共有 5 款主题</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Code Highlight theme</span></span><br><span class="line"><span class="comment"># Available value:</span></span><br><span class="line"><span class="comment">#    normal | night | night eighties | night blue | night bright</span></span><br><span class="line"><span class="comment"># https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line"><span class="attr">highlight_theme:</span> <span class="string">night</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    print(a * <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h2><h3 id="字数统计"><a href="#字数统计" class="headerlink" title="字数统计"></a>字数统计</h3><p>主题配置文件中修改</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">post_wordcount:</span></span><br><span class="line"><span class="attr">  item_text:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  wordcount:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  min2read:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  totalcount:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  separated_meta:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="访问统计"><a href="#访问统计" class="headerlink" title="访问统计"></a>访问统计</h3><p>主题配置文件修改</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">busuanzi_count:</span></span><br><span class="line">  <span class="comment"># count values only if the other configs are false</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># custom uv span for the whole site</span></span><br><span class="line"><span class="attr">  site_uv:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  site_uv_header:</span> <span class="string">&lt;i</span> <span class="string">class="fa</span> <span class="string">fa-user"&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="attr">  site_uv_footer:</span> <span class="string">总访客</span></span><br><span class="line">  <span class="comment"># custom pv span for the whole site</span></span><br><span class="line"><span class="attr">  site_pv:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  site_pv_header:</span> <span class="string">&lt;i</span> <span class="string">class="fa</span> <span class="string">fa-eye"&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="attr">  site_pv_footer:</span> <span class="string">总访问</span></span><br><span class="line">  <span class="comment"># custom pv span for one page only</span></span><br><span class="line"><span class="attr">  page_pv:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  page_pv_header:</span> <span class="string">&lt;i</span> <span class="string">class="fa</span> <span class="string">fa-file-o"&gt;&lt;/i&gt;</span></span><br><span class="line"><span class="attr">  page_pv_footer:</span> <span class="string">文章阅读数</span></span><br></pre></td></tr></table></figure>
+<h1 id="搜索引擎优化（SEO）"><a href="#搜索引擎优化（SEO）" class="headerlink" title="搜索引擎优化（SEO）"></a>搜索引擎优化（SEO）</h1><h2 id="验证网站所有权"><a href="#验证网站所有权" class="headerlink" title="验证网站所有权"></a>验证网站所有权</h2><h3 id="谷歌"><a href="#谷歌" class="headerlink" title="谷歌"></a>谷歌</h3><p>进入 <a href="https://link.jianshu.com/?t=https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="noopener">Google Search Console</a>，选择 HTML 标记，将字段复制到主题配置文件 google_site_verification 位置。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">google_site_verification:</span> <span class="string">SHONCNF9wVKYUwUP...</span></span><br></pre></td></tr></table></figure>
+<h3 id="百度"><a href="#百度" class="headerlink" title="百度"></a>百度</h3><ol>
+<li><p>登录<a href="https://link.jianshu.com/?t=http://ziyuan.baidu.com/site/siteadd" target="_blank" rel="noopener">百度站长平台</a>，选择 CNAME 验证</p>
+<p>主机记录添加 rnv4n…，记录值 ziyuan.baidu.com，保存。</p>
+</li>
+</ol>
+<h2 id="安装-sitemap-插件"><a href="#安装-sitemap-插件" class="headerlink" title="安装 sitemap 插件"></a>安装 sitemap 插件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-sitemap --save     </span><br><span class="line">npm install hexo-generator-baidu-sitemap --save</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>修改站点配置文件为博客首页</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">url:</span> <span class="attr">https://www.hotheat.top/</span></span><br><span class="line"><span class="attr">root:</span> <span class="string">/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>站点配置文件中添加</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sitemap:</span> </span><br><span class="line"><span class="attr">    path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">baidusitemap.xml</span></span><br></pre></td></tr></table></figure>
+<p>执行 <code>hexo d -g</code> 后， public 目录下发现生成了 <code>sitemap.xml</code>和<code>baidusitemap.xml</code> 表示配置成功了。</p>
+</li>
+</ol>
+<h2 id="提交站点地图"><a href="#提交站点地图" class="headerlink" title="提交站点地图"></a>提交站点地图</h2><h3 id="谷歌-1"><a href="#谷歌-1" class="headerlink" title="谷歌"></a>谷歌</h3><ol>
+<li><p>谷歌<a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="noopener">站点地图</a>找到<code>抓取$$\rightarrow$$站点地图</code>，输入 <code>sitemap.xml</code></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/qdgD296p07HH.png?imageslim" alt="mark"></p>
+</li>
+<li><p><strong>这步很重要！很重要！</strong></p>
+<p>提交站点地图之后，点击<code>Google 抓取方式</code>，点击<code>抓取$$\rightarrow$$请求编入索引</code></p>
+</li>
+</ol>
+<h3 id="百度-1"><a href="#百度-1" class="headerlink" title="百度"></a>百度</h3><ol>
+<li><p>点击 <code>数据引入$$\rightarrow$$链接提交</code>，在 <code>自动提交</code>中选择 <code>sitemap</code>，输入<strong>域名加 baidusitemap.xml</strong> 即可</p>
+</li>
+<li><p>点击<code>抓取诊断</code>，选择<code>PC UA</code>点击抓取，显示抓取成功</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/GqGwLBJ3wSVP.png?imageslim" alt="mark"></p>
+</li>
+<li><p>next 主题中部署自动推送代码，主题配置文件中修改</p>
+<p><code>baidu_push: true</code></p>
+</li>
+</ol>
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><h3 id="添加-robots-txt"><a href="#添加-robots-txt" class="headerlink" title="添加 robots.txt"></a>添加 robots.txt</h3><p>在 <code>source</code> 目录下增加 <code>robots.txt</code> 文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">User-agent:</span> <span class="string">*</span></span><br><span class="line"><span class="attr">Allow:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">Allow:</span> <span class="string">/archives/</span></span><br><span class="line"><span class="attr">Allow:</span> <span class="string">/categories/</span></span><br><span class="line"><span class="attr">Allow:</span> <span class="string">/tags/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Disallow:</span> <span class="string">/vendors/</span></span><br><span class="line"><span class="attr">Disallow:</span> <span class="string">/js/</span></span><br><span class="line"><span class="attr">Disallow:</span> <span class="string">/css/</span></span><br><span class="line"><span class="attr">Disallow:</span> <span class="string">/fonts/</span></span><br><span class="line"><span class="attr">Disallow:</span> <span class="string">/vendors/</span></span><br><span class="line"><span class="attr">Disallow:</span> <span class="string">/fancybox/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Sitemap:</span> <span class="attr">https://www.hotheat.top/sitemap.xml</span></span><br><span class="line"><span class="attr">Sitemap:</span> <span class="attr">https://www.hotheat.top/baidusitemap.xml</span></span><br></pre></td></tr></table></figure>
+<h3 id="URL-持久化"><a href="#URL-持久化" class="headerlink" title="URL 持久化"></a>URL 持久化</h3><h4 id="安装-hexo-abbrlink"><a href="#安装-hexo-abbrlink" class="headerlink" title="安装 hexo-abbrlink"></a>安装 hexo-abbrlink</h4><p><code>npm install hexo-abbrlink --save</code></p>
+<h4 id="修改站点配置文件"><a href="#修改站点配置文件" class="headerlink" title="修改站点配置文件"></a>修改站点配置文件</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">permalink:</span> <span class="string">archives/:abbrlink.html</span></span><br><span class="line"><span class="attr">abbrlink:</span></span><br><span class="line"><span class="attr">  alg:</span> <span class="string">crc32</span>  <span class="comment"># 算法：crc16(default) and crc32</span></span><br><span class="line"><span class="attr">  rep:</span> <span class="string">hex</span>    <span class="comment"># 进制：dec(default) and hex</span></span><br></pre></td></tr></table></figure>
+<p><strong>这步设置也很重要，避免了文章名称经 URL 编码后过长（超过 50 个字符）引起 Gitalk 的 <code>Error: Validation Failed.</code>，而网上多采用对 label 进行 md5 加密的方法解决。</strong></p>
+<h3 id="添加-nofollow-标签"><a href="#添加-nofollow-标签" class="headerlink" title="添加 nofollow 标签"></a>添加 nofollow 标签</h3><ol>
+<li><p>修改 <code>themes\next\layout\_partials\footer.swig</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; __('footer.powered', '<span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"theme-link"</span> <span class="attr">href</span>=<span class="string">"http://hexo.io"</span> <span class="attr">rel</span>=<span class="string">"external nofollow"</span>&gt;</span>Hexo<span class="tag">&lt;/<span class="name">a</span>&gt;</span>') &#125;&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"theme-link"</span> <span class="attr">href</span>=<span class="string">"https://github.com/iissnan/hexo-theme-next"</span> <span class="attr">rel</span>=<span class="string">"external nofollow"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改 <code>themes\next\layout\_macro\sidebar.swig</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; link &#125;&#125;"</span> <span class="attr">title</span>=<span class="string">"&#123;&#123; name &#125;&#125;"</span> <span class="attr">target</span>=<span class="string">"_blank"</span> <span class="attr">rel</span>=<span class="string">"external nofollow"</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>:  </p>
+<p>使用<code>hexo g</code>生成文章的时候，当文章中有<code>}}</code>时,且这两个括号未被代码块包含，解析会出问题。这部分并没有进行设置。</p>
+</li>
+</ol>
+<h3 id="页面关键字优化"><a href="#页面关键字优化" class="headerlink" title="页面关键字优化"></a>页面关键字优化</h3><ol>
+<li>编辑 <code>themes\next\layout\index.swig</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% block title %&#125;&#123;&#123; config.title &#125;&#125;&#123;% if theme.index_with_subtitle and config.subtitle %&#125; - &#123;&#123;config.subtitle &#125;&#125;</span><br><span class="line">改为：</span><br><span class="line">&#123;% block title %&#125;&#123;&#123; config.title &#125;&#125;&#123;% if theme.index_with_subtitle and config.subtitle %&#125; - &#123;&#123;config.subtitle &#125;&#125;&#123;% endif %&#125;&#123;&#123; theme.description &#125;&#125; &#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>站点配置文件中添加 <code>keywords</code> 和 <code>description</code></li>
+</ol>
+<h3 id="Next-主题自带-SEO-优化"><a href="#Next-主题自带-SEO-优化" class="headerlink" title="Next 主题自带 SEO  优化"></a>Next 主题自带 SEO  优化</h3><p>修改主题配置文件</p>
+<p><code>seo: true</code></p>
+<h1 id="支持-Latex"><a href="#支持-Latex" class="headerlink" title="支持 Latex"></a>支持 Latex</h1><ol>
+<li><p>安装 Mathjax 插件</p>
+<p><code>npm install hexo-math --save</code></p>
+</li>
+<li><p>更换 markdown 渲染引擎</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked --save</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解决语义冲突（这步我没做）</p>
+<p>进入<code>node_modules\kramed\lib\rules\inline.js</code>，修改 11 行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//escape: /^\\([\\`*&#123;&#125;\[\]()#$+\-.!_&gt;])/,</span><br><span class="line">escape: /^\\([`*\[\]()#$+\-.!_&gt;])/,</span><br></pre></td></tr></table></figure>
+<p>修改 20 行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//  em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br><span class="line">em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改主题配置文件，将 <code>enable</code> 修改为 <code>true</code>，更换 url</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># MathJax Support</span><br><span class="line">mathjax:</span><br><span class="line">  enable: true</span><br><span class="line">  per_page: true</span><br><span class="line">  #cdn: //cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML</span><br><span class="line">  cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开 mathjax 开关，在文章的 Front-matter 中打开 mathjax 开关。类似 categories，在 scaffold/post.md 中添加 <code>mathjax: true</code>，可以新建文章时自动打开 mathjax 开关。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: &#123;&#123; title &#125;&#125;</span><br><span class="line">date: &#123;&#123; date &#125;&#125;</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">mathjax: true</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Gitalk-评论系统"><a href="#Gitalk-评论系统" class="headerlink" title="Gitalk 评论系统"></a>Gitalk 评论系统</h1><h2 id="注册"><a href="#注册" class="headerlink" title="注册"></a>注册</h2><ol>
+<li><p>在 GitHub 上注册新应用，<a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">https://github.com/settings/applications/new</a>，这里 Homepage 和回调网址都用自定义域名 <code>https://www.hotheat.top</code>。有自定义域名的填写自定义域名，没有的填写仓库地址链接。</p>
+</li>
+<li><p>记录 <code>Cliet ID</code> 和 <code>Client Secret</code></p>
+</li>
+</ol>
+<h2 id="gitalk-配置"><a href="#gitalk-配置" class="headerlink" title="gitalk 配置"></a>gitalk 配置</h2><p><strong>gitalk</strong> 是这样写，而不是这样 <del>gittalk</del>。</p>
+<ol>
+<li><p>新建 <code>themes\next\layout\_third-party\comments\gitalk.swig</code>，并添加内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#123;%</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">&amp;&amp;</span> <span class="string">theme.gitalk.enable</span> <span class="string">%&#125;</span></span><br><span class="line">    <span class="string">&lt;link</span> <span class="string">rel="stylesheet"</span> <span class="string">href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"&gt;</span></span><br><span class="line">    <span class="string">&lt;script</span> <span class="string">src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"&gt;&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;script</span> <span class="string">type="text/javascript"&gt;</span></span><br><span class="line">		<span class="string">var</span> <span class="string">gitalk</span> <span class="string">=</span> <span class="string">new</span> <span class="string">Gitalk(&#123;</span></span><br><span class="line">		  <span class="attr">clientID:</span> <span class="string">'<span class="template-variable">&#123;&#123; theme.gitalk.ClientID &#125;&#125;</span>'</span><span class="string">,</span></span><br><span class="line">		  <span class="attr">clientSecret:</span> <span class="string">'<span class="template-variable">&#123;&#123; theme.gitalk.ClientSecret &#125;&#125;</span>'</span><span class="string">,</span></span><br><span class="line">		  <span class="attr">repo:</span> <span class="string">'<span class="template-variable">&#123;&#123; theme.gitalk.repo &#125;&#125;</span>'</span><span class="string">,</span></span><br><span class="line">		  <span class="attr">owner:</span> <span class="string">'<span class="template-variable">&#123;&#123; theme.gitalk.githubID &#125;&#125;</span>'</span><span class="string">,</span></span><br><span class="line">		  <span class="attr">admin:</span> <span class="string">['&#123;&#123;</span> <span class="string">theme.gitalk.adminUser</span> <span class="string">&#125;&#125;'],</span></span><br><span class="line">		  <span class="attr">id:</span> <span class="string">location.pathname,</span></span><br><span class="line">		  <span class="attr">distractionFreeMode:</span> <span class="string">'<span class="template-variable">&#123;&#123; theme.gitalk.distractionFreeMode &#125;&#125;</span>'</span></span><br><span class="line">		<span class="string">&#125;)</span></span><br><span class="line">		<span class="string">gitalk.render('gitalk-container')</span></span><br><span class="line">       <span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">&#123;%</span> <span class="string">endif</span> <span class="string">%&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>themes\next\layout\_partials\comments.swig</code> 添加内容，与上一个 <code>elseif</code> 同级</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#123;%</span> <span class="string">elseif</span> <span class="string">theme.gitalk.enable</span> <span class="string">%&#125;</span></span><br><span class="line">      <span class="string">&lt;div</span> <span class="string">id="gitalk-container"&gt;&lt;/div&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>themes\next\layout\_third-party\comments\index.swig</code> 添加内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#123;%</span> <span class="string">include</span> <span class="string">'gitalk.swig'</span> <span class="string">%&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建 <code>themes\next\source\css\_common\components\third-party\gitalk.styl</code>，添加内容</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.gt-header</span> <span class="string">a,</span> <span class="string">.gt-comments</span> <span class="string">a,</span> <span class="string">.gt-popup</span> <span class="string">a</span></span><br><span class="line"><span class="attr">  border-bottom:</span> <span class="string">none;</span></span><br><span class="line"><span class="string">.gt-container</span> <span class="string">.gt-popup</span> <span class="string">.gt-action.is--active:before</span></span><br><span class="line"><span class="attr">  top:</span> <span class="number">0.7</span><span class="string">em;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>themes\next\source\css\_common\components\third-party\third-party.styl</code> 最后一行添加</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">@import</span> <span class="string">"gitalk"</span><span class="string">;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>主题配置文件添加</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">gitalk:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  ClientID:</span> <span class="string">***</span> <span class="comment">#填写步骤一中申请应用后网页上的的对应参数</span></span><br><span class="line"><span class="attr">  ClientSecret:</span> <span class="string">***</span> <span class="comment">#同上</span></span><br><span class="line"><span class="attr">  repo:</span> <span class="string">gitalk-comments</span> <span class="comment">#填写你准备用来存放评论的仓库，只需要写名称，一定确保已经创建该仓库</span></span><br><span class="line"><span class="attr">  githubID:</span> <span class="string">hotheat</span> <span class="comment">#你的 Github ID</span></span><br><span class="line"><span class="attr">  adminUser:</span> <span class="string">hotheat</span> <span class="comment"># 你的 Github ID或者其他有权限的管理，官方注释"support multiple admins split with comma, e.g. foo,bar"</span></span><br><span class="line"><span class="attr">  distractionFreeMode:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>about/index.md</code>、<code>categories/index.md</code>、<code>tags/index.md</code>的  header 里加上 <code>comments: false</code>，在关于、分类和标签中禁用评论。</p>
+</li>
+</ol>
+<h2 id="出现问题"><a href="#出现问题" class="headerlink" title="出现问题"></a>出现问题</h2><ol>
+<li><p>点击 <code>使用 GitHub 登录</code>后跳转到主页</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/zszG0aq5IjUq.png?imageslim" alt="mark"></p>
+<p>进入控制台发现报错 <code>[VM646:1 GET https://api.github.com/user **401** (Unauthorized)]</code>，怀疑是开始注册时填写的回调网站 <code>hotheat.github.io</code>有问题。</p>
+<p><strong>解决</strong>：将注册时的 <code>callback URL</code>改成 <code>https://www.hotheat.top</code>，在主题配置文件中修改相应的 ClientID 和 ClientSecret，而 repo 不用改，就可以点击登录评论。</p>
+</li>
+<li><p>Chrome 中点击评论按钮捕捉不到 mousedown 事件，Firefox 则可以正常添加评论</p>
+<p>报错信息：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uncaught <span class="built_in">TypeError</span>: Cannot read property <span class="string">'keydown'</span> <span class="keyword">of</span> <span class="literal">undefined</span></span><br><span class="line">Uncaught <span class="built_in">TypeError</span>: Cannot read property <span class="string">'mousedown'</span> <span class="keyword">of</span> <span class="literal">undefined</span></span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/3F9ddCquDgm8.png?imageslim" alt="mark"></p>
+<p><strong>解决</strong>：最终测试发现，是 Chrome 浏览器中 Tampermonkey（油猴）插件中「网页限制解除」脚本导致的。debug 过程满满地都是泪啊~</p>
+</li>
+</ol>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181227/m29Xc6Fdil6v.png?imageslim" alt="mark"></p>
+<h3 id="部署、配置和优化主要参考："><a href="#部署、配置和优化主要参考：" class="headerlink" title="部署、配置和优化主要参考："></a>部署、配置和优化主要参考：</h3><p> <a href="https://www.bgrc.fun/posts/hexo/index.html#more" target="_blank" rel="noopener">https://www.bgrc.fun/posts/hexo/index.html#more</a></p>
+<p><a href="https://www.bgrc.fun/posts/next/index.html" target="_blank" rel="noopener">https://www.bgrc.fun/posts/next/index.html</a></p>
+<p><a href="https://www.jianshu.com/p/c20bb9df1867" target="_blank" rel="noopener">https://www.jianshu.com/p/c20bb9df1867</a></p>
+<p><a href="https://www.jianshu.com/p/86557c34b671" target="_blank" rel="noopener">https://www.jianshu.com/p/86557c34b671</a></p>
+<p><a href="https://blog.csdn.net/lewky_liu/article/details/82432045" target="_blank" rel="noopener">https://blog.csdn.net/lewky_liu/article/details/82432045</a></p>
+<h3 id="支持-Latex-参考："><a href="#支持-Latex-参考：" class="headerlink" title="支持 Latex 参考："></a>支持 Latex 参考：</h3><p><a href="https://www.jianshu.com/p/d95a4795f3a8" target="_blank" rel="noopener">https://www.jianshu.com/p/d95a4795f3a8</a></p>
+<h3 id="评论系统参考"><a href="#评论系统参考" class="headerlink" title="评论系统参考"></a>评论系统参考</h3><p><a href="https://asdfv1929.github.io/2018/01/20/gitalk/" target="_blank" rel="noopener">https://asdfv1929.github.io/2018/01/20/gitalk/</a></p>
+<p><a href="https://iochen.com/2018/01/06/use-gitalk-in-hexo/" target="_blank" rel="noopener">https://iochen.com/2018/01/06/use-gitalk-in-hexo/</a></p>
+<p><strong>折腾酷炫的网站意义不大，最主要的是多写文章。</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/edddb6f8.html" rel="next" title="Typora 使用">
+                <i class="fa fa-chevron-left"></i> Typora 使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/578b18fe.html" rel="prev" title="Python 编程导论（第 2 版）读书笔记 1~8 章">
+                Python 编程导论（第 2 版）读书笔记 1~8 章 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装环境"><span class="nav-number">1.</span> <span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初次运行-Git"><span class="nav-number">2.1.</span> <span class="nav-text">初次运行 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo-常用命令"><span class="nav-number">2.2.</span> <span class="nav-text">Hexo 常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Hexo-及相关组件"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Hexo 及相关组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Hexo"><span class="nav-number">2.3.1.</span> <span class="nav-text">安装 Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成-Hexo-项目"><span class="nav-number">2.3.2.</span> <span class="nav-text">生成 Hexo 项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地调试运行"><span class="nav-number">2.3.3.</span> <span class="nav-text">本地调试运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">2.4.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-next-主题"><span class="nav-number">2.5.</span> <span class="nav-text">安装 next 主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加文章"><span class="nav-number">2.6.</span> <span class="nav-text">添加文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用-Github-Pages-实现远程访问"><span class="nav-number">2.7.</span> <span class="nav-text">利用 Github Pages 实现远程访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建仓库"><span class="nav-number">2.7.1.</span> <span class="nav-text">新建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定-SSH-Key"><span class="nav-number">2.7.2.</span> <span class="nav-text">绑定 SSH Key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署网站"><span class="nav-number">2.7.3.</span> <span class="nav-text">部署网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定域名"><span class="nav-number">2.7.4.</span> <span class="nav-text">绑定域名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同时部署到-Coding-net"><span class="nav-number">2.8.</span> <span class="nav-text">同时部署到 Coding.net</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#next-主题优化配置"><span class="nav-number">3.</span> <span class="nav-text">next 主题优化配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置语言和网站信息"><span class="nav-number">3.1.</span> <span class="nav-text">设置语言和网站信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#菜单设置"><span class="nav-number">3.2.</span> <span class="nav-text">菜单设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类和标签"><span class="nav-number">3.2.1.</span> <span class="nav-text">分类和标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分类"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标签"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新建文章时自动生成-categories"><span class="nav-number">3.2.1.3.</span> <span class="nav-text">新建文章时自动生成 categories</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于（About）"><span class="nav-number">3.2.2.</span> <span class="nav-text">关于（About）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalSearch-搜索"><span class="nav-number">3.2.3.</span> <span class="nav-text">LocalSearch 搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#algolia-search"><span class="nav-number">3.2.4.</span> <span class="nav-text">algolia search</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章"><span class="nav-number">3.3.</span> <span class="nav-text">文章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首页只显示部分内容"><span class="nav-number">3.3.1.</span> <span class="nav-text">首页只显示部分内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改文章内链接文本样式"><span class="nav-number">3.3.2.</span> <span class="nav-text">修改文章内链接文本样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置代码高亮"><span class="nav-number">3.3.3.</span> <span class="nav-text">设置代码高亮</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站"><span class="nav-number">3.4.</span> <span class="nav-text">网站</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字数统计"><span class="nav-number">3.4.1.</span> <span class="nav-text">字数统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问统计"><span class="nav-number">3.4.2.</span> <span class="nav-text">访问统计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搜索引擎优化（SEO）"><span class="nav-number">4.</span> <span class="nav-text">搜索引擎优化（SEO）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#验证网站所有权"><span class="nav-number">4.1.</span> <span class="nav-text">验证网站所有权</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#谷歌"><span class="nav-number">4.1.1.</span> <span class="nav-text">谷歌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百度"><span class="nav-number">4.1.2.</span> <span class="nav-text">百度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-sitemap-插件"><span class="nav-number">4.2.</span> <span class="nav-text">安装 sitemap 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交站点地图"><span class="nav-number">4.3.</span> <span class="nav-text">提交站点地图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#谷歌-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">谷歌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百度-1"><span class="nav-number">4.3.2.</span> <span class="nav-text">百度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他配置"><span class="nav-number">4.4.</span> <span class="nav-text">其他配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加-robots-txt"><span class="nav-number">4.4.1.</span> <span class="nav-text">添加 robots.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL-持久化"><span class="nav-number">4.4.2.</span> <span class="nav-text">URL 持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-hexo-abbrlink"><span class="nav-number">4.4.2.1.</span> <span class="nav-text">安装 hexo-abbrlink</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改站点配置文件"><span class="nav-number">4.4.2.2.</span> <span class="nav-text">修改站点配置文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加-nofollow-标签"><span class="nav-number">4.4.3.</span> <span class="nav-text">添加 nofollow 标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面关键字优化"><span class="nav-number">4.4.4.</span> <span class="nav-text">页面关键字优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-主题自带-SEO-优化"><span class="nav-number">4.4.5.</span> <span class="nav-text">Next 主题自带 SEO  优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持-Latex"><span class="nav-number">5.</span> <span class="nav-text">支持 Latex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gitalk-评论系统"><span class="nav-number">6.</span> <span class="nav-text">Gitalk 评论系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册"><span class="nav-number">6.1.</span> <span class="nav-text">注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitalk-配置"><span class="nav-number">6.2.</span> <span class="nav-text">gitalk 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题"><span class="nav-number">6.3.</span> <span class="nav-text">出现问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署、配置和优化主要参考："><span class="nav-number">6.3.1.</span> <span class="nav-text">部署、配置和优化主要参考：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持-Latex-参考："><span class="nav-number">6.3.2.</span> <span class="nav-text">支持 Latex 参考：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评论系统参考"><span class="nav-number">6.3.3.</span> <span class="nav-text">评论系统参考</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

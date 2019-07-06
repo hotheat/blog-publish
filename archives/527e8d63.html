@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在网上找到一篇很好的介绍 word2vec 的博客，但由于原博客中 Latex 公式显示不友好，特搬运到这里。 原博客链接彻底将word2vec拉下神坛。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="word2vec">
+<meta property="og:url" content="https://www.hotheat.top/archives/527e8d63.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="在网上找到一篇很好的介绍 word2vec 的博客，但由于原博客中 Latex 公式显示不友好，特搬运到这里。 原博客链接彻底将word2vec拉下神坛。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190322/WqlvFMNgcFNJ.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190322/zh6IilvRxequ.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190322/mBJVsy3orBgt.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190322/m2KxtI6Vc4EN.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190322/IRiqlHOeuls2.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.304Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="word2vec">
+<meta name="twitter:description" content="在网上找到一篇很好的介绍 word2vec 的博客，但由于原博客中 Latex 公式显示不友好，特搬运到这里。 原博客链接彻底将word2vec拉下神坛。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190322/WqlvFMNgcFNJ.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/527e8d63.html">
+
+
+
+
+
+  <title>word2vec | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/527e8d63.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">word2vec</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-22T14:21:02+08:00">
+                2019-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/NLP/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在网上找到一篇很好的介绍 word2vec 的博客，但由于原博客中 Latex 公式显示不友好，特搬运到这里。</p>
+<p>原博客链接<a href="https://blog.xingwudao.me/2017/12/04/word2vec/" target="_blank" rel="noopener">彻底将word2vec拉下神坛</a>。</p>
+<a id="more"></a>
+<h1 id="word2vec是什么"><a href="#word2vec是什么" class="headerlink" title="word2vec是什么"></a>word2vec是什么</h1><p>简单说：</p>
+<p>word2vec是一个工具。 word2vec是一个将词表示成向量的工具。</p>
+<p>这从它的名字就能简单明了地看出来：从word（词）到（2是取英语to的谐音）vector（向量）。</p>
+<p>word2vec在算法策略圈（无论技术还是产品都知道）很流行很轰动，原因有多方面：</p>
+<ol>
+<li>Google出品：品牌背书</li>
+<li>非常实用：解决了很多实际的NLP问题，挖掘同义词</li>
+<li>成本很小：百万词表用单机处理是不成问题的</li>
+<li>上手很快：不用二次开发就能拿来即用</li>
+<li>效果炫目：著名的vec(king) - vec(man) + vec(woman) = vec(queen)等式</li>
+</ol>
+<h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><p>到目前为止，这些问题都不涉及到细节。从现在开始，我开始回答一系列我猜测观众朋友可能会问的问题，从而（几乎）彻底消除大家对word2vec的神秘感。</p>
+<h2 id="向量是什么？"><a href="#向量是什么？" class="headerlink" title="向量是什么？"></a>向量是什么？</h2><p>好，如果看这篇文章还问这个问题，我只能说：“我的压力很大，但是我还是要尝试给你讲清楚。”</p>
+<p>向量就是vector，当然这是废话。通常的解释是：向量是空间中的一个点。这个解释没有错，但是对于理解后面的文本算法可能有点障碍。我尝试稍微再解释得通用点，从而不给我后面的讲解添麻烦。</p>
+<p>看下面这副刚刚出土的泼墨画：</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190322/WqlvFMNgcFNJ.png?imageslim" alt="mark"></p>
+<p>这幅图示意了两个向量：（1, 2）和（3, 3, 3）。我们姑且给他们分别起个名字：a=(1,2)和b=(3,3,3)，a向量唯一确定了它在那个二维坐标系中的位置，一个点，独一无二：只要是这个向量就一定是在这里，只要在这个点这里就肯定是a，即使你给他起别的任何名字，它本质就是(1,2)这个点。同样(3,3,3)是在三维坐标系中的一个点。</p>
+<p>但是我还是做得不够好，还是引入了“二维坐标系”和“三维坐标系”这样的名字，这两个名字就是前面那句“向量是空间中的一个点”中的“空间”。二维坐标系是平面，活在这里的都没有身高，脸大可能比较受欢迎，可以想象扑克牌上的卡通人物都活在二维坐标系中。我们人活在三维坐标系中，因为除了有平面坐标外，还有高度。</p>
+<p>至此，总结：</p>
+<ol>
+<li>向量是一个点；</li>
+<li>不同空间下的向量没有比较的意义，我们常说“我们不是一个世界的人”，意思就是“我们不是同一个空间下的向量”。</li>
+</ol>
+<p>说向量，叫说维度，前面说的二维，三维，就是“两个维度的空间”和“三个维度的空间”。在我的泼墨画中，我们也贴心地给维度取了名字：</p>
+<ol>
+<li>在二维下，两个维度的名字分别是x和y，你取什么名字都行。</li>
+<li>在三维下，三个维度的名字分别是x,y,z，你去什么名字都行。</li>
+</ol>
+<p>带上维度名字后的向量a：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">向量名字</th>
+<th style="text-align:left">维度x</th>
+<th style="text-align:left">维度y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>带上维度名字后的向量b：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">向量名字</th>
+<th style="text-align:left">维度x</th>
+<th style="text-align:left">维度y</th>
+<th style="text-align:left">维度z</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">b</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所以说a这个向量因为在x和y这两个维度上都有确定的取值1和2，因此唯一确定了位置，b也是同样道理。接下里，我们可能要飞一下，请系好安全带。</p>
+<blockquote>
+<p>要用数学来表示任何事物的存在，向量是最佳选择。 因为只有向量表示后，任何事物才可以被计算。</p>
+</blockquote>
+<p>表示一篇文章（后面统称文档或者doc）的独一无二，用向量就是很自然的想法，那么根据“向量是空间中的点”这个定义，就需要解决两个问题：</p>
+<ol>
+<li>空间是啥？以及在哪？</li>
+<li>如何确定它在空间中的位置？</li>
+</ol>
+<p>很遗憾，这两个问题有很多答案，也没有标准答案，很多大牛默默耕耘多年，目的就是尝试给出更好答案。这里距离说明一个常见的文档向量表示方法：</p>
+<h2 id="unigram模型"><a href="#unigram模型" class="headerlink" title="unigram模型"></a>unigram模型</h2><p>别被这个名字吓到了，你就乖乖听我说就行了。我们从前面的二维空间向量a类比过来：</p>
+<p>我们这样来用向量表示一篇文档：</p>
+<ol>
+<li>我们这个空间维度和词的数量一样，相同的词只算一个；</li>
+<li>空间每个维度的名字都由文档中的词来承担；</li>
+<li>每个维度上的取值就是词在文档中出现的次数。</li>
+</ol>
+<p>比如这一篇文档1：</p>
+<blockquote>
+<p>Are you OK ?</p>
+</blockquote>
+<p>不考虑标点符号，有三个词：Are you OK。那么我们选择的空间就是个三维空间，维度的名字分别叫Are， you， OK，这是规定，这样规定后，其他文档也在这个空间下，互相就可以一起玩耍了（后面再讲）。</p>
+<p>这篇文档的向量就是：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">向量名字</th>
+<th style="text-align:left">维度Are</th>
+<th style="text-align:left">维度you</th>
+<th style="text-align:left">维度OK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">文档1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>然后再来一篇文档2：</p>
+<blockquote>
+<p>I am OK.</p>
+</blockquote>
+<p>同样表示成向量：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">向量名字</th>
+<th style="text-align:left">维度I</th>
+<th style="text-align:left">维度am</th>
+<th style="text-align:left">维度OK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">文档2</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这两个文档的向量虽然都是三个维度的空间，但显然不在一个空间下，因为是不同的维度下，我们必须让两篇文档在一个空间下，才能做一些事情，比如计算文档相似度。方法是，互相补充缺少的维度，取值就是0：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">向量名字</th>
+<th style="text-align:left">维度Are</th>
+<th style="text-align:left">维度you</th>
+<th style="text-align:left">维度OK</th>
+<th style="text-align:left">维度I</th>
+<th style="text-align:left">维度am</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">文档1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">0</td>
+</tr>
+<tr>
+<td style="text-align:left">文档2</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这样，两篇文档可以计算相似度了，计算方法就是余弦相似度，而余弦相似度背后还有一个知识，此刻要说出来，不然来不及了：点积（内积）是两个向量（当然是相同空间）最常见操作。</p>
+<p>两个向量计算点积后会得到一个数值，这个数值可以直观理解为“反应了两个向量之间的距离”，注意，我很严谨，是“反应了”，而不是“就是”。点积是这样算的：</p>
+<ol>
+<li>把两个向量在相同维度上的取值相乘</li>
+<li>然后把这个乘积再加起来</li>
+</ol>
+<p>用公式写一写，比较有些脑回路不一样的人看公式更容易看懂：</p>
+<script type="math/tex; mode=display">
+\dot(a, b) = \sum_{i}{a_{i}b_{i}}\</script><p>所谓余弦相似度，只是把这个点积归一化到[0,1]之间了，归一化的方式就是除以各自向量的长度。</p>
+<script type="math/tex; mode=display">
+\ cos(a, b) = \frac{dot(a,b)}{\sqrt{\sum_{i}{a_{i}^{2}}}\sqrt{\sum_{i}{b_{i}^{2}}}}</script><p>向量的长度计算方式其实就是这个“点”到空间中“原点”的距离，想象一下前面泼墨画里面的二维向量的长度，就是 $\sqrt{1^2+2^2} = \sqrt{5}$</p>
+<p>一定要记住向量的点积运算，在机器学习里面处处可见。到现在，我们学会了把一个事物表示成一个向量的必要性和方法。</p>
+<h2 id="为什么要把词表示成向量？"><a href="#为什么要把词表示成向量？" class="headerlink" title="为什么要把词表示成向量？"></a>为什么要把词表示成向量？</h2><p>前面说到，任何事物都可以表示成向量，都要表示成向量才能计算。词为什么要表示成向量呢？好问题，那请看下面这个需求：</p>
+<blockquote>
+<p>狗”和“狗狗”是相近意思吗？ “喵星人”和“猫咪”是相近意思吗？</p>
+</blockquote>
+<p>不要怀疑，他们就是相同意思，但是计算机可没那么多知识，计算机仅仅从字符匹配上看是不是同一个，所以在计算机看来“狗”和“狗狗”是不同的，”喵星人”和“猫咪”是不同的，除非…… 除非用相同的向量表示他们，这样再计算时，两个名字不同的事物其实就是相同的了。</p>
+<p>把词表示成向量有很多办法。word2vec就是其中一个工具。表示成向量后，就可以进行下面的计算了：</p>
+<blockquote>
+<p>vec(king) - vec(man) + vec(woman) = vec(queen)</p>
+</blockquote>
+<p>意思是：king, man, woman, queen这几个词在表示成向量后，也就表达了词的意思了，也就用数学方式计算出下面这个推理：</p>
+<blockquote>
+<p>king的意思中把其中有关性别的那些意思换成女性的话，那其实和queen是一个意思。</p>
+</blockquote>
+<p>关键是怎么把一个词的向量算出来。这就是word2vec的任务了。</p>
+<h1 id="简陋版word2vec"><a href="#简陋版word2vec" class="headerlink" title="简陋版word2vec"></a>简陋版word2vec</h1><p>基于一个直觉：两个词，如果他们经常和相同的词一起出现，那么这两个词就很相似，也就是这两个词的向量很接近。word2vec把这个直觉用神经网络表达出来了。word2vec原始论文中，做了大量的工程优化，我们先抛去不看，从最简单的例子入手。这个例子里作如下假设：</p>
+<ol>
+<li>只考虑上下文的一个词</li>
+<li>词表很小</li>
+</ol>
+<p>在这两天前提下，我们来实现word2vec中的CBOW模型，还有一个Skip gram模型，稍后再看。</p>
+<h2 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h2><p>为了实现word2vec，我们要搞清楚一些必要的数学运算，就是那部分要变成代码的数学运算。</p>
+<p>现在明确以下，这个模型的任务是根据一个词前面/后面的词，预测当前这个词。模型的样子在下面这张图：</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190322/zh6IilvRxequ.png?imageslim" alt="mark"></p>
+<p>输入是一个词，输出是给整个词表每个词都计算一个概率，当然实际上输出只有一个词是正确的，那么那个正确的词的概率就要越大越好。</p>
+<p>首先，把输入的这个词用one-hot编码方式表示成向量x，表示成的向量就是这个样子：</p>
+<ol>
+<li>维度等于词表长度V</li>
+<li>只有输入词编号位置是1，其他都是0</li>
+</ol>
+<p>同样，输出词就是正确的label，也是one-hot编码而成的向量y。</p>
+<p>然后，因为是神经网络，所以中间有一个隐藏层h，和通常的神经网络（深度神经网络更是如此）不同，这个隐藏层没有非线性激活函数。h有N个神经元，这个N就是最终给每个词学习到的向量长度，是一个超参数，所谓超参数就是开始计算只要需要人指定的参数。 h和x之间，形成了一个V*N形状的矩阵，标记为$ W_{V\times{N}}$。这个矩阵：</p>
+<ol>
+<li>每一行是一个词的向量，我们称之为输入向量，也是word2vec的最终产出</li>
+<li>隐藏层的输出就是$H<em>{N\times{1}} = W</em>{V\times{N}}^{T}X_{V\times{1}}$</li>
+</ol>
+<p>这里顺带提一句，如果自己编程实现机器学习模型，有一个小技巧去帮助理解：一定要搞对每一步的矩阵运算维度变化。</p>
+<p>神经网络的隐藏层没有非线性激活函数，所以上面的H直接就要输出，输出为了给每一个词算一个概率，用到了softmax regression（理解为指数加权的轮盘赌）。从隐藏层到最终的概率输出，别看图中很简单（右半部分），中间其实经历了三步：</p>
+<ol>
+<li>$\mu<em>{V\times{1}} = W^{\prime T}</em>{N\times{V}}H_{N\times{1}}$</li>
+<li>对 $\mu$ 中每一个元素值都进行指数运算：$\mu<em>{V\times{1}} = np.exp(\mu</em>{V\times{1}})$，其中 np.exp 就是对一个向量每个元素都求指数</li>
+<li>然后归一化，得到每个词的概率：$Y<em>{V\times{1}} = \frac{\mu</em>{V\times{1}}}{\sum<em>{j}{\mu</em>{j}}}$ </li>
+</ol>
+<p>这里得到的每个词的概率就是模型的最终输出了。再提醒一遍：这里说的“模型的输出”是说的模型按照定义走完的计算流程最后一步，而我们需要的“输出”其实是这个模型的副产品：$W_{V\times{N}}$ ，不过，让我们先忘掉这个我们其实最终想拿到的副产品。</p>
+<h2 id="得到向量"><a href="#得到向量" class="headerlink" title="得到向量"></a>得到向量</h2><p>模型结构如前所述，接下来就是从数据中学到模型中的所有未知数，有两个地方需要学习：$W<em>{V\times{N}}$ 和 $W^{\prime T}</em>{N\times{V}}$。按照机器学习的套路，当然是先量化目标，即学到什么程度算是好？目标函数就是最大化输出词的预测概率（即最大似然）。下面涉及到的所有公式，都不是为了学术推导，而是为了编程实现，为了利用 numpy 这个矩阵运算Python 库，我们的目标是把所有的计算都用矩阵运算表示出来。</p>
+<p>目标是最大化预测词概率：</p>
+<script type="math/tex; mode=display">
+max p(W_{O}|W_{I}) = max y_{j^{* }} = max log y_{j^{* }}= \mu_{j^{* }} - log \sum_{j^{\prime}=1}^{V}{exp(\mu_{j^{\prime}})} := -E</script><p>定义的损失函数就是 E ，最小化E，等价于最大化输出词的预测概率。</p>
+<p>按照梯度下降优化方法，需要求出待学习参数的梯度即可，两大块，一个一个来。</p>
+<h3 id="更新输出矩阵"><a href="#更新输出矩阵" class="headerlink" title="更新输出矩阵"></a>更新输出矩阵</h3><p>隐藏层右边的矩阵（或称为“输出矩阵”）每个元素的梯度是：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{w_{ij}^{\prime}}} = \frac{\partial{E}}{\partial{\mu_{j}}}\frac{\partial{\mu_{j}}}{\partial{w_{ij}^{\prime}}}</script><p>而其中：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{\mu_{j}}} = y_{j} - t_{j} := e_{j}</script><p>第一部分偏导数表示为$e_{j}$，其中 $t_j$ 对于输出词是1，其他词是0。</p>
+<script type="math/tex; mode=display">
+\frac{\partial{\mu_{j}}}{\partial{w_{ij}^{\prime}}} = h_{i}</script><p>这里说明了输出矩阵单个元素$w_{ij}^{\prime}$的梯度如何计算，用矩阵运算方式表示出该矩阵所有元素的梯度就是：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{W^{\prime}}} = H_{N\times{1}}(Y-T)_ {V\times{1}}^{T}</script><p>其中$Y<em>{V\times{1}}$ 和 $T</em>{V\times{1}}$分别是：预测概率向量及输出词的 one-hot 编码向量，维度都是和词表长度一直，为 V。再次提醒，关注矩阵的下标，下标一定要对，我这里也特地标识出了每个矩阵的下标。</p>
+<p>得到了梯度后，每次迭代更新$W^{\prime}_{N\times{V}}$ 的公式就是：</p>
+<script type="math/tex; mode=display">
+W^{\prime}_{N\times{V}} = W^{\prime}_{N\times{V}} - \eta\frac{\partial{E}}{\partial{W^{\prime}}}</script><h3 id="更新输入矩阵"><a href="#更新输入矩阵" class="headerlink" title="更新输入矩阵"></a>更新输入矩阵</h3><p>隐藏层左边的矩阵（或称为“输入矩阵”）每个元素的梯度是：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{w_{ki}}} = \frac{\partial{E}}{\partial{h_{i}}}\frac{\partial{h_{i}}}{\partial{w_{ki}}}</script><p>而其中：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{h_{i}}} = \sum_{j=1}^{V}{\frac{\partial{E}}{\partial{\mu_{j}}}\frac{\partial{\mu_{j}}}{\partial{h_{i}}}}</script><p>不要被这一坨吓到了，遇到元素相乘再求和的，那就是向量的点积，计算矩阵的其中一个元素值用到点积，那显然是两个矩阵在运算，因此这一坨对应的矩阵运算就是：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{H}} = W^{\prime}_ {N\times{V}}(\frac{\partial{E}}{\partial{\mu}})_ {V\times{1}}</script><p>再看：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{h_{i}}}{\partial{w_{ki}}} = x_{k}</script><p>用矩阵运算表示就是：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{H}}{\partial{W}} = X_{V\times{1}}</script><p>综合起来，输入矩阵的梯度计算就是：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{E}}{\partial{W}} = (\frac{\partial{H}}{\partial{W}})_ {V\times{1}}(\frac{\partial{E}}{\partial{H}})^{T}_ {N\times{1}}</script><p>得到梯度后，每次迭代更新$W_{V\times{N}}$ 的公式就是：</p>
+<script type="math/tex; mode=display">
+W_{V\times{N}} = W_{V\times{N}} - \eta\frac{\partial{E}}{\partial{W}}</script><h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><p>将所有计算表示成矩阵运算，有个好处就是用numpy写起来得心应手。接下来就是给训练过程准备数据，原始论文中为了提高训练速度，采用了随机梯度下降(SGD)训练模型，我们这里为了说明计算过程，所用语料是人为构造的，所以不适合随机梯度下降，直接用梯度下降，多轮迭代。</p>
+<p>迭代之前，随机初始化两个矩阵，然后每轮迭代过程就是三步： 1. 计算输出概率 2. 计算输出矩阵的梯度，更新输出矩阵参数 3. 计算输入矩阵的梯度，更新输入矩阵参数</p>
+<p>我们把原始语料库拆解成词对：</p>
+<p>(左边词，当前词) (右边词，当前词)</p>
+<p>然后构造成训练样本。</p>
+<h2 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h2><p>读入语料库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import scipy as sp</span><br><span class="line">import argparse</span><br><span class="line">from feature_tools import FeatureIndex</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">def read_corpus(corpusfile, window = 1):</span><br><span class="line">    vocabulary = FeatureIndex()</span><br><span class="line">    traindata = []</span><br><span class="line">    with open(corpusfile) as corpusinput:</span><br><span class="line">        for line in corpusinput:</span><br><span class="line">            words = line.strip().split()</span><br><span class="line">            wordid = []</span><br><span class="line">            for word in words:</span><br><span class="line">                index = vocabulary[word]</span><br><span class="line">                if index &gt;= 0:</span><br><span class="line">                    wordid.append(index)</span><br><span class="line"></span><br><span class="line">            lastword = -1</span><br><span class="line">            for i in range(len(wordid)):</span><br><span class="line">                # 以当前词作为预测目标，前一个词作为输入构造一条样本</span><br><span class="line">                if i &gt; 0:</span><br><span class="line">                    traindata.append((wordid[i - 1], wordid[i]))</span><br><span class="line">                # 以当前词作为预测目标，下一个词作为输入构造一条样本</span><br><span class="line">                if i &lt; len(wordid) - 1:</span><br><span class="line">                    traindata.append((wordid[i + 1], wordid[i]))</span><br><span class="line"></span><br><span class="line">    return vocabulary, traindata</span><br></pre></td></tr></table></figure>
+<p>初始化两个矩阵：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">init_vectors(V, N):</span><br><span class="line">input_vectors = np.random.rand(V, N)</span><br><span class="line">output_vectors = np.random.rand(N, V)</span><br><span class="line"></span><br><span class="line">return input_vectors, output_vectors</span><br></pre></td></tr></table></figure>
+<p>保存我们想要的副产品（输入矩阵）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def save_vectors(input_vectors, vectorfile):</span><br><span class="line">    with open(vectorfile, &apos;w&apos;) as vectorfileoutput:</span><br><span class="line">        for row in range(input_vectors.shape[0]):</span><br><span class="line">            vectorfileoutput.write(&quot;%s\n&quot; % (&quot; &quot;.join([str(s) for s in input_vectors[row]])))</span><br></pre></td></tr></table></figure>
+<p>计算损失函数值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def compute_loss(V, traindata, input_vectors, output_vectors):</span><br><span class="line">    loss = 0.0</span><br><span class="line">    for pair in traindata:</span><br><span class="line">        context_word_onehot = np.zeros((V, 1))</span><br><span class="line">        context_word_onehot[pair[0]] = 1</span><br><span class="line">        output_word_onehot = np.zeros((V, 1))</span><br><span class="line">        output_word_onehot[pair[1]] = 1</span><br><span class="line">        hidden_output = np.dot(np.transpose(input_vectors), context_word_onehot)</span><br><span class="line">        output_log_prob = np.dot(np.transpose(output_vectors), hidden_output)</span><br><span class="line">        exp_log_prob = np.exp(output_log_prob)</span><br><span class="line">        sum_exp_prob = np.sum(exp_log_prob)</span><br><span class="line">        output_word_prob = exp_log_prob / sum_exp_prob</span><br><span class="line">        prob = output_word_prob[pair[1]]</span><br><span class="line">        loss += math.log(1.0/prob)</span><br><span class="line">    return loss</span><br></pre></td></tr></table></figure>
+<p>主流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">def main(corpusfile, vectorfile, vocabulary_file, N, learning_rate, epoch):</span><br><span class="line">    vocabulary, traindata = read_corpus(corpusfile)</span><br><span class="line">    input_vectors, output_vectors = init_vectors(len(vocabulary), N)</span><br><span class="line">    for t in range(epoch):</span><br><span class="line">        print(&apos;epoch = %s, loss = %f&apos; % (t, compute_loss(len(vocabulary), traindata, input_vectors, output_vectors)))</span><br><span class="line">        for pair in traindata:</span><br><span class="line">            # predict</span><br><span class="line">            context_word_onehot = np.zeros((len(vocabulary), 1))</span><br><span class="line">            context_word_onehot[pair[0]] = 1</span><br><span class="line">            #print(&quot;context_word_onehot shape = (%s, %s)&quot; % context_word_onehot.shape)</span><br><span class="line"></span><br><span class="line">            output_word_onehot = np.zeros((len(vocabulary), 1))</span><br><span class="line">            output_word_onehot[pair[1]] = 1</span><br><span class="line">            #print(&quot;output_word_onehot shape = (%s, %s)&quot; % output_word_onehot.shape)</span><br><span class="line"></span><br><span class="line">            #print(&quot;input_vector shape = (%s, %s)&quot; % input_vectors.shape)</span><br><span class="line">            #print(&quot;output_vector shape = (%s, %s)&quot; % output_vectors.shape)</span><br><span class="line"></span><br><span class="line">            hidden_output = np.dot(np.transpose(input_vectors), context_word_onehot)</span><br><span class="line">            #print(&quot;hidden_output shape = (%s, %s)&quot; % hidden_output.shape)</span><br><span class="line">            output_log_prob = np.dot(np.transpose(output_vectors), hidden_output)</span><br><span class="line">            #print(&quot;output_log_prob shape = (%s, %s)&quot; % output_log_prob.shape)</span><br><span class="line">            exp_log_prob = np.exp(output_log_prob)</span><br><span class="line">            sum_exp_prob = np.sum(exp_log_prob)</span><br><span class="line">            #print(&quot;exp_log_prob shape = (%s, %s)&quot; % exp_log_prob.shape)</span><br><span class="line">            output_word_prob = exp_log_prob / sum_exp_prob</span><br><span class="line"></span><br><span class="line">            #print(&quot;output_word_prob shape = (%s, %s)&quot; % output_word_prob.shape)</span><br><span class="line">            # compute gradient and update  output vectors</span><br><span class="line">            d_output_log_prob = output_word_prob - output_word_onehot # d_\mu</span><br><span class="line">            #print(&quot;d_output_log_prob shape = (%s, %s)&quot; % d_output_log_prob.shape)</span><br><span class="line">            d_output_vectors = np.dot(hidden_output, np.transpose(d_output_log_prob)) # d_w^\prime</span><br><span class="line">            #print(&quot;d_output_vector shape = (%s, %s)&quot; % d_output_vectors.shape)</span><br><span class="line">            output_vectors = output_vectors - learning_rate * d_output_vectors</span><br><span class="line"></span><br><span class="line">            # compute gradient and update input vectors</span><br><span class="line">            d_hidden_to_output_log_prob = output_vectors</span><br><span class="line">            #print(&quot;d_hidden_to_output_log_prob shape = (%s, %s)&quot; % d_hidden_to_output_log_prob.shape)</span><br><span class="line">            d_hidden_output = np.dot(d_hidden_to_output_log_prob, d_output_log_prob)</span><br><span class="line">            #print(&quot;d_hidden_output shape = (%s, %s)&quot; % d_hidden_output.shape)</span><br><span class="line">            d_input_vectors = np.dot(context_word_onehot, np.transpose(d_hidden_output))</span><br><span class="line">            #print(&quot;d_input_vector shape = (%s, %s)&quot; % d_input_vectors.shape)</span><br><span class="line">            input_vectors = input_vectors - learning_rate * d_input_vectors</span><br><span class="line"></span><br><span class="line">    save_vectors(input_vectors, vectorfile)</span><br><span class="line">    vocabulary.save(vocabulary_file)</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">   parser = argparse.ArgumentParser(description = &quot;&quot;&quot;it is a word2vec simple version, with one word as context, and little vocabulary&quot;&quot;&quot;)</span><br><span class="line">   parser.add_argument(&apos;-c&apos;, &apos;--corpus&apos;, help = &quot;&quot;&quot;corpus file, words have been splited by space&quot;&quot;&quot;)</span><br><span class="line">   parser.add_argument(&apos;-v&apos;, &apos;--vector&apos;, help = &quot;&quot;&quot;file to save vectors&quot;&quot;&quot;)</span><br><span class="line">   parser.add_argument(&apos;-w&apos;, &apos;--words&apos;, help = &quot;&quot;&quot;file to save words&quot;&quot;&quot;)</span><br><span class="line">   parser.add_argument(&apos;-N&apos;, &apos;--dim&apos;, type = int, default = 5, help = &quot;&quot;&quot;vector&apos;s dimention&quot;&quot;&quot;)</span><br><span class="line">   parser.add_argument(&apos;-e&apos;, &apos;--eta&apos;, type = float, default = 0.05, help = &quot;&quot;&quot;learn rate&quot;&quot;&quot;)</span><br><span class="line">   parser.add_argument(&apos;-t&apos;, &apos;--epoch&apos;, type = int, default = 10, help = &quot;&quot;&quot;iteration times&quot;&quot;&quot;)</span><br><span class="line"></span><br><span class="line">   args = vars(parser.parse_args())</span><br><span class="line">   if args[&apos;corpus&apos;] is None or args[&apos;vector&apos;] is None or args[&apos;words&apos;] is None:</span><br><span class="line">       parser.print_help()</span><br><span class="line">       exit()</span><br><span class="line">   main(args[&apos;corpus&apos;], args[&apos;vector&apos;], args[&apos;words&apos;], args[&apos;dim&apos;], args[&apos;eta&apos;], args[&apos;epoch&apos;])</span><br></pre></td></tr></table></figure>
+<h2 id="简单测试"><a href="#简单测试" class="headerlink" title="简单测试"></a>简单测试</h2><p>构造了一个简单的语料库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">吃 米饭 喝 啤酒</span><br><span class="line">喝 果汁</span><br><span class="line">吃 面条</span><br><span class="line">面条 吃</span><br><span class="line">米饭 吃</span><br><span class="line">果汁 喝</span><br><span class="line">啤酒 喝</span><br><span class="line">喝 汽水</span><br><span class="line">饮 啤酒</span><br><span class="line">喝 白酒</span><br><span class="line">干 二锅头</span><br><span class="line">干 啤酒</span><br><span class="line">吃 馒头</span><br><span class="line">吃 大米</span><br><span class="line">品 茶</span><br><span class="line">品 白酒</span><br><span class="line">品 二锅头</span><br><span class="line">喝 茶</span><br><span class="line">喂 米饭</span><br><span class="line">煮 米饭</span><br><span class="line">煮 茶</span><br></pre></td></tr></table></figure>
+<p>训练模型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python word2vec-simple.py -c test.txt  -v vector.txt -w words.txt -N 2 -e 0.05 -t 100</span><br></pre></td></tr></table></figure>
+<p>得到的词向量保存在vector.txt中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-3.48655168257 2.52472987981</span><br><span class="line">1.99419651757 0.235927228504</span><br><span class="line">-1.30266728484 -1.60364665592</span><br><span class="line">0.118887402224 3.37770876191</span><br><span class="line">2.29850687776 2.76492591673</span><br><span class="line">3.30972447229 -0.903345339461</span><br><span class="line">1.75212009611 2.18479497465</span><br><span class="line">0.297810632964 -2.22627345782</span><br><span class="line">1.41486168408 2.00855041213</span><br><span class="line">0.11649004134 -2.51488838507</span><br><span class="line">0.169218016547 2.03265228465</span><br><span class="line">2.57190896308 -0.735779806183</span><br><span class="line">2.56125135754 -0.739565548644</span><br><span class="line">-1.83965190942 -2.43976953378</span><br><span class="line">1.60691474095 1.06507268586</span><br><span class="line">-2.53892144511 1.2898654145</span><br><span class="line">-2.50456983554 -0.612351171966</span><br></pre></td></tr></table></figure>
+<p>写一个程序用来查找相似词：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">from feature_tools import FeatureIndex</span><br><span class="line">from annoy import AnnoyIndex</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def read_vectors(vectorfile):</span><br><span class="line">    vector_index = AnnoyIndex(2)</span><br><span class="line">    with open(vectorfile) as vectorfile_input:</span><br><span class="line">        wordid = 0</span><br><span class="line">        for line in vectorfile_input:</span><br><span class="line">            vector = [float(s) for s in line.strip().split()]</span><br><span class="line">            vector_index.add_item(wordid, vector)</span><br><span class="line">            wordid += 1</span><br><span class="line">    vector_index.build(-1)</span><br><span class="line">    vector_index.save(&apos;vector.ann&apos;)</span><br><span class="line">    vector_index.load(&apos;vector.ann&apos;)</span><br><span class="line">    return vector_index</span><br><span class="line"></span><br><span class="line">def main(vectorfile, vocabularyfile):</span><br><span class="line">    vocabulary = FeatureIndex()</span><br><span class="line">    vocabulary.read(vocabularyfile)</span><br><span class="line">    vocabulary.set_flag(False)</span><br><span class="line">    vector_index = read_vectors(vectorfile)</span><br><span class="line">    while True:</span><br><span class="line">        print(&quot;please input a word in vocabulary:&quot;)</span><br><span class="line">        line = sys.stdin.readline()</span><br><span class="line">        line = line.strip()</span><br><span class="line">        if line == &apos;exit&apos; or line == &apos;quit&apos;:</span><br><span class="line">            break</span><br><span class="line">        wordid = vocabulary[line]</span><br><span class="line">        if wordid is None:</span><br><span class="line">            print(&apos;sorry, the word you input is not in our corpus.&apos;)</span><br><span class="line">            continue</span><br><span class="line">        print(&quot;your word&apos;s id is %s&quot; % wordid)</span><br><span class="line">        similar_words, distances = vector_index.get_nns_by_item(wordid, 5, include_distances = True)</span><br><span class="line">        print(&quot;similar words:&quot;)</span><br><span class="line">        similar_words = [vocabulary[wid] for wid in similar_words]</span><br><span class="line">        for i in range(len(similar_words)):</span><br><span class="line">            print(&quot;\t%s:\t%s&quot; % (similar_words[i], distances[i]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    parser = argparse.ArgumentParser(description = &apos;query similar words from vectors&apos;)</span><br><span class="line">    parser.add_argument(&apos;-v&apos;, &apos;--vector&apos;, help = &quot;&quot;&quot;vector file from word2vec&quot;&quot;&quot;)</span><br><span class="line">    parser.add_argument(&apos;-w&apos;, &apos;--words&apos;, help = &quot;&quot;&quot;all words and its id(vocabulary)&quot;&quot;&quot;)</span><br><span class="line"></span><br><span class="line">    args = vars(parser.parse_args())</span><br><span class="line">    if args[&apos;vector&apos;] is None or args[&apos;words&apos;] is None:</span><br><span class="line">        parser.print_help()</span><br><span class="line">        exit()</span><br><span class="line">    main(args[&apos;vector&apos;], args[&apos;words&apos;])</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190322/mBJVsy3orBgt.png?imageslim" alt="mark"></p>
+<h1 id="原汁原味的word2vec"><a href="#原汁原味的word2vec" class="headerlink" title="原汁原味的word2vec"></a>原汁原味的word2vec</h1><p>毕竟，我们为了找感觉，对word2vec原始论文做了很多简化。下面就开始啃真正的硬骨头，原址原文实现word2vec。相比前面的简化版，有以下变化：</p>
+<ol>
+<li>层次softmax（Huffman softmax regression）</li>
+<li>负样本采样</li>
+<li>随机梯度下降</li>
+</ol>
+<h2 id="CBOW模型"><a href="#CBOW模型" class="headerlink" title="CBOW模型"></a>CBOW模型</h2><p>CBOW模型是word2vec原始论文中的两个模型之一，也是我们在上一小节中简化的模型原型。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190322/m2KxtI6Vc4EN.png?imageslim" alt="mark"></p>
+<p>我手绘了一下CBOM模型：</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190322/IRiqlHOeuls2.png?imageslim" alt="mark"></p>
+<p>首先，上下文中2C个词作为输入，他们每个词的向量都是N维，word2vec的做法是把他们加起来：</p>
+<p>$V<em>{w}=\sum</em>{k=1}^{2C}{W_{k}}$</p>
+<p>$V_{w}$ 就是这个相加后的向量，N维。</p>
+<p>然后，计算输出，也就是说计算:$p(w|V_{w})$。这里用一棵Huffman树计算，就相当于把我们上一节中的一次性计算多分类变成了计算多次二分类。而与传统的把多分类转变成多次二分类不同之处在于：</p>
+<ol>
+<li>传统的方式是询问“是不是篮球？”“是不是乒乓球”……对叶子节点逐一询问；</li>
+<li>这里的Huffman 树是假设了多个隐藏的二分类节点，二分类的询问“不可告人”，出来结果时就是最终类别了。</li>
+</ol>
+<p>这里从Huffman树根部逐一向下询问，每一个节点询问一次，询问的方式是用sigmoid函数计算“向左”还是“向右”的概率。向左认为是正确路径，向右是错误路径。每一次计算也就能计算出误差来，并且每个隐藏节点的正确错误恰巧就是待预测词的Huffman编码。</p>
+<script type="math/tex; mode=display">
+p(w|V_{w}) = \prod{p(L,R | V_{w}, \theta)}</script><p>这里就是意思一下，你知道，输出词的概率就是沿着树的路径一路把概率乘下来。现在规定几个符号，把上面这个概率连乘表示更清楚些：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$p$</td>
+<td>当前输出词在Huffman 树中的路径</td>
+</tr>
+<tr>
+<td>$l$</td>
+<td>路径 $p$经历的节点数(包括叶子节点)，比如上面的手绘图中，足球这个词的 $l=4$</td>
+</tr>
+<tr>
+<td>$d_{j}$</td>
+<td>第j个叶子节点后面的编码，即左还是右, $2&lt;=j&lt;=l$，这里注意，根节点是没有编码的</td>
+</tr>
+<tr>
+<td>$\theta_{j}$</td>
+<td>第j个叶子节点对应的隐藏向量，也是N维, $1&lt;=j&lt;=l-1$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中一个隐藏节点的概率是：</p>
+<script type="math/tex; mode=display">
+p(d_{j}|\theta_{j-1},V_{w}) = \begin{cases} \sigma(V_{w}^{T}\theta_{j-1}) &d_{j} = 0 \\ 1-\sigma(V_{w}^{T}\theta_{j-1}) &d_{j} = 1 \end{cases}</script><p>换个写法变成一个整体：</p>
+<script type="math/tex; mode=display">
+p(d_{j}|\theta_{j-1},V_{w}) = [\sigma(V_{w}^{T}\theta_{j-1})]^{1-d_{j}}[1-\sigma(V_{w}^{T}\theta_{j-1})]^{d_{j}}</script><p>那么：</p>
+<script type="math/tex; mode=display">
+p(w|V_{w}) = \prod_{j=2}^{l}{p(d_{j}|\theta_{j-1},V_{w})}</script><p>表示出了一个词的概率，就可以表示出整个语料的概率，无非还是连乘。按照前面说过的最大化似然（最小化负似然），分别计算出损失函数对 $\theta$ 和 $V_{w}$的梯度：</p>
+<script type="math/tex; mode=display">
+\frac{\partial{L}}{\partial{\theta_{j-1}}} = -[1-d_{j}-\sigma(V_{w}^{T}\theta_{j-1})]V_{w}\\
+\frac{\partial{L}}{\partial{V_{w}}} = -[1-d_{j}-\sigma(V_{w}^{T}\theta_{j-1})]\theta_{j-1}</script><p>更新公式分别为：</p>
+<script type="math/tex; mode=display">
+\theta{j-1}=\theta_{j-1}+\eta[1-d_{j}-\sigma(V_{w}^{T}\theta_{j-1})]V_{w}W_{k}  = W_{k}+\eta\sum_{j=2}^{l}{\frac{\partial{L}}{\partial{V_{w}}}} =  W_{k}+\eta\sum_{j=2}^{l}{[1-d_{j}-\sigma(V_{w}^{T}\theta_{j-1})]\theta_{j-1}}</script><p>其中，由于原来公式中的$V<em>{w}$ 是每个词的向量 $W</em>{k}$ 求和而来，但我们要更新的是 $W_{k}$，所以上面第二个更新公式是这样式的。</p>
+<p>由于用的是随机梯度下降优化，所以就对所有的样本运行上述更新过程即可。流程伪代码如下：</p>
+<blockquote>
+<p>e = 0</p>
+<p>$V<em>{w}=\sum</em>{k=1}^{2C}{W_{k}}$</p>
+<p>FOR j = 2, to, l DO:</p>
+<p>{</p>
+<ol>
+<li>$q = \sigma(V<em>{w}^{T}\theta</em>{j-1})$</li>
+<li>$g = \eta(1-d_{j}-q)$</li>
+<li>$e = e + g\theta_{j-1}$</li>
+<li>$\theta<em>{j-1} = \theta</em>{j-1} + gV_{w}$</li>
+</ol>
+<p>}</p>
+<p>FOR $w_{k} \in context(w)$ DO:</p>
+<p>{</p>
+<p>$W<em>{k} = W</em>{k} + e$</p>
+<p>}</p>
+</blockquote>
+<h2 id="python实现-CBOW-模型"><a href="#python实现-CBOW-模型" class="headerlink" title="python实现 CBOW 模型"></a>python实现 CBOW 模型</h2><h3 id="Huffman树实现"><a href="#Huffman树实现" class="headerlink" title="Huffman树实现"></a>Huffman树实现</h3><p>一个关键的数据结构是Huffman树。先说构建这棵Huffman树完成后的结果是什么：</p>
+<ol>
+<li>一棵二叉树</li>
+<li>叶子节点是词及其词频</li>
+<li>左边的节点词频大于右边词频</li>
+<li>每个节点的权重是子节点权重之和</li>
+<li>每个节点是父节点的左子节点则编码为1，否则编码为0</li>
+<li>根节点不编码</li>
+<li>每个节点有一个N维向量</li>
+</ol>
+<p>它承担的功能是：</p>
+<ol>
+<li>每一个样本，输入 $V_{w}$和词w，从Huffman树中找出词w的Huffman编码，其实就是其在树中的路径；</li>
+<li>从顶向下逐一计算二分类概率，并计算预测错误，用于计算梯度，累加梯度用于更新词向量，然后更新当前节点的向量值</li>
+</ol>
+<p>构建Huffman树的流程是：</p>
+<ol>
+<li>将原始词表构建为V棵树，每棵树节点是词，和词频</li>
+<li>循环执行下述过程，直到树列表中只剩一棵树时停止：</li>
+<li>合并权重最小的两棵树，合并后的节点权重是原来两个节点权重之和，且为父子关系</li>
+<li>添加合并后的节点进树列表，删除已合并的节点</li>
+</ol>
+<p>注意：在合并时记录编码。 Python代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line">class TreeNode(object):</span><br><span class="line">    &quot;&quot;&quot;this is a tree node implement</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, data = &#123;&#125;):</span><br><span class="line">        self._data = data</span><br><span class="line">        self._left = None</span><br><span class="line">        self._right = None</span><br><span class="line"></span><br><span class="line">    def __getitem__(self, index):</span><br><span class="line">        if index in self._data:</span><br><span class="line">            return self._data[index]</span><br><span class="line">        return None</span><br><span class="line"></span><br><span class="line">    def __setitem__(self, key, value):</span><br><span class="line">        self._data[key] = value</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def left(self):</span><br><span class="line">        return self._left</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def right(self):</span><br><span class="line">        return self._right</span><br><span class="line"></span><br><span class="line">    @left.setter</span><br><span class="line">    def left(self, node):</span><br><span class="line">        self._left = node</span><br><span class="line"></span><br><span class="line">    @right.setter</span><br><span class="line">    def right(self, node):</span><br><span class="line">        self._right = node</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return &quot;%s, \n\tleft = %s, \n\tright = %s&quot; % (self._data,</span><br><span class="line">                                                      self.left._data if self.left is not None else &apos;&apos;,</span><br><span class="line">                                                      self.right._data if self.right is not None else &apos;&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class HuffmanTree(object):</span><br><span class="line">    &quot;&quot;&quot;this is huffman tree implement</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, words, N):</span><br><span class="line">        &apos;&apos;&apos;build a huffman tree from a vocabulary with frequence.</span><br><span class="line">        Args:</span><br><span class="line">            words: tuple list, key is word and value is frequence</span><br><span class="line">            N: vector dimention</span><br><span class="line">        Returns:</span><br><span class="line">            HuffmanTree instance</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        tree_nodes = []</span><br><span class="line">        for word in words:</span><br><span class="line">            data = &#123;&#125;</span><br><span class="line">            data[&apos;code&apos;] = 0</span><br><span class="line">            data[&apos;weight&apos;] = word[1]</span><br><span class="line">            data[&apos;word&apos;] = word[0]</span><br><span class="line">            data[&apos;theta&apos;] = np.random.rand(N)</span><br><span class="line">            node = TreeNode(data)</span><br><span class="line">            tree_nodes.append(node)</span><br><span class="line">        while len(tree_nodes) &gt; 1:</span><br><span class="line">            tree_nodes = sorted(tree_nodes, key = lambda x: x[&apos;weight&apos;])</span><br><span class="line">            node1 = tree_nodes[0]</span><br><span class="line">            node2 = tree_nodes[1]</span><br><span class="line">            node = self.__merge_two_node__(node1, node2)</span><br><span class="line">            tree_nodes.pop(0)</span><br><span class="line">            tree_nodes.pop(0)</span><br><span class="line">            tree_nodes.append(node)</span><br><span class="line">        self._root = tree_nodes[0]</span><br><span class="line">        # get huffman code of each word</span><br><span class="line">        self._word_codes = &#123;&#125;</span><br><span class="line">        def get_codes(node, codes):</span><br><span class="line">            if node == None:</span><br><span class="line">                return</span><br><span class="line">            huffman_code = codes.copy()</span><br><span class="line">            huffman_code.append(node)</span><br><span class="line">            if node[&apos;word&apos;] is not None:</span><br><span class="line">                self._word_codes[node[&apos;word&apos;]] = huffman_code</span><br><span class="line">                return</span><br><span class="line">            get_codes(node.left, huffman_code)</span><br><span class="line">            get_codes(node.right, huffman_code)</span><br><span class="line">        get_codes(self._root, [])</span><br><span class="line"></span><br><span class="line">    def get_path(self, word):</span><br><span class="line">        &apos;&apos;&apos;query word&apos;s path in huffman tree</span><br><span class="line">        Args:</span><br><span class="line">            word: a word</span><br><span class="line">        Returns:</span><br><span class="line">            a tree nodes list</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        if word not in self._word_codes:</span><br><span class="line">            return []</span><br><span class="line">        return self._word_codes[word]</span><br><span class="line"></span><br><span class="line">    def __merge_two_node__(self, node1, node2):</span><br><span class="line">        &apos;&apos;&apos;merge two nodes to a new node</span><br><span class="line">        Args:</span><br><span class="line">            node1: one of the node</span><br><span class="line">            node2: another node</span><br><span class="line">        Return:</span><br><span class="line">            node, which its weight equal to node1.weight + node2.weight</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        data = &#123;&#125;</span><br><span class="line">        data[&apos;code&apos;] = -1</span><br><span class="line">        data[&apos;weight&apos;] = node1[&apos;weight&apos;] + node2[&apos;weight&apos;]</span><br><span class="line">        data[&apos;theta&apos;] = np.random.rand(len(node1[&apos;theta&apos;]))</span><br><span class="line">        node = TreeNode(data)</span><br><span class="line"></span><br><span class="line">        if node1[&apos;weight&apos;] &gt; node2[&apos;weight&apos;]:</span><br><span class="line">            node1[&apos;code&apos;] = 1</span><br><span class="line">            node2[&apos;code&apos;] = 0</span><br><span class="line">            node.left = node1</span><br><span class="line">            node.right = node2</span><br><span class="line">        else:</span><br><span class="line">            node1[&apos;code&apos;] = 0</span><br><span class="line">            node2[&apos;code&apos;] = 1</span><br><span class="line">            node.left = node2</span><br><span class="line">            node.right = node1</span><br><span class="line">        return node</span><br></pre></td></tr></table></figure>
+<h3 id="处理语料库"><a href="#处理语料库" class="headerlink" title="处理语料库"></a>处理语料库</h3><p>将语料库按照空格分开成词，给词编号。实现一个词表类，需求如下：</p>
+<ol>
+<li>给每个词编号</li>
+<li>给每个词统计词频</li>
+<li>可以遍历词表</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Word(object):</span><br><span class="line">    &quot;&quot;&quot;Word save string and count.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, w):</span><br><span class="line">        self._count = 1</span><br><span class="line">        self._word = w;</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return &quot;(%s, %s)&quot; % (self._word, self._count)</span><br><span class="line"></span><br><span class="line">    def __str__(self):</span><br><span class="line">        return &quot;(%s, %s)&quot; % (self._word, self._count)</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def word(self):</span><br><span class="line">        return self._word</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def freq(self):</span><br><span class="line">        return self._count</span><br><span class="line"></span><br><span class="line">    @freq.setter</span><br><span class="line">    def freq(self, value):</span><br><span class="line">        self._count = value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Vocabulary(object):</span><br><span class="line">    &apos;&apos;&apos;vocabulary saving many words</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self._word_2_index = &#123;&#125;</span><br><span class="line">        self._index_2_word = []</span><br><span class="line"></span><br><span class="line">    def __getitem__(self, index):</span><br><span class="line">        if isinstance(index, str):</span><br><span class="line">            if index not in self._word_2_index:</span><br><span class="line">                self._word_2_index[index] = len(self._index_2_word)</span><br><span class="line">                word = Word(index)</span><br><span class="line">                self._index_2_word.append(word)</span><br><span class="line">            return self._word_2_index[index]</span><br><span class="line">        if isinstance(index, int):</span><br><span class="line">            if index &lt; 0 or index &gt;= len(self._index_2_word):</span><br><span class="line">                return &apos;&apos;</span><br><span class="line">            return self._index_2_word[index]</span><br><span class="line">        raise Exception(&apos;unsupport index type, should be str or int.&apos;)</span><br><span class="line"></span><br><span class="line">    def __len__(self):</span><br><span class="line">        return len(self._index_2_word)</span><br><span class="line"></span><br><span class="line">    def add(self, word):</span><br><span class="line">        &apos;&apos;&apos; add a word in vocabulary</span><br><span class="line">            if word has being there, then make its frequence plus 1</span><br><span class="line">        Args:</span><br><span class="line">            word: string word</span><br><span class="line">        Returns:</span><br><span class="line">            the word&apos;s index number</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        _index = -1</span><br><span class="line">        if word not in self._word_2_index:</span><br><span class="line">            w = Word(word)</span><br><span class="line">            _index = len(self._index_2_word)</span><br><span class="line">            self._index_2_word.append(w)</span><br><span class="line">            self._word_2_index[word] = _index</span><br><span class="line">        else:</span><br><span class="line">            _index = self._word_2_index[word]</span><br><span class="line">            self._index_2_word[_index].freq += 1</span><br><span class="line">        return _index</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def words(self):</span><br><span class="line">        &apos;&apos;&apos;get words</span><br><span class="line">        Args:</span><br><span class="line">            None</span><br><span class="line">        Returns:</span><br><span class="line">            [(index, freq)]</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        _words = []</span><br><span class="line">        for i in range(len(self._index_2_word)):</span><br><span class="line">            _words.append((i, self._index_2_word[i].freq))</span><br><span class="line">        return _words</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Corpus(object):</span><br><span class="line">    &quot;&quot;&quot;this is corpus saving many documents(sentences)</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def __init__(self, corpus_path):</span><br><span class="line">        &apos;&apos;&apos;corpus</span><br><span class="line">        reading words sequence from file, split into list, map word to index, statistic word frequence</span><br><span class="line">        Args:</span><br><span class="line">            corpus_path: corpus file</span><br><span class="line">            N: vector  dimention</span><br><span class="line">        Return:</span><br><span class="line">            corpus instance</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        self._vocabulary = Vocabulary()</span><br><span class="line">        self._sentences = []</span><br><span class="line">        with open(corpus_path, &apos;r&apos;) as corpus_file:</span><br><span class="line">            for line in corpus_file:</span><br><span class="line">                words = line.strip().split()</span><br><span class="line">                words_index = []</span><br><span class="line">                for word in words:</span><br><span class="line">                    index = self._vocabulary.add(word)</span><br><span class="line">                    words_index.append(index)</span><br><span class="line">                self._sentences.append(words_index)</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def sentences(self):</span><br><span class="line">        return self._sentences</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def vocabulary(self):</span><br><span class="line">        return self._vocabulary</span><br></pre></td></tr></table></figure>
+<h3 id="CBOW模型-1"><a href="#CBOW模型-1" class="headerlink" title="CBOW模型"></a>CBOW模型</h3><p>主体就是按照前面的流程实现CBOW模型了。Python代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Word2Vec(object):</span><br><span class="line">    &apos;&apos;&apos;this is a word2vec implement</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line">    def __init__(self, corpus_file, config):</span><br><span class="line">        &apos;&apos;&apos;initialize instance of word2vec</span><br><span class="line">        Args:</span><br><span class="line">            corpus_file: corpus file</span><br><span class="line">            config: hyperparameters loaded from yaml file</span><br><span class="line">        Returns:</span><br><span class="line">            instance of word2vec</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        self._config = config</span><br><span class="line">        self._corpus = Corpus(corpus_file)</span><br><span class="line">        words = self._corpus.vocabulary.words</span><br><span class="line">        self._huffman_softmax = HuffmanTree(words, self._config[&apos;N&apos;])</span><br><span class="line">        self._word_vectors = []</span><br><span class="line">        for i in range(len(self._corpus.vocabulary.words)):</span><br><span class="line">            self._word_vectors.append(np.random.rand(self._config[&apos;N&apos;]))</span><br><span class="line"></span><br><span class="line">    def run_cbow(self):</span><br><span class="line">        &apos;&apos;&apos;run CBOW model</span><br><span class="line">        run CBOW model with SGD</span><br><span class="line">        Args:</span><br><span class="line">            None</span><br><span class="line">        Returns:</span><br><span class="line">            None</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        sentences = self._corpus.sentences</span><br><span class="line">        sentences_bar = Bar(&apos;Processing sentences&apos;, max = len(sentences))</span><br><span class="line">        for sentence in sentences:</span><br><span class="line">            words_bar = ChargingBar(&apos;processing words&apos;, max = len(sentence))</span><br><span class="line">            for i in range(len(sentence)):</span><br><span class="line">                current_word = sentence[i]</span><br><span class="line">                left_window_start = i - config[&apos;window&apos;]</span><br><span class="line">                left_window_start = 0 if left_window_start &lt; 0 else left_window_start</span><br><span class="line">                right_window_end = i + config[&apos;window&apos;] + 1</span><br><span class="line">                right_window_end = len(sentence) if right_window_end &gt; len(sentence) else right_window_end</span><br><span class="line">                context = sentence[left_window_start: config[&apos;window&apos;]]</span><br><span class="line">                context += sentence[i+1: right_window_end]</span><br><span class="line">                self.__process_a_sample__(context, current_word)</span><br><span class="line">                words_bar.next()</span><br><span class="line">            words_bar.finish()</span><br><span class="line">            sentences_bar.next()</span><br><span class="line">        sentences_bar.finish()</span><br><span class="line"></span><br><span class="line">    def __process_a_sample__(self, context, current_word):</span><br><span class="line">        e = 0.0</span><br><span class="line">        v_w = np.zeros(config[&apos;N&apos;])</span><br><span class="line">        for c in context:</span><br><span class="line">            v_w = v_w + self._word_vectors[c]</span><br><span class="line"></span><br><span class="line">        huffman_path = self._huffman_softmax.get_path(current_word)</span><br><span class="line">        for j in range(len(huffman_path)):</span><br><span class="line">            if j == 1:</span><br><span class="line">                continue</span><br><span class="line">            q = self.__sigmoid__(v_w, huffman_path[j - 1][&apos;theta&apos;])</span><br><span class="line">            g = config[&apos;eta&apos;] * (1 - huffman_path[j][&apos;code&apos;] - q)</span><br><span class="line">            e = e + g * huffman_path[j - 1][&apos;theta&apos;]</span><br><span class="line">            huffman_path[j - 1][&apos;theta&apos;] += g * v_w</span><br><span class="line">        for c in context:</span><br><span class="line">             self._word_vectors[c] += e</span><br><span class="line"></span><br><span class="line">    def __sigmoid__(self, vector1, vector2):</span><br><span class="line">        linear = np.dot(vector1, vector2)</span><br><span class="line">        if linear &gt; 100:</span><br><span class="line">            return 1.0</span><br><span class="line">        elif linear &lt; -100:</span><br><span class="line">            return -1.0</span><br><span class="line">        else:</span><br><span class="line">            return 1.0/(1.0 + math.exp(-1.0 * linear))</span><br><span class="line"></span><br><span class="line">    def save(self, vector_file, words_file):</span><br><span class="line">        &apos;&apos;&apos;save vector and vocabulary into file</span><br><span class="line">        Args:</span><br><span class="line">            vector_file: vector file</span><br><span class="line">            words_file: vocabulary file</span><br><span class="line">        Returns:</span><br><span class="line">            None</span><br><span class="line">        &apos;&apos;&apos;</span><br><span class="line">        with open(vector_file, &apos;w&apos;) as vector_output:</span><br><span class="line">            with open(words_file, &apos;w&apos;) as words_output:</span><br><span class="line">                for i in range(len(self._corpus.vocabulary.words)):</span><br><span class="line">                    vector = self._word_vectors[i]</span><br><span class="line">                    vector_output.write(&apos; &apos;.join([str(s) for s in vector]))</span><br><span class="line">                    vector_output.write(&apos;\n&apos;)</span><br><span class="line">                    words_output.write(self._corpus.vocabulary[i].word)</span><br><span class="line">                    words_output.write(&apos;\n&apos;)</span><br></pre></td></tr></table></figure>
+<h3 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def main(config, corpus_file, vector_file, words_file):</span><br><span class="line">    word2vec = Word2Vec(corpus_file, config)</span><br><span class="line">    word2vec.run_cbow()</span><br><span class="line">    word2vec.save(vector_file, words_file)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    parser = argparse.ArgumentParser(description = &apos;run word2vec model&apos;)</span><br><span class="line">    parser.add_argument(&apos;-c&apos;, &apos;--corpus&apos;, help = &apos;&apos;&apos;corpus file&apos;&apos;&apos;)</span><br><span class="line">    parser.add_argument(&apos;--config&apos;, help = &apos;&apos;&apos;config file(yaml file)&apos;&apos;&apos;)</span><br><span class="line">    parser.add_argument(&apos;-v&apos;, &apos;--vectors&apos;, help = &apos;&apos;&apos;vectors file&apos;&apos;&apos;)</span><br><span class="line">    parser.add_argument(&apos;-w&apos;, &apos;--words&apos;, help = &apos;&apos;&apos;words  file&apos;&apos;&apos;)</span><br><span class="line">    args = vars(parser.parse_args())</span><br><span class="line">    if args[&apos;corpus&apos;] is None or args[&apos;config&apos;] is None or args[&apos;vectors&apos;] is None or args[&apos;words&apos;] is None:</span><br><span class="line">        parser.print_help()</span><br><span class="line">        exit()</span><br><span class="line">    config = yaml.load(open(args[&apos;config&apos;], &apos;r&apos;))</span><br><span class="line">    main(config, args[&apos;corpus&apos;], args[&apos;vectors&apos;], args[&apos;words&apos;])</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/d0d273d9.html" rel="next" title="LR,SVM 与 EM 算法的区别">
+                <i class="fa fa-chevron-left"></i> LR,SVM 与 EM 算法的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/409af206.html" rel="prev" title="机器学习面试每日一问">
+                机器学习面试每日一问 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#word2vec是什么"><span class="nav-number">1.</span> <span class="nav-text">word2vec是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预备知识"><span class="nav-number">2.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向量是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">向量是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unigram模型"><span class="nav-number">2.2.</span> <span class="nav-text">unigram模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要把词表示成向量？"><span class="nav-number">2.3.</span> <span class="nav-text">为什么要把词表示成向量？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简陋版word2vec"><span class="nav-number">3.</span> <span class="nav-text">简陋版word2vec</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型结构"><span class="nav-number">3.1.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#得到向量"><span class="nav-number">3.2.</span> <span class="nav-text">得到向量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更新输出矩阵"><span class="nav-number">3.2.1.</span> <span class="nav-text">更新输出矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新输入矩阵"><span class="nav-number">3.2.2.</span> <span class="nav-text">更新输入矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练过程"><span class="nav-number">3.2.3.</span> <span class="nav-text">训练过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python实现"><span class="nav-number">3.3.</span> <span class="nav-text">Python实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单测试"><span class="nav-number">3.4.</span> <span class="nav-text">简单测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原汁原味的word2vec"><span class="nav-number">4.</span> <span class="nav-text">原汁原味的word2vec</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CBOW模型"><span class="nav-number">4.1.</span> <span class="nav-text">CBOW模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python实现-CBOW-模型"><span class="nav-number">4.2.</span> <span class="nav-text">python实现 CBOW 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Huffman树实现"><span class="nav-number">4.2.1.</span> <span class="nav-text">Huffman树实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理语料库"><span class="nav-number">4.2.2.</span> <span class="nav-text">处理语料库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CBOW模型-1"><span class="nav-number">4.2.3.</span> <span class="nav-text">CBOW模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主函数"><span class="nav-number">4.2.4.</span> <span class="nav-text">主函数</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

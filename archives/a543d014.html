@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="做比赛时，每个维度的分析都非常重要，有时还需要像不太懂数据分析的人解释，这时候可视化就变得非常重要。以下文章主要参考科赛网上的文章，seaborn 官方教程翻译。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="低维度特征可视化与强特征构造">
+<meta property="og:url" content="https://www.hotheat.top/archives/a543d014.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="做比赛时，每个维度的分析都非常重要，有时还需要像不太懂数据分析的人解释，这时候可视化就变得非常重要。以下文章主要参考科赛网上的文章，seaborn 官方教程翻译。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/mvmP7e1ho2L8.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/M2EsdxmxzCCd.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/5f7BhQiSIfK7.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/QtW5NhHufCLU.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/QtW5NhHufCLU.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/CFSvPmhNKiDh.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/0NcWxHeULNAN.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/eVp35OzC2Ggo.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/qkn08YiJA0zn.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/7zsBMTQ2irO9.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/alyXLCGEDWda.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/AkuFMzVry5cl.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/rsxbwJMNBLvT.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/8h4n0MRrmVGp.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/wI074S6A3nV8.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/ri7aDyw8sDFS.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/Wn91DBSiNCEF.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/rFq2Dymvx5t5.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/8ckcrPH800A1.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/KTaNoBTkkEEl.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/m4zFIVj14FAg.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/Uw5gnaSfUeQa.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/u03KNEsSm4bQ.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/rn4OqbNsE04i.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/4FE9zVyFxkEa.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/4Bh38x0LbIU3.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/Dl3bg7H58S2J.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/MepB8hYIOYYr.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/xHaRWCCEbqg2.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/NfRcvPhz1XCq.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190123/e7aHHc726d3A.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/r0Mtje2oVq2c.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/zULxpwoURi5x.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/OyTp0ENnxVWa.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/27jNImVs88RW.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/zxrX4OT6GAgF.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/wDhlarKzPKRh.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/dQFApopjz88W.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/7uXi7uU0dU3f.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/Fzsb68mUjYqB.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/dbT6PPlWXs0A.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/6podVgb1QgtX.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/S03PR4YvStTi.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/2UGbbAGGsrO8.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/zvFGrNaN9VOg.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/jcH0rvOt81Hx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/BCNNJ5S5Rrk5.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/6IUFN8xHlVLq.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/8p5s3dTEI7cc.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/ucQ40JsY6f9b.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/4snlE8oVTAst.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/umNbcuuR3vyt.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/6fX1s8drLNzP.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/jWwdLh3TIuLg.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/q7ouzDnGF8cn.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/IqqGtPNYEnCA.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/njbIPKaHHo4u.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/A7yUXhnjNzbL.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/gPC9Eshtb2Qo.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190120/lU051AAt1rvx.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="低维度特征可视化与强特征构造">
+<meta name="twitter:description" content="做比赛时，每个维度的分析都非常重要，有时还需要像不太懂数据分析的人解释，这时候可视化就变得非常重要。以下文章主要参考科赛网上的文章，seaborn 官方教程翻译。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190120/mvmP7e1ho2L8.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/a543d014.html">
+
+
+
+
+
+  <title>低维度特征可视化与强特征构造 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/a543d014.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">低维度特征可视化与强特征构造</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-20T22:32:09+08:00">
+                2019-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/可视化/" itemprop="url" rel="index">
+                    <span itemprop="name">可视化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/可视化/seaborn/" itemprop="url" rel="index">
+                    <span itemprop="name">seaborn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>做比赛时，每个维度的分析都非常重要，有时还需要像不太懂数据分析的人解释，这时候可视化就变得非常重要。以下文章主要参考科赛网上的<a href="https://www.kesci.com/home/project/59f687e1c5f3f511952baca0" target="_blank" rel="noopener">文章</a>，seaborn 官方教程<a href="https://zhuanlan.zhihu.com/p/27435863" target="_blank" rel="noopener">翻译</a>。</p>
+<a id="more"></a>
+<h1 id="连续型变量"><a href="#连续型变量" class="headerlink" title="连续型变量"></a>连续型变量</h1><p>对于一些类别特征，常常采用 count 或 mean 的统计分析基本可以满足分析的需求，但是如果是数值特征，也就是连续变量时，需要数据可视化来观察数据的分布特点，相关性等。</p>
+<h2 id="连续单变量特征"><a href="#连续单变量特征" class="headerlink" title="连续单变量特征"></a>连续单变量特征</h2><p>最常见的单变量特征分析是在回归问题中，可以了解数据的异常值和<a href="http://seaborn.pydata.org/tutorial/distributions.html" target="_blank" rel="noopener">分布情况</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> stats, integrate</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.set(color_codes=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置随机数种子，ord() 返回字符的 ASCII 码值</span></span><br><span class="line">np.random.seed(sum(map(ord, <span class="string">"distributions"</span>)))</span><br></pre></td></tr></table></figure>
+<h3 id="plt-hist"><a href="#plt-hist" class="headerlink" title="plt hist"></a>plt hist</h3><p>单变量最简单的方法是绘制直方图，默认 bins 是 10 个。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.normal(size=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.hist(x)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(array([ 4., 13., 12., 22., 20., 15.,  9.,  1.,  3.,  1.]),</span><br><span class="line"> array([-1.85860798, -1.38515154, -0.91169511, -0.43823868,  0.03521775,</span><br><span class="line">         0.50867418,  0.98213061,  1.45558704,  1.92904348,  2.40249991,</span><br><span class="line">         2.87595634]),</span><br><span class="line"> &lt;a list of 10 Patch objects&gt;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/mvmP7e1ho2L8.png?imageslim" alt="mark"></p>
+<h3 id="seaborn-kdeplot"><a href="#seaborn-kdeplot" class="headerlink" title="seaborn kdeplot"></a>seaborn kdeplot</h3><p>kdeplot 采用核函数的方式对离散型数据进行了平滑处理，默认是高斯核函数。关于核密度估计可以参考<a href="https://zhuanlan.zhihu.com/p/24044989" target="_blank" rel="noopener">文章</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.kdeplot(x,shade=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/M2EsdxmxzCCd.png?imageslim" alt="mark"></p>
+<p>双样本的双变量密度图可以通过两次调用 <code>sns.kdeplot()</code> 来实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">sns.set(style=<span class="string">"darkgrid"</span>)</span><br><span class="line">iris = sns.load_dataset(<span class="string">"iris"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Subset the iris dataset by species</span></span><br><span class="line">setosa = iris.query(<span class="string">"species == 'setosa'"</span>)</span><br><span class="line">virginica = iris.query(<span class="string">"species == 'virginica'"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set up the figure</span></span><br><span class="line">f, ax = plt.subplots(figsize=(<span class="number">8</span>, <span class="number">8</span>))</span><br><span class="line">ax.set_aspect(<span class="string">"equal"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Draw the two density plots</span></span><br><span class="line">ax = sns.kdeplot(setosa.sepal_width, setosa.sepal_length,</span><br><span class="line">                 cmap=<span class="string">"Reds"</span>, shade=<span class="literal">True</span>, shade_lowest=<span class="literal">False</span>)</span><br><span class="line">ax = sns.kdeplot(virginica.sepal_width, virginica.sepal_length,</span><br><span class="line">                 cmap=<span class="string">"Blues"</span>, shade=<span class="literal">True</span>, shade_lowest=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add labels to the plot</span></span><br><span class="line">red = sns.color_palette(<span class="string">"Reds"</span>)[<span class="number">-2</span>]</span><br><span class="line">blue = sns.color_palette(<span class="string">"Blues"</span>)[<span class="number">-2</span>]</span><br><span class="line">ax.text(<span class="number">2.5</span>, <span class="number">8.2</span>, <span class="string">"virginica"</span>, size=<span class="number">16</span>, color=blue)</span><br><span class="line">ax.text(<span class="number">3.8</span>, <span class="number">4.5</span>, <span class="string">"setosa"</span>, size=<span class="number">16</span>, color=red)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Text(3.8,4.5,&apos;setosa&apos;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/5f7BhQiSIfK7.png?imageslim" alt="mark"></p>
+<h3 id="distplot"><a href="#distplot" class="headerlink" title="distplot"></a>distplot</h3><p>distplot 可以绘制出拟合的近似分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.distplot(x)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/QtW5NhHufCLU.png?imageslim" alt="mark"></p>
+<p>可以通过 <code>kde=Fasle</code>, <code>hist=False</code>, <code>rug=False</code>, <code>bins=num</code> 来控制关闭 kde, 关闭直方图，关闭坐标竖条，关闭分布观测条。</p>
+<p>比赛中，常常会通过观察 bins 进行切分，并做成 one-hot 编码形成新的特征。</p>
+<p><code>fit</code> 可以用其他的分布函数近似拟合数据，例如用 gamma 分布拟合。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.gamma(<span class="number">6</span>, size=<span class="number">200</span>)</span><br><span class="line">sns.distplot(x, kde=<span class="literal">False</span>, fit=stats.gamma)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/QtW5NhHufCLU.png?imageslim" alt="mark"></p>
+<p>用高斯分布拟合 gamma 分布生成的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.distplot(x, kde=<span class="literal">False</span>, fit=stats.gausshyper)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/CFSvPmhNKiDh.png?imageslim" alt="mark"></p>
+<h2 id="连续二元变量特征"><a href="#连续二元变量特征" class="headerlink" title="连续二元变量特征"></a>连续二元变量特征</h2><p>实际问题中，我们常常需要对两个连续变量之间进行相关性分析，进行预测等。主要用到 matplotlib 中的 scatter plot 和 jointplot。</p>
+<p>在应用散点图时，数据比较多时，建议使用采样观察。通过散点图可以很容易发现簇的存在，以及涉及到经纬度时，可以考虑聚类等操作。</p>
+<p>通过多元高斯分布生成数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mean, cov = [<span class="number">0</span>, <span class="number">1</span>], [(<span class="number">1</span>, <span class="number">.5</span>), (<span class="number">.5</span>, <span class="number">1</span>)]</span><br><span class="line">data = np.random.multivariate_normal(mean, cov, <span class="number">200</span>)</span><br><span class="line">df = pd.DataFrame(data, columns=[<span class="string">"x"</span>, <span class="string">"y"</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.dataframe tbody tr th &#123;</span><br><span class="line">    vertical-align: top;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.dataframe thead th &#123;</span><br><span class="line">    text-align: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.190873</td>
+      <td>2.902961</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.387901</td>
+      <td>3.441322</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.304909</td>
+      <td>0.586173</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.016867</td>
+      <td>0.907323</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.284953</td>
+      <td>1.189304</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+<h3 id="plt-scatter"><a href="#plt-scatter" class="headerlink" title="plt scatter"></a>plt scatter</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(df[<span class="string">'x'</span>].values,df[<span class="string">'y'</span>].values)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/0NcWxHeULNAN.png?imageslim" alt="mark"></p>
+<h3 id="jointplot"><a href="#jointplot" class="headerlink" title="jointplot"></a>jointplot</h3><p>jointplot 不仅可以方便的绘制散点图，还可以进行一些简单的模型拟合，比如线性回归等。</p>
+<p>默认的 Jointplot</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.jointplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=df)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/eVp35OzC2Ggo.png?imageslim" alt="mark"></p>
+<p>Hexbin 图类似于直方图的二维展示。一般适用于较大数据集，最好使用白色背景，可以用 with 来控制背景。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> sns.axes_style(<span class="string">'white'</span>):</span><br><span class="line">    sns.jointplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=df, kind=<span class="string">'hex'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/qkn08YiJA0zn.png?imageslim" alt="mark"></p>
+<p>KDE 图是 kde plot 的二维展示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.jointplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=df, kind=<span class="string">"kde"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/7zsBMTQ2irO9.png?imageslim" alt="mark"></p>
+<p>cubehelix 是具有线性增加或降低亮度和色调变化顺序的调色板，可以使得在各种变化中都保持良好的亮度线性梯度。reverse 可以对调结果顺序。as_cmap 参数用来更改显示的颜色范围是离散的还是连续的。关于更多的调色板知识请参考<a href="https://zhuanlan.zhihu.com/p/27471537" target="_blank" rel="noopener">文章</a>。</p>
+<p><code>n_levels</code> 控制轮廓级数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f, ax = plt.subplots(figsize=(<span class="number">6</span>, <span class="number">6</span>))</span><br><span class="line">cmap = sns.cubehelix_palette(as_cmap=<span class="literal">True</span>, dark=<span class="number">0</span>, light=<span class="number">1</span>, reverse=<span class="literal">True</span>)</span><br><span class="line">sns.kdeplot(df.x, df.y, cmap=cmap, n_levels=<span class="number">60</span>, shade=<span class="literal">True</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/alyXLCGEDWda.png?imageslim" alt="mark"></p>
+<h3 id="plot-joint"><a href="#plot-joint" class="headerlink" title="plot_joint"></a>plot_joint</h3><p>plot_joint 可以将很多绘图形式放在同一张图表中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">g = sns.jointplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=df, kind=<span class="string">"kde"</span>, color=<span class="string">"m"</span>)</span><br><span class="line">g.plot_joint(plt.scatter, c=<span class="string">"w"</span>, s=<span class="number">30</span>, linewidth=<span class="number">1</span>, marker=<span class="string">"+"</span>)</span><br><span class="line"></span><br><span class="line">g.ax_joint.collections[<span class="number">0</span>].set_alpha(<span class="number">0</span>)</span><br><span class="line">g.set_axis_labels(<span class="string">"$X$"</span>, <span class="string">"$Y$"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/AkuFMzVry5cl.png?imageslim" alt="mark"></p>
+<h3 id="pairplot"><a href="#pairplot" class="headerlink" title="pairplot"></a>pairplot</h3><p>绘制多个变量两两之间的关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iris = sns.load_dataset(<span class="string">"iris"</span>)</span><br><span class="line">sns.pairplot(iris)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/rsxbwJMNBLvT.png?imageslim" alt="mark"></p>
+<p>pairplot 是建立在 pairgrid 之上的，可以用很多中间函数进行变换。在对角线和非对角线上分别应用不同的函数。关于更多的 pairgrid 的方法可以参数<a href="https://zhuanlan.zhihu.com/p/27816821" target="_blank" rel="noopener">文章</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g = sns.PairGrid(iris)</span><br><span class="line">g.map_diag(sns.kdeplot)</span><br><span class="line">g.map_offdiag(sns.kdeplot, cmap=<span class="string">"Blues_d"</span>, n_levels=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/8h4n0MRrmVGp.png?imageslim" alt="mark"></p>
+<p><strong>一些连续数据可视化更详细的参数可以参考<a href="https://zhuanlan.zhihu.com/p/27570774" target="_blank" rel="noopener">文章</a></strong></p>
+<h1 id="类别变量"><a href="#类别变量" class="headerlink" title="类别变量"></a>类别变量</h1><p>对于类别变量绘制，散点图和回归模型将不起作用。可视化的目的为了观察分布的抽象表示及应用统计估计权重趋势或置信区间。主要包括以下三类：</p>
+<ul>
+<li>swarmplot() 和 stripplot()</li>
+<li>boxplot() 和 violinplot()</li>
+<li>barplot() 和 pointplot()</li>
+</ul>
+<p>还有，通过 Factorplot 和 Pairgrid 集成函数展示更多的变量间的关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sns.set(style=<span class="string">"whitegrid"</span>, color_codes=<span class="literal">True</span>)</span><br><span class="line">np.random.seed(sum(map(ord, <span class="string">"categorical"</span>)))</span><br><span class="line">titanic = sns.load_dataset(<span class="string">"titanic"</span>)</span><br><span class="line">tips = sns.load_dataset(<span class="string">"tips"</span>)</span><br><span class="line">iris = sns.load_dataset(<span class="string">"iris"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="分类散点图"><a href="#分类散点图" class="headerlink" title="分类散点图"></a>分类散点图</h2><h3 id="stripplot"><a href="#stripplot" class="headerlink" title="stripplot"></a>stripplot</h3><p>最简单的方式是使用 stripplot()。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.stripplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips, jitter=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/wI074S6A3nV8.png?imageslim" alt="mark"></p>
+<p>上述图因为覆盖太过严重，很难看到某个 label 上点的实际分布情况，可以使用随机抖动(jitter)将同一位置的点随机分开，抖动也可以在数据集上用 numpy 实现。sns.stripplot() 默认 jitter = True。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.stripplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips, jitter=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/ri7aDyw8sDFS.png?imageslim" alt="mark"></p>
+<h3 id="swarmplot"><a href="#swarmplot" class="headerlink" title="swarmplot"></a>swarmplot</h3><p>即使随机抖动还是有重叠的可能，所以 swarmplot() 使用使用了避免重叠点的算法，这种方式更好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.swarmplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/Wn91DBSiNCEF.png?imageslim" alt="mark"></p>
+<p>可以通过传入 hue 参数添加多个分类变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.swarmplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"sex"</span>,data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/rFq2Dymvx5t5.png?imageslim" alt="mark"></p>
+<p>当要计算的类别是数值类别时，将会被排序后显示。如果类别名称很长或者有很多类别时，可以使用 orient=’h’ 或交换 x 和 y 变量的赋值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.swarmplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"day"</span>, hue=<span class="string">"time"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/8ckcrPH800A1.png?imageslim" alt="mark"></p>
+<h3 id="stripplot-VS-swarmplot"><a href="#stripplot-VS-swarmplot" class="headerlink" title="stripplot VS swarmplot"></a>stripplot VS swarmplot</h3><ul>
+<li>当两个变量都是类别变量时，swarmplot 更加明显。</li>
+<li>swarmplot 缺点非常耗时，数据量大时不适用。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_, [ax0, ax1] = plt.subplots(nrows=<span class="number">2</span>, ncols=<span class="number">1</span>, figsize=[<span class="number">12</span>, <span class="number">8</span>])</span><br><span class="line">sns.stripplot(x=<span class="string">"size"</span>, y=<span class="string">"size"</span>, data=tips, jitter=<span class="literal">True</span>, ax=ax0)</span><br><span class="line">sns.swarmplot(x=<span class="string">"size"</span>, y=<span class="string">"size"</span>, data=tips, ax=ax1)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/KTaNoBTkkEEl.png?imageslim" alt="mark"></p>
+<h2 id="类别内的分布"><a href="#类别内的分布" class="headerlink" title="类别内的分布"></a>类别内的分布</h2><p>分类散点图在有些情况下提供的分布信息十分有限，在两个类别十分相近时，会变得不清晰，这时需要在类别之间进行简单比较或汇总统计。</p>
+<h3 id="boxplot"><a href="#boxplot" class="headerlink" title="boxplot"></a>boxplot</h3><p>箱式图给出了均值，四分位数及极值的信息。上下两条晶须分别对应第一四分位数 + $1.5 \times IQR$ 和第三四分位数 + $1.5 \times IQR$，IQR=第三四分位数-第一四分位数。<br><img src="http://qnpic.sijihaiyang.top/blog/20190120/m4zFIVj14FAg.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/Uw5gnaSfUeQa.png?imageslim" alt="mark"></p>
+<p>可以通过 hue 显示不同变量的箱式图。但是这种情况下箱子会很难看。可以通过 dodge 控制箱子的位移。默认 dodge 为 True。更多控制箱子的参数参考<a href="https://seaborn.pydata.org/generated/seaborn.boxplot.html" target="_blank" rel="noopener">官网</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"size"</span>, data=tips, dodge=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/u03KNEsSm4bQ.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"size"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/rn4OqbNsE04i.png?imageslim" alt="mark"></p>
+<h3 id="violinplot"><a href="#violinplot" class="headerlink" title="violinplot"></a>violinplot</h3><p>小提琴图结合了箱式图和 kde 图，使用核密度估计更好的描述值的的分布。<br><img src="http://qnpic.sijihaiyang.top/blog/20190120/4FE9zVyFxkEa.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"day"</span>, hue=<span class="string">"time"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/4Bh38x0LbIU3.png?imageslim" alt="mark"></p>
+<p>可以通过控制一些参数，比如 scale, scale_hue 等进行美化。当 hue 只有两个类别时。可以传入 split 参数更好的利用空间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"sex"</span>, data=tips, split=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/Dl3bg7H58S2J.png?imageslim" alt="mark"></p>
+<p>控制 inner 参数显示框内的信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"sex"</span>, data=tips,</span><br><span class="line">               split=<span class="literal">True</span>, inner=<span class="string">"stick"</span>, palette=<span class="string">"Set3"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/MepB8hYIOYYr.png?imageslim" alt="mark"></p>
+<h3 id="与-swarmplot-的结合"><a href="#与-swarmplot-的结合" class="headerlink" title="与 swarmplot 的结合"></a>与 swarmplot 的结合</h3><p>violinplot 的形状与 swarmplot 形状类似，可以将二者结合。</p>
+<blockquote>
+<p>但是并不推荐这样做，过多的信息除了炫技没什么其他用处。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips, inner=<span class="literal">None</span>)</span><br><span class="line">sns.swarmplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips, color=<span class="string">"w"</span>, alpha=<span class="number">.5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/xHaRWCCEbqg2.png?imageslim" alt="mark"></p>
+<p>同样 swarmplot 也可以与 boxplot 结合。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips)</span><br><span class="line">sns.swarmplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, data=tips, color=<span class="string">"w"</span>, alpha=<span class="number">.5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/NfRcvPhz1XCq.png?imageslim" alt="mark"></p>
+<h3 id="boxenplot"><a href="#boxenplot" class="headerlink" title="boxenplot"></a>boxenplot</h3><p>一种新的箱式图展示，对于含有较多异常值时展示<a href="https://stackoverflow.com/questions/52403381/how-boxen-plot-is-different-from-box-plot" target="_blank" rel="noopener">更合理</a>。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190123/e7aHHc726d3A.png?imageslim" alt="mark"></p>
+<h2 id="类别的统计信息"><a href="#类别的统计信息" class="headerlink" title="类别的统计信息"></a>类别的统计信息</h2><p>有时，不能仅仅只看数据的一个外在的表现，我们需要一些工具将它的一些统计信息（均值，个数等）反应出来。</p>
+<h3 id="barplot"><a href="#barplot" class="headerlink" title="barplot"></a>barplot</h3><p>默认会使用对应类别的均值。hue 可以控制更精细的类别。黑色竖线代表置信区间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.barplot(x=<span class="string">"sex"</span>, y=<span class="string">"survived"</span>, hue=<span class="string">"class"</span>, data=titanic)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/r0Mtje2oVq2c.png?imageslim" alt="mark"></p>
+<h3 id="countplot"><a href="#countplot" class="headerlink" title="countplot"></a>countplot</h3><p>纵轴计算的是均值，在泰坦尼克号数据中指的是存活下来的比例，有时我们想看一下总个数，以确认这种均值是否具有统计学意义。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(hue=<span class="string">"sex"</span>, x=<span class="string">"survived"</span>, data=titanic, palette=<span class="string">"Greens_d"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/zULxpwoURi5x.png?imageslim" alt="mark"></p>
+<h3 id="pointplot"><a href="#pointplot" class="headerlink" title="pointplot"></a>pointplot</h3><p>只给出点估计（概率形式）和置信区间，直线连接相同 hue 类别的点，很容易通过斜率的差异看出主要关系如何随第二个变量的变化而变化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.pointplot(x=<span class="string">"sex"</span>, y=<span class="string">"survived"</span>, hue=<span class="string">"class"</span>, data=titanic)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/OyTp0ENnxVWa.png?imageslim" alt="mark"></p>
+<p>使用不同的标记和线条样式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sns.pointplot(x=<span class="string">"class"</span>, y=<span class="string">"survived"</span>, hue=<span class="string">"sex"</span>, data=titanic,</span><br><span class="line">              palette=&#123;<span class="string">"male"</span>: <span class="string">"g"</span>, <span class="string">"female"</span>: <span class="string">"m"</span>&#125;,</span><br><span class="line">              markers=[<span class="string">"^"</span>, <span class="string">"o"</span>], linestyles=[<span class="string">"-"</span>, <span class="string">"--"</span>])</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/27jNImVs88RW.png?imageslim" alt="mark"></p>
+<h3 id="通过-grid-展示更多的分类变量"><a href="#通过-grid-展示更多的分类变量" class="headerlink" title="通过 grid 展示更多的分类变量"></a>通过 grid 展示更多的分类变量</h3><h4 id="factorplot"><a href="#factorplot" class="headerlink" title="factorplot()"></a>factorplot()</h4><p>factorplot() 与 facetgrid() 结合使用，与 jointplot 一样，配合 kind 关键字指定不同的类型，默认情况下是 kind = “pinpoint”，seaborn 0.9.0 中改为 catplot()，默认为 stripplot()。具体见<a href="http://pbpython.com/seaborn09.html" target="_blank" rel="noopener">网址</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.factorplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"smoker"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/zxrX4OT6GAgF.png?imageslim" alt="mark"></p>
+<p>factorplot bar</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.factorplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"smoker"</span>, data=tips, kind=<span class="string">"bar"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/wDhlarKzPKRh.png?imageslim" alt="mark"></p>
+<p>与 sns.barplot 效果相同</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.barplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"smoker"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/dQFApopjz88W.png?imageslim" alt="mark"></p>
+<p>factorplot 的优点是可以通过 col 再展开一个特征。这样可以查看 x,y,hue,col 四个变量的分布情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.factorplot(x=<span class="string">"day"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"smoker"</span>,col=<span class="string">"time"</span>, data=tips, kind=<span class="string">"swarm"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/7uXi7uU0dU3f.png?imageslim" alt="mark"></p>
+<p>可以通过 size 和 aspect 更改图形的大小和形状</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.factorplot(x=<span class="string">"time"</span>, y=<span class="string">"total_bill"</span>, hue=<span class="string">"smoker"</span>,</span><br><span class="line">               col=<span class="string">"day"</span>, data=tips, kind=<span class="string">"box"</span>, size=<span class="number">4</span>, aspect=<span class="number">.5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/Fzsb68mUjYqB.png?imageslim" alt="mark"></p>
+<h4 id="与-pairgrid-结合"><a href="#与-pairgrid-结合" class="headerlink" title="与 pairgrid 结合"></a>与 pairgrid 结合</h4><p>也可以与 parigrid 结合来实现 violinplot，多个不同变量间的分类关系，下面这张图便展示出了五个变量个分布关系情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">g = sns.PairGrid(tips,</span><br><span class="line">                 x_vars=[<span class="string">"smoker"</span>, <span class="string">"time"</span>, <span class="string">"sex"</span>],</span><br><span class="line">                 y_vars=[<span class="string">"total_bill"</span>, <span class="string">"tip"</span>],</span><br><span class="line">                 aspect=<span class="number">.75</span>, size=<span class="number">3.5</span>)</span><br><span class="line">g.map(sns.violinplot, palette=<span class="string">"pastel"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/dbT6PPlWXs0A.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g = sns.PairGrid(tips,x_vars=[<span class="string">"smoker"</span>, <span class="string">"time"</span>, <span class="string">"sex"</span>],y_vars=[<span class="string">"total_bill"</span>, <span class="string">"tip"</span>],aspect=<span class="number">.75</span>, size=<span class="number">3.5</span>)</span><br><span class="line">g.map(sns.barplot, palette=<span class="string">"pastel"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/6podVgb1QgtX.png?imageslim" alt="mark"></p>
+<h3 id="其他技巧"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧</h3><h4 id="使用”宽格式”-数据"><a href="#使用”宽格式”-数据" class="headerlink" title="使用”宽格式” 数据"></a>使用”宽格式” 数据</h4><p>宽格式数据一个特征的不同类别用不同的列表示，而并不像长格式数据一样一个特征即一列。宽格式数据和长格式数据可以通过 stack() 与 unstack() 相互转换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iris.head()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.dataframe tbody tr th &#123;</span><br><span class="line">    vertical-align: top;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.dataframe thead th &#123;</span><br><span class="line">    text-align: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+
+<p>转换为长格式数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iris.set_index(<span class="string">'species'</span>).stack().reset_index(<span class="number">1</span>).head(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.dataframe tbody tr th &#123;</span><br><span class="line">    vertical-align: top;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.dataframe thead th &#123;</span><br><span class="line">    text-align: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level_1</th>
+      <th>0</th>
+    </tr>
+    <tr>
+      <th>species</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>setosa</th>
+      <td>sepal_length</td>
+      <td>5.1</td>
+    </tr>
+    <tr>
+      <th>setosa</th>
+      <td>sepal_width</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <th>setosa</th>
+      <td>petal_length</td>
+      <td>1.4</td>
+    </tr>
+    <tr>
+      <th>setosa</th>
+      <td>petal_width</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>setosa</th>
+      <td>sepal_length</td>
+      <td>4.9</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(data=iris,orient=<span class="string">"h"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/S03PR4YvStTi.png?imageslim" alt="mark"></p>
+<h4 id="接受-pandas-或-numpy-的向量"><a href="#接受-pandas-或-numpy-的向量" class="headerlink" title="接受 pandas 或 numpy 的向量"></a>接受 pandas 或 numpy 的向量</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=iris.species, y=iris.sepal_length)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/2UGbbAGGsrO8.png?imageslim" alt="mark"></p>
+<h4 id="可以通过-matplotlib-中的命令控制图形大小和形状等"><a href="#可以通过-matplotlib-中的命令控制图形大小和形状等" class="headerlink" title="可以通过 matplotlib 中的命令控制图形大小和形状等"></a>可以通过 matplotlib 中的命令控制图形大小和形状等</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f, ax = plt.subplots(figsize=(<span class="number">7</span>, <span class="number">3</span>))</span><br><span class="line">sns.countplot(y=<span class="string">"deck"</span>, data=titanic, color=<span class="string">"c"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/zvFGrNaN9VOg.png?imageslim" alt="mark"></p>
+<p>更多的类别变量资料请参考<a href="https://zhuanlan.zhihu.com/p/27683042" target="_blank" rel="noopener">文章</a></p>
+<h1 id="变量关系的可视化"><a href="#变量关系的可视化" class="headerlink" title="变量关系的可视化"></a>变量关系的可视化</h1><p>一般用于回归问题，同时也可以更好的进行特征构造。Seaborn 的目的是通过可视化快速轻松的探索数据集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sns.set(color_codes=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">np.random.seed(sum(map(ord, <span class="string">"regression"</span>)))</span><br><span class="line"></span><br><span class="line">tips = sns.load_dataset(<span class="string">"tips"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="不存在异常值的-线性关系"><a href="#不存在异常值的-线性关系" class="headerlink" title="不存在异常值的 线性关系"></a>不存在异常值的 线性关系</h2><h3 id="lmplot-和-regplot"><a href="#lmplot-和-regplot" class="headerlink" title="lmplot 和 regplot"></a>lmplot 和 regplot</h3><p>lmplot 和 regplot 的区别：  </p>
+<ul>
+<li>lmplot 必须接受 dataframe 结构中的长格式数据，必须传入 data 参数，x 和 y 参数需是字符串。  </li>
+<li>regplot 则可以接受 numpy arrays, pandas series 和 dataframe 中的变量。  </li>
+<li>lmplot()将 regplot() 与 FacetGrid 结合在一起，可以在“faceted”图上显示线性回归，从而探索多达三个或更多类别变量的交互。<br>总结来说，观察两个变量时， regplot 的数据形式比 lmplot 更灵活，但是，lmplot 可以通过 hue 或 col 参数来展示更多维度变量的线性关系。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = list(range(<span class="number">1</span>, <span class="number">50</span>))</span><br><span class="line">y = np.sin(x)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.regplot(x, y)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/jcH0rvOt81Hx.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x, y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">TypeError                         Traceback (most recent call last)</span><br><span class="line"></span><br><span class="line">&lt;ipython-input-131-e787e6bb2080&gt; in &lt;module&gt;()</span><br><span class="line">----&gt; 1 sns.lmplot(x, y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: lmplot() missing 1 required positional argument: &apos;data&apos;</span><br></pre></td></tr></table></figure>
+<p>二者都返回回归直线和置信区间</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.regplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/BCNNJ5S5Rrk5.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/6IUFN8xHlVLq.png?imageslim" alt="mark"></p>
+<h2 id="存在异常值的线性回归"><a href="#存在异常值的线性回归" class="headerlink" title="存在异常值的线性回归"></a>存在异常值的线性回归</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anscombe = sns.load_dataset(<span class="string">"anscombe"</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anscombe.head()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.dataframe tbody tr th &#123;</span><br><span class="line">    vertical-align: top;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.dataframe thead th &#123;</span><br><span class="line">    text-align: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dataset</th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>I</td>
+      <td>10.0</td>
+      <td>8.04</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>I</td>
+      <td>8.0</td>
+      <td>6.95</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>I</td>
+      <td>13.0</td>
+      <td>7.58</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>I</td>
+      <td>9.0</td>
+      <td>8.81</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I</td>
+      <td>11.0</td>
+      <td>8.33</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=anscombe.query(<span class="string">"dataset == 'III'"</span>),</span><br><span class="line">           ci=<span class="literal">None</span>, scatter_kws=&#123;<span class="string">"s"</span>: <span class="number">80</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/8p5s3dTEI7cc.png?imageslim" alt="mark"></p>
+<p>可以通过传入 robust=True，使用不同的损失函数减小相对较大的误差</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=anscombe.query(<span class="string">"dataset == 'III'"</span>),robust=<span class="literal">True</span>, ci=<span class="literal">None</span>, scatter_kws=&#123;<span class="string">"s"</span>: <span class="number">80</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/ucQ40JsY6f9b.png?imageslim" alt="mark"></p>
+<h2 id="通过-residplot-判断相关性"><a href="#通过-residplot-判断相关性" class="headerlink" title="通过 residplot 判断相关性"></a>通过 residplot 判断相关性</h2><p>在拟合一个线性回归后，理想情况下，这些值应该分布在 y=0 上下的</p>
+<p>线性相关情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.residplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=anscombe.query(<span class="string">"dataset == 'I'"</span>),</span><br><span class="line">              scatter_kws=&#123;<span class="string">"s"</span>: <span class="number">80</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/4snlE8oVTAst.png?imageslim" alt="mark"></p>
+<p>非线性相关</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.residplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=anscombe.query(<span class="string">"dataset == 'II'"</span>),scatter_kws=&#123;<span class="string">"s"</span>: <span class="number">80</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/umNbcuuR3vyt.png?imageslim" alt="mark"></p>
+<h2 id="局部加权线性回归（LOWESS）"><a href="#局部加权线性回归（LOWESS）" class="headerlink" title="局部加权线性回归（LOWESS）"></a>局部加权线性回归（LOWESS）</h2><p>在实际例子中，全部数据建模通常不是一条直线，LOWESS 主要思想是选取一定比例的局部数据，在这部分数据中拟合多项式回归曲线。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, data=tips,lowess=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/6fX1s8drLNzP.png?imageslim" alt="mark"></p>
+<h2 id="一些二阶和高阶的关系探索"><a href="#一些二阶和高阶的关系探索" class="headerlink" title="一些二阶和高阶的关系探索"></a>一些二阶和高阶的关系探索</h2><p>在实践中，还会存在一些二次和其他关系中的数据存在，文章中说可以通过直接线性拟合预测得到的结果融入到 model 中.例如作为 xgb 或者其他模型的一个特征，这点还不是很理解。<br>可以通过设置 order=N 来控制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"x"</span>, y=<span class="string">"y"</span>, data=anscombe.query(<span class="string">"dataset == 'II'"</span>),order=<span class="number">2</span>, ci=<span class="literal">None</span>, scatter_kws=&#123;<span class="string">"s"</span>: <span class="number">80</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/jWwdLh3TIuLg.png?imageslim" alt="mark"></p>
+<h2 id="更高维度上的线性回归"><a href="#更高维度上的线性回归" class="headerlink" title="更高维度上的线性回归"></a>更高维度上的线性回归</h2><p>如果我们想看这两个变量受第三或更多个变量线性关系的影响，可以利用 lmplot()，像前面 factorplot 一样加入 hue 或 col 参数来展示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, hue=<span class="string">"smoker"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/q7ouzDnGF8cn.png?imageslim" alt="mark"></p>
+<p>调节散点的形状</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, hue=<span class="string">"smoker"</span>, data=tips, markers=[<span class="string">"o"</span>, <span class="string">"x"</span>], palette=<span class="string">"Set1"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/IqqGtPNYEnCA.png?imageslim" alt="mark"></p>
+<p>加入 hue, row 和 col 参数，展示 5 个变量的线性关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.lmplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, hue=<span class="string">"smoker"</span>, col=<span class="string">"time"</span>, row=<span class="string">"sex"</span>, data=tips)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/njbIPKaHHo4u.png?imageslim" alt="mark"></p>
+<h2 id="jointplot-与-pairplot-上的线性回归"><a href="#jointplot-与-pairplot-上的线性回归" class="headerlink" title="jointplot 与 pairplot 上的线性回归"></a>jointplot 与 pairplot 上的线性回归</h2><h3 id="jointplot-1"><a href="#jointplot-1" class="headerlink" title="jointplot"></a>jointplot</h3><p>jointplot 可以通过传入 kind=’reg’ 显示线性回归</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.jointplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, data=tips, kind=<span class="string">"reg"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/A7yUXhnjNzbL.png?imageslim" alt="mark"></p>
+<h3 id="pairplot-1"><a href="#pairplot-1" class="headerlink" title="pairplot"></a>pairplot</h3><p>pariplot 是建立在 pairgrid 基础上的，展示变量的不同配对的结果，也可以通过传入 hue 参数调节第三个变量的线性关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.jointplot(x=<span class="string">"total_bill"</span>, y=<span class="string">"tip"</span>, data=tips, kind=<span class="string">"reg"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/gPC9Eshtb2Qo.png?imageslim" alt="mark"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.pairplot(tips, x_vars=[<span class="string">"total_bill"</span>, <span class="string">"size"</span>], y_vars=[<span class="string">"tip"</span>],hue=<span class="string">"smoker"</span>, size=<span class="number">5</span>, aspect=<span class="number">.8</span>, kind=<span class="string">"reg"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190120/lU051AAt1rvx.png?imageslim" alt="mark"></p>
+<p>主要参考文章：<br><a href="https://zhuanlan.zhihu.com/p/27593869" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27593869</a><br><a href="https://www.kesci.com/home/project/59f687e1c5f3f511952baca0" target="_blank" rel="noopener">https://www.kesci.com/home/project/59f687e1c5f3f511952baca0</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/23f0bd8b.html" rel="next" title="pandas 中 cut 后最小区间的开区间的取值">
+                <i class="fa fa-chevron-left"></i> pandas 中 cut 后最小区间的开区间的取值
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/51ddfe42.html" rel="prev" title="常见的数据可视化图表">
+                常见的数据可视化图表 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#连续型变量"><span class="nav-number">1.</span> <span class="nav-text">连续型变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连续单变量特征"><span class="nav-number">1.1.</span> <span class="nav-text">连续单变量特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#plt-hist"><span class="nav-number">1.1.1.</span> <span class="nav-text">plt hist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#seaborn-kdeplot"><span class="nav-number">1.1.2.</span> <span class="nav-text">seaborn kdeplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distplot"><span class="nav-number">1.1.3.</span> <span class="nav-text">distplot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连续二元变量特征"><span class="nav-number">1.2.</span> <span class="nav-text">连续二元变量特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#plt-scatter"><span class="nav-number">1.2.1.</span> <span class="nav-text">plt scatter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jointplot"><span class="nav-number">1.2.2.</span> <span class="nav-text">jointplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plot-joint"><span class="nav-number">1.2.3.</span> <span class="nav-text">plot_joint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pairplot"><span class="nav-number">1.2.4.</span> <span class="nav-text">pairplot</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类别变量"><span class="nav-number">2.</span> <span class="nav-text">类别变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类散点图"><span class="nav-number">2.1.</span> <span class="nav-text">分类散点图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stripplot"><span class="nav-number">2.1.1.</span> <span class="nav-text">stripplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swarmplot"><span class="nav-number">2.1.2.</span> <span class="nav-text">swarmplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stripplot-VS-swarmplot"><span class="nav-number">2.1.3.</span> <span class="nav-text">stripplot VS swarmplot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类别内的分布"><span class="nav-number">2.2.</span> <span class="nav-text">类别内的分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#boxplot"><span class="nav-number">2.2.1.</span> <span class="nav-text">boxplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#violinplot"><span class="nav-number">2.2.2.</span> <span class="nav-text">violinplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与-swarmplot-的结合"><span class="nav-number">2.2.3.</span> <span class="nav-text">与 swarmplot 的结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#boxenplot"><span class="nav-number">2.2.4.</span> <span class="nav-text">boxenplot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类别的统计信息"><span class="nav-number">2.3.</span> <span class="nav-text">类别的统计信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#barplot"><span class="nav-number">2.3.1.</span> <span class="nav-text">barplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#countplot"><span class="nav-number">2.3.2.</span> <span class="nav-text">countplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pointplot"><span class="nav-number">2.3.3.</span> <span class="nav-text">pointplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-grid-展示更多的分类变量"><span class="nav-number">2.3.4.</span> <span class="nav-text">通过 grid 展示更多的分类变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#factorplot"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">factorplot()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#与-pairgrid-结合"><span class="nav-number">2.3.4.2.</span> <span class="nav-text">与 pairgrid 结合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他技巧"><span class="nav-number">2.3.5.</span> <span class="nav-text">其他技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用”宽格式”-数据"><span class="nav-number">2.3.5.1.</span> <span class="nav-text">使用”宽格式” 数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接受-pandas-或-numpy-的向量"><span class="nav-number">2.3.5.2.</span> <span class="nav-text">接受 pandas 或 numpy 的向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可以通过-matplotlib-中的命令控制图形大小和形状等"><span class="nav-number">2.3.5.3.</span> <span class="nav-text">可以通过 matplotlib 中的命令控制图形大小和形状等</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量关系的可视化"><span class="nav-number">3.</span> <span class="nav-text">变量关系的可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不存在异常值的-线性关系"><span class="nav-number">3.1.</span> <span class="nav-text">不存在异常值的 线性关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lmplot-和-regplot"><span class="nav-number">3.1.1.</span> <span class="nav-text">lmplot 和 regplot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存在异常值的线性回归"><span class="nav-number">3.2.</span> <span class="nav-text">存在异常值的线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-residplot-判断相关性"><span class="nav-number">3.3.</span> <span class="nav-text">通过 residplot 判断相关性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#局部加权线性回归（LOWESS）"><span class="nav-number">3.4.</span> <span class="nav-text">局部加权线性回归（LOWESS）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些二阶和高阶的关系探索"><span class="nav-number">3.5.</span> <span class="nav-text">一些二阶和高阶的关系探索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更高维度上的线性回归"><span class="nav-number">3.6.</span> <span class="nav-text">更高维度上的线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jointplot-与-pairplot-上的线性回归"><span class="nav-number">3.7.</span> <span class="nav-text">jointplot 与 pairplot 上的线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jointplot-1"><span class="nav-number">3.7.1.</span> <span class="nav-text">jointplot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pairplot-1"><span class="nav-number">3.7.2.</span> <span class="nav-text">pairplot</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

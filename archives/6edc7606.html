@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="密度聚类密度聚类方法的指导思想是，只要样本点的密度大于某阈值，则将该样本添加到最近的簇中。 这类算法能够克服基于距离的算法只能发现“类圆形”（凸）的聚类的缺点，可以发现任意形状的聚类，且对噪声数据不敏感。但是计算密度单元的计算复杂度大，需要建立空间索引（如并查集）来降低计算量。 主要介绍 DBSCAN 和密度最大值算法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类算法笔记（三）--密度聚类&#x2F;谱聚类">
+<meta property="og:url" content="https://www.hotheat.top/archives/6edc7606.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="密度聚类密度聚类方法的指导思想是，只要样本点的密度大于某阈值，则将该样本添加到最近的簇中。 这类算法能够克服基于距离的算法只能发现“类圆形”（凸）的聚类的缺点，可以发现任意形状的聚类，且对噪声数据不敏感。但是计算密度单元的计算复杂度大，需要建立空间索引（如并查集）来降低计算量。 主要介绍 DBSCAN 和密度最大值算法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/4K1lDopH81V9.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/HwkJRYIBbBku.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/EeYGpFRGm9Mh.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/x4wLHlFnTWs6.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/fNHjE8L8nMIL.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/weB2mHuzP0UH.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/NE23CXx0oDu1.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/ayUmLo9D6kIj.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/lpLqc94gQk6j.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/TPCWVBdVKepq.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/b4JpCddCDIhu.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/MMgjM4xKldgB.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/3rRkvyJrAbJD.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190402/t97L8GTKa1vi.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聚类算法笔记（三）--密度聚类&#x2F;谱聚类">
+<meta name="twitter:description" content="密度聚类密度聚类方法的指导思想是，只要样本点的密度大于某阈值，则将该样本添加到最近的簇中。 这类算法能够克服基于距离的算法只能发现“类圆形”（凸）的聚类的缺点，可以发现任意形状的聚类，且对噪声数据不敏感。但是计算密度单元的计算复杂度大，需要建立空间索引（如并查集）来降低计算量。 主要介绍 DBSCAN 和密度最大值算法。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190402/4K1lDopH81V9.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/6edc7606.html">
+
+
+
+
+
+  <title>聚类算法笔记（三）--密度聚类/谱聚类 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/6edc7606.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">聚类算法笔记（三）--密度聚类/谱聚类</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-21T17:39:29+08:00">
+                2019-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/聚类/" itemprop="url" rel="index">
+                    <span itemprop="name">聚类</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="密度聚类"><a href="#密度聚类" class="headerlink" title="密度聚类"></a>密度聚类</h1><p>密度聚类方法的指导思想是，只要样本点的密度大于某阈值，则将该样本添加到最近的簇中。</p>
+<p>这类算法能够克服基于距离的算法只能发现“类圆形”（凸）的聚类的缺点，<strong>可以发现任意形状的聚类</strong>，且对噪声数据不敏感。但是计算密度单元的计算复杂度大，需要建立空间索引（如并查集）来降低计算量。</p>
+<p>主要介绍 DBSCAN 和密度最大值算法。</p>
+<a id="more"></a>
+<h2 id="DBSCAN"><a href="#DBSCAN" class="headerlink" title="DBSCAN"></a>DBSCAN</h2><p>DBSCAN 的全称是 Desity-Based Spatial Clustering of Applications with Noise。</p>
+<p>将簇定义为<strong>密度相连</strong>的点的最大集合，能够把具有足够高密度的区域划分为簇，并可在有噪声的数据中发现任意形状的聚类。</p>
+<h3 id="DBSCAN-的若干概念"><a href="#DBSCAN-的若干概念" class="headerlink" title="DBSCAN 的若干概念"></a>DBSCAN 的若干概念</h3><p><img src="http://qnpic.sijihaiyang.top/blog/20190402/4K1lDopH81V9.png?imageslim" alt="mark"></p>
+<p>如图，q 是核心对象，p 不是核心对象。从 q 到 p 是直接密度可达的。这种指向是单向的，$p\rightarrow q$ 时，$p$ 是核心对象，$q​$ 则不一定。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/HwkJRYIBbBku.png?imageslim" alt="mark"></p>
+<p>在上图 1 的密度可达链中，从 $p, p<em>1, …, p</em>{n-1}​$ 是核心对象，$p​$ 是否是核心对象未知。</p>
+<p>在上图 2 中，$p$ 密度可达 $o$，$q$ 密度可达 $o$，$p$ 和 $q$ 可以称为密度相连。</p>
+<p>当某个样本离其他样本比较远，不能由其他样本点密度可达时，有可能被定义为噪声。在实际情况下，如果一个样本是核心对象，但是形成的簇比较小，也可能会将这个簇内的所有样本认为是噪声。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/EeYGpFRGm9Mh.png?imageslim" alt="mark"></p>
+<h3 id="超参数-m-和-epsilon"><a href="#超参数-m-和-epsilon" class="headerlink" title="超参数 $m$ 和 $\epsilon$"></a>超参数 $m$ 和 $\epsilon$</h3><p><img src="http://qnpic.sijihaiyang.top/blog/20190402/x4wLHlFnTWs6.png?imageslim" alt="mark"></p>
+<p>$r$ 和 $\epsilon$ 等价，上图表示当 $m$ 值变小时，原来的噪声可能会变成核心对象，会形成一些新的小簇，簇的样本数量很小。所以，可能需要些后处理，设定形成簇所需最小样本的阈值。</p>
+<p>如果呈现出图 4 中的情况，大多数点聚类成一类，往往是因为判定条件太弱导致的，这时需要调小 $\epsilon$ 半径，调大 m 值。</p>
+<h3 id="答疑"><a href="#答疑" class="headerlink" title="答疑"></a>答疑</h3><p>为了方便查找（Find），常常会做一些路径的压缩，比如 $3\rightarrow 7\rightarrow 8 \rightarrow 1$ 表示为 $3$、$7$、$8$ 三者均指向 $1$，$7\rightarrow1, 8\rightarrow1, 3\rightarrow1$，构成并查集，用来提高计算速度。</p>
+<p>扫描全部样本点，直到样本点的分类不再变化为止。</p>
+<p>DBSCAN 算法对数据分布是没有要求的。</p>
+<p>两种情况注意区分：</p>
+<p>$1\rightarrow 2\leftarrow 3$，$1, 2, 3$ 不一定是一个簇，如果真是这样的话，$1, 3$ 都是核心对象，$2$ 属于 $1$ 或 $3$ 都是有道理的。</p>
+<p>$1\leftarrow 2\rightarrow 3$，$1, 2, 3$ 是一个簇。</p>
+<p>如果一个样本不是核心对象，并且没有被其他核心对象密度可达，那么这个样本可以被判定为异常值。</p>
+<p>$\epsilon​$ 邻域的定义有多种，可以用切比雪夫距离，欧式距离，曼哈顿距离等等。</p>
+<h2 id="密度最大值聚类"><a href="#密度最大值聚类" class="headerlink" title="密度最大值聚类"></a>密度最大值聚类</h2><p>密度最大值聚类可以识别各种形状的类簇，并且参数很容易确定。</p>
+<h3 id="局部密度-rho-i"><a href="#局部密度-rho-i" class="headerlink" title="局部密度 $\rho_i$"></a>局部密度 $\rho_i$</h3><script type="math/tex; mode=display">
+\rho_i = \sum_{j}\chi(d_{ij} - d_c)</script><script type="math/tex; mode=display">
+\chi(x)=
+\begin{equation}  
+\left\{
+\begin{aligned}
+1 && x<0\\
+0 && otherwise
+\end{aligned}
+\right.  
+\end{equation}</script><p>$d_c$ 是一个截断距离，类似之前讲的 $\epsilon$ 邻域。</p>
+<p>$\rho_i​$  是到对象 $i​$ 的距离小于 $d_c​$ 的对象的个数，也就是邻居数，类似前面说的 $m​$。</p>
+<p>由于该算法只对 $\rho_i$ 的相对值敏感，所以对 $d_c$ 的选择是稳健的，一个推荐的做法是选择 $d_c$，使平均每个点的邻居数为所有点的 1%~2%。</p>
+<h3 id="高局部密度点距离-delta-i"><a href="#高局部密度点距离-delta-i" class="headerlink" title="高局部密度点距离 $\delta_i$"></a>高局部密度点距离 $\delta_i$</h3><script type="math/tex; mode=display">
+\delta_i = min_{j:\rho_j>\rho_i}(d_{ij})</script><p>对于样本 i，找出所有密度高于 $\rho_i​$ 的所有对象，这些对象中距离对象 i 最近的距离称为高局部密度点距离 $\delta_i​$。</p>
+<p>对于每个样本都有一个 $(\rho_i, \delta_i)​$：</p>
+<p>一个样本的 $\rho_i$ 和 $\delta_i$ 都很大，$\rho_i$ 大的意思是样本 i 周围有很多样本，$\delta_i$ 大指有一个比 $\rho_i$ 还大的样本距离 i 很远，那么 i 可以被认为一个聚类中心。</p>
+<p>$\rho_i$  小，$\delta_i$ 大时，样本 $i​$ 周围样本很少，并且远离了大多数样本，可以认为是异常值。</p>
+<p>$\rho_i$ 大，$\delta_i$ 小时，说明离比 $\rho_i$ 大的样本很近，大多数样本符合这种情况。</p>
+<p>$\rho_i$ 小，$\delta_i$ 小时，这种情况很少见，因为噪声的 $\rho_i$ 会很小，这种现象可以认为是噪声中的噪声。</p>
+<h3 id="局部密度的其他定义"><a href="#局部密度的其他定义" class="headerlink" title="局部密度的其他定义"></a>局部密度的其他定义</h3><p>为了避免采用计数确定密度时，出现二者计数相同的情况，可以采用其他方式定义密度。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/fNHjE8L8nMIL.png?imageslim" alt="mark"></p>
+<p>$I_S{i}$ 指样本 i 的邻域。</p>
+<h3 id="簇中心的识别"><a href="#簇中心的识别" class="headerlink" title="簇中心的识别"></a>簇中心的识别</h3><p>在利用比较大的局部密度 $\rho_i$ 和大的高密度距离 $\delta_i$ 确认簇中心后，其他点按照距离已知簇的中心最近进行分类，也可按照密度可达的方法进行分类。</p>
+<h3 id="Density-Peak-决策图"><a href="#Density-Peak-决策图" class="headerlink" title="Density Peak 决策图"></a>Density Peak 决策图</h3><p>分别以 $\rho_i$ 和 $\delta_i$ 为横纵坐标画图</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/weB2mHuzP0UH.png?imageslim" alt="mark"></p>
+<p>1 和 10 点的 $\rho_i$ 和 $\delta_i$  值都非常大，可以认为是聚类中心。</p>
+<p>26、27 和 28 的 $\rho_i$ 很小，$\delta_i$ 大，可以认为是噪声。</p>
+<p>大多数样本的 $\rho_i$ 和 $\delta_i$ 都是很小的</p>
+<h3 id="算法鲁棒性的证明"><a href="#算法鲁棒性的证明" class="headerlink" title="算法鲁棒性的证明"></a>算法鲁棒性的证明</h3><p><img src="http://qnpic.sijihaiyang.top/blog/20190402/NE23CXx0oDu1.png?imageslim" alt="mark"></p>
+<h1 id="谱聚类"><a href="#谱聚类" class="headerlink" title="谱聚类"></a>谱聚类</h1><p>线代中的两个结论，是实对称矩阵的特征值一定是实数，实对称阵不同特征值对应的特征向量一定正交。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/ayUmLo9D6kIj.png?imageslim" alt="mark"></p>
+<p>如果有概念关系到“谱”，往往就是求的特征值和特征向量。</p>
+<h2 id="谱聚类的过程"><a href="#谱聚类的过程" class="headerlink" title="谱聚类的过程"></a>谱聚类的过程</h2><h3 id="相似度度量方式"><a href="#相似度度量方式" class="headerlink" title="相似度度量方式"></a>相似度度量方式</h3><p>给定一组数据 $x_1, x_2, …, x_n$，总有办法求出任意两个点之间的相似度 $s(x_i, x_j)$，这里，借鉴 SVM 中核函数的方法度量两个样本间的相似性</p>
+<script type="math/tex; mode=display">
+s(x_i, x_j) = exp[-\frac{||x_i-x_j||_2^2}{2\sigma^2}]</script><p>$\sigma$ 决定了衰减速度。</p>
+<h3 id="相似度矩阵"><a href="#相似度矩阵" class="headerlink" title="相似度矩阵"></a>相似度矩阵</h3><p>任意两个样本 $i$, $j$ 都可以计算相似度，n 个样本则可以形成 $n\times n$ 的方阵 $W = (w_{ij}), i, j=1, .., n$。</p>
+<p>对角线上指的是样本和自己的相似度，这里并不取 1，取做 0。</p>
+<script type="math/tex; mode=display">
+W = 
+\begin{pmatrix}
+0 & s(x_1, x_2) & s(x_1, x_3)...&s(x_1, x_n)\\
+s(x_2, x_1) & 0 & s(x_2, x_3)...&s(x_2, x_n)\\
+...\\
+s(x_n, x_1) & s(x_n, x_2) & s(x_n, x_3)...&0\\
+\end{pmatrix}</script><p>如果相似度的度量方式是对称的，相似度矩阵 $W$ 则是一个对称阵。</p>
+<h3 id="顶点的度"><a href="#顶点的度" class="headerlink" title="顶点的度"></a>顶点的度</h3><p>顶点的度 $d<em>i​$，定义为相似度矩阵中每一行的加和 $d_i = \sum</em>{j=1}^nw_{ij}​$。</p>
+<p>于是便有对角阵 $D$</p>
+<script type="math/tex; mode=display">
+D = 
+\begin{pmatrix}
+d_1 & ...&0\\
+0&d_2&... &0\\
+0&0...&d_n\\
+\end{pmatrix}</script><h3 id="拉普拉斯矩阵"><a href="#拉普拉斯矩阵" class="headerlink" title="拉普拉斯矩阵"></a>拉普拉斯矩阵</h3><p>$L = D - W$</p>
+<p>矩阵 $L$ 是对称阵，求特征值 $\lambda$ 和特征向量 $\mu$。将特征向量按特征值<strong>从小到大</strong>排列，$u_1, u_2, …, u_n$ 可以构成特征向量矩阵 $U$。</p>
+<p>构造拉普拉斯矩阵有多种方式，如果 $L = W-D$ 或 $L = D^{-1}W​$，那就需要特征值从大到小排列。</p>
+<p>事先给定聚类个数 $k$，选择前 k 个的特征值对应的特征向量，形成矩阵 $U$，$U\in R^{n\times k}​$。</p>
+<h3 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h3><p>$U$ 是 $n\times k$ 维，将每一行看作一个样本，每个样本是 $k$ 维的，使用 k-means 算法对 n 个样本进行聚类，得到 $C_1, C_2, …, C_k$ 簇，该聚类的结果就是谱聚类的结果。</p>
+<p>过程和 PCA 十分相似，同时，这也是一个降维的过程。</p>
+<h3 id="答疑-1"><a href="#答疑-1" class="headerlink" title="答疑"></a>答疑</h3><ol>
+<li>如何选择 K</li>
+</ol>
+<p>将 $\lambda​$ 从小到大排列后，选择 $\lambda​$ 突然上升之前的 k 作为最终聚类的数目。比如将 $\lambda​$ 从小到大排序后，如下图所示，那选择 $k=4​$ 是比较合适的，这是谱聚类常用的选择 k 的方法。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/lpLqc94gQk6j.png?imageslim" alt="mark"></p>
+<ol>
+<li><p>谱聚类可以认为是切割图推导的聚类。原则上切割后的两个类中的 $w(i, j)​$ 不要太小，同时保证切割后两个类的样本数量差不多，由此也可以推出为什么 $L=D-W​$。</p>
+</li>
+<li><p>$L=D^{-1}W​$ 的解释。如果将 $W​$ 左乘一个矩阵 $D^{-1}​$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+\frac{1}{d_1}\\
+&\frac{1}{d_2}\\
+...
+&&&\frac{1}{d_n}
+\end{pmatrix}</script><p>最终得到</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+\frac{w_{11}}{d_1}&\frac{w_{12}}{d_1}...&\frac{w_{1n}}{d_1}\\
+\frac{w_{21}}{d_2}&\frac{w_{22}}{d_2}...&\frac{w_{2n}}{d_2}\\
+...\\
+\frac{w_{n1}}{d_n}&\frac{w_{n2}}{d_n}...&\frac{w_{nn}}{d_n}\\
+\end{pmatrix}</script><p>这个矩阵的第 i 行可以表示样本 i 转移到相邻样本的转移概率。</p>
+<p>由此，拉普拉斯矩阵可以认为任一样本在其对应的转移概率下到相邻样本的随机游走。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/TPCWVBdVKepq.png?imageslim" alt="mark"></p>
+<ul>
+<li>未正则拉普拉斯矩阵 $L=D-W$</li>
+<li>随机游走拉普拉斯矩阵 $L=D^{-1}(D-W)$ 或 $L=D^{-1}W$</li>
+<li>对称拉普拉斯矩阵 $L=D^{-1/2}(D-W)^{-1/2}$</li>
+</ul>
+<p>随机游走拉普拉斯矩阵是使用最多的。</p>
+</li>
+<li><p>谱聚类，k-means，层级聚类都需要事先指定 k 值；密度聚类，AP 算法，Canopy 算法都不需要事先指定 k 值。</p>
+</li>
+<li><p>W 矩阵的建立方式有多种，比如全连接图，$\epsilon$ 近邻图，k 近邻图等</p>
+</li>
+<li><p><img src="http://qnpic.sijihaiyang.top/blog/20190402/b4JpCddCDIhu.png?imageslim" alt="mark"></p>
+<p>但是，不见得非要做 K-Means，可以试试其他聚类方法，比如密度聚类，层次聚类等。</p>
+</li>
+</ol>
+<h2 id="为什么谱聚类是有效的"><a href="#为什么谱聚类是有效的" class="headerlink" title="为什么谱聚类是有效的"></a>为什么谱聚类是有效的</h2><p>拉普拉斯矩阵 $L=D-W$ 是对称半正定矩阵，最小特征值是 0，相应的特征向量是全 1 向量。</p>
+<p>证明过程如下</p>
+<script type="math/tex; mode=display">
+L
+\begin{pmatrix}
+1\\
+1\\
+.\\
+.\\
+1
+\end{pmatrix}=
+D
+\begin{pmatrix}
+1\\
+1\\
+.\\
+.\\
+1
+\end{pmatrix}-
+W
+\begin{pmatrix}
+1\\
+1\\
+.\\
+.\\
+1
+\end{pmatrix}=
+\begin{pmatrix}
+d_1\\
+d_2\\
+.\\
+.\\
+d_n
+\end{pmatrix}-
+\begin{pmatrix}
+w_{11}+w_{12}+...+w_{1n}\\
+w_{21}+w_{22}+...+w_{2n}\\
+.\\
+.\\
+w_{n1}+w_{n2}+...+w_{nn}
+\end{pmatrix}\\
+=
+\begin{pmatrix}
+d_1\\
+d_2\\
+.\\
+.\\
+d_n
+\end{pmatrix}-
+\begin{pmatrix}
+d_1\\
+d_2\\
+.\\
+.\\
+d_n
+\end{pmatrix}=0
+=0
+\begin{pmatrix}
+1\\
+1\\
+.\\
+.\\
+1
+\end{pmatrix}</script><p>假如共有 n 个样本，我们知道有 r 个样本是一个簇，另外 n-r 个样本是一个簇，而且，假设这两个簇间的相似度为 0。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/MMgjM4xKldgB.png?imageslim" alt="mark"></p>
+<p>相似度矩阵 $W$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+W_{r\times r}&0\\
+0&W_{n-r\times n-r}
+\end{pmatrix}</script><p>矩阵 $D​$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+D_{r\times r}&0\\
+0&D_{n-r\times n-r}
+\end{pmatrix}</script><p>拉普拉斯矩阵 $L​$</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+L_{r\times r}&0\\
+0&L_{n-r\times n-r}
+\end{pmatrix}=
+\begin{pmatrix}
+D_{r\times r}-W_{r\times r}&0\\
+0&D_{n-r\times n-r}-W_{n-r\times n-r}
+\end{pmatrix}</script><p>根据 $L<em>{r\times r}​$ 和 $L</em>{n-r\times n-r}​$ 分别能得到特征值为 0 的两个特征向量，选择前 2 小的特征值对应的特征向量如下：</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+1\\
+.\\
+1\\
+1\\
+.\\
+0\\
+\end{pmatrix}
+\begin{pmatrix}
+0\\
+.\\
+1\\
+1\\
+.\\
+1\\
+\end{pmatrix}</script><p>第一个向量有 $r$ 个 1，第二个向量有 $n-r$ 个 1，共有 n 行。</p>
+<p>这样，每个样本变成了 (1, 0)，(1, 0)，… (0, 1) 的形式，用 k-means 进行聚类自然能聚成两类。一类样本数量是 r，一类样本数量 n-r。在现实中可能不会这么理想，形成的两个向量可能是小数形式。</p>
+<p>从切割图，随机游走和举特例的方式都可以尝试着解释谱聚类。</p>
+<h1 id="标签传递算法"><a href="#标签传递算法" class="headerlink" title="标签传递算法"></a>标签传递算法</h1><p><img src="http://qnpic.sijihaiyang.top/blog/20190402/3rRkvyJrAbJD.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190402/t97L8GTKa1vi.png?imageslim" alt="mark"></p>
+<p>假设一个样本的邻域内有 7 个样本，5 个绿色，2个红色，那这个样本有 $\frac{5}{7}$ 的概率标记为绿色，$\frac{2}{7}$ 的概率标记为红色。上述图是遍历所有样本次数差异得到的聚类结果。可以应用在社区发现中。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/97e11c7c.html" rel="next" title="什么是迭代器和生成器">
+                <i class="fa fa-chevron-left"></i> 什么是迭代器和生成器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/2c759b92.html" rel="prev" title="聚类算法笔记（二）--PCA/SVD">
+                聚类算法笔记（二）--PCA/SVD <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#密度聚类"><span class="nav-number">1.</span> <span class="nav-text">密度聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DBSCAN"><span class="nav-number">1.1.</span> <span class="nav-text">DBSCAN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DBSCAN-的若干概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">DBSCAN 的若干概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数-m-和-epsilon"><span class="nav-number">1.1.2.</span> <span class="nav-text">超参数 $m$ 和 $\epsilon$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#答疑"><span class="nav-number">1.1.3.</span> <span class="nav-text">答疑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密度最大值聚类"><span class="nav-number">1.2.</span> <span class="nav-text">密度最大值聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#局部密度-rho-i"><span class="nav-number">1.2.1.</span> <span class="nav-text">局部密度 $\rho_i$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高局部密度点距离-delta-i"><span class="nav-number">1.2.2.</span> <span class="nav-text">高局部密度点距离 $\delta_i$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部密度的其他定义"><span class="nav-number">1.2.3.</span> <span class="nav-text">局部密度的其他定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#簇中心的识别"><span class="nav-number">1.2.4.</span> <span class="nav-text">簇中心的识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Density-Peak-决策图"><span class="nav-number">1.2.5.</span> <span class="nav-text">Density Peak 决策图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法鲁棒性的证明"><span class="nav-number">1.2.6.</span> <span class="nav-text">算法鲁棒性的证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谱聚类"><span class="nav-number">2.</span> <span class="nav-text">谱聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#谱聚类的过程"><span class="nav-number">2.1.</span> <span class="nav-text">谱聚类的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相似度度量方式"><span class="nav-number">2.1.1.</span> <span class="nav-text">相似度度量方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相似度矩阵"><span class="nav-number">2.1.2.</span> <span class="nav-text">相似度矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顶点的度"><span class="nav-number">2.1.3.</span> <span class="nav-text">顶点的度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉普拉斯矩阵"><span class="nav-number">2.1.4.</span> <span class="nav-text">拉普拉斯矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚类"><span class="nav-number">2.1.5.</span> <span class="nav-text">聚类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#答疑-1"><span class="nav-number">2.1.6.</span> <span class="nav-text">答疑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么谱聚类是有效的"><span class="nav-number">2.2.</span> <span class="nav-text">为什么谱聚类是有效的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标签传递算法"><span class="nav-number">3.</span> <span class="nav-text">标签传递算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

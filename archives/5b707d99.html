@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本章主要讲解初级篇中的数据源深入，工作表，函数与计算。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tableau-数据可视化实战(二)">
+<meta property="og:url" content="https://www.hotheat.top/archives/5b707d99.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="本章主要讲解初级篇中的数据源深入，工作表，函数与计算。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190428/MrcUg0E99pt6.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190428/pbhqUrUVjdLW.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190429/MFuYbK5VYiyv.png?imageslim">
+<meta property="og:image" content="c:/Users/hotheat/AppData/Roaming/Typora/typora-user-images/1556534299835.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190429/VlUOIOwG0OO9.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/kMP7CDGmAHQL.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/QueHNqOgtnUa.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/dM614ETajuCb.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/FWDN2STQFSk7.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/99fkpeqdx1vc.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/NmQ3wUClPmtT.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/TWtgm0pFJ1Ta.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/Fge7igIGJa4Q.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/CPaVyNXlrj7m.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/Qb9i9xlquT0K.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/zRYfTmRGaKyO.png?imageslim">
+<meta property="og:image" content="c:/Users/hotheat/AppData/Roaming/Typora/typora-user-images/1556609636372.png">
+<meta property="og:image" content="c:/Users/hotheat/AppData/Roaming/Typora/typora-user-images/1556609686392.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/A1bMxRF2NfoB.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/nGvMQtIQUCvs.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/0MGbVdhLJYrF.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190430/WkIF0169mm47.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/IfRRyCUdezdc.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/iK0QnGnjlObu.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/UM6HyW3h0Ccx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/xhtpzT2TfLim.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/61CntgQQKmaP.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/fumE37z5A1TX.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/U57wJY0Ub0K9.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/CdaCSDwfbyGo.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/wsqoNhREulhz.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/nXVFKUESiUD5.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/8qyKMHUskTiv.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190501/65FGrHfvjnXf.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190502/0OMMiGW7k7y9.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190502/GGFAJG1QCYAG.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190502/4JijCS2gn3uh.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190502/4mW4mln02NsB.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190502/7Yd4RT5gnQdK.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190503/p3kaWcUL1Dzz.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tableau-数据可视化实战(二)">
+<meta name="twitter:description" content="本章主要讲解初级篇中的数据源深入，工作表，函数与计算。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190428/MrcUg0E99pt6.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/5b707d99.html">
+
+
+
+
+
+  <title>Tableau-数据可视化实战(二) | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/5b707d99.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Tableau-数据可视化实战(二)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T09:19:26+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据可视化/" itemprop="url" rel="index">
+                    <span itemprop="name">数据可视化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据可视化/Tableau/" itemprop="url" rel="index">
+                    <span itemprop="name">Tableau</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本章主要讲解初级篇中的数据源深入，工作表，函数与计算。</p>
+<a id="more"></a>
+<h1 id="Tableau-初级篇"><a href="#Tableau-初级篇" class="headerlink" title="Tableau 初级篇"></a>Tableau 初级篇</h1><h2 id="数据源深入"><a href="#数据源深入" class="headerlink" title="数据源深入"></a>数据源深入</h2><h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><p>超市.xls 文件中共有三张表，分别是订单表、退货表、销售人员表。订单表的信息如下：</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190428/MrcUg0E99pt6.png?imageslim" alt="mark"></p>
+<ol>
+<li>选择数据源</li>
+<li>选择维度和度量（数值类型），可以自己调整</li>
+<li>应用可视化技术</li>
+</ol>
+<h3 id="数据连接方式"><a href="#数据连接方式" class="headerlink" title="数据连接方式"></a>数据连接方式</h3><ol>
+<li><p>数据提取连结</p>
+<p>把数据从数据源加载到本地，进行离线分析。</p>
+</li>
+<li><p>实时联结</p>
+<p>与数据源同步，不会保存到本地，可以选择“立即更新”或“后继自动更新”</p>
+<p>立即更新类似于更新；自动更新，只要数据库发生变化，就会自动更新。</p>
+</li>
+</ol>
+<h3 id="数据多表联结"><a href="#数据多表联结" class="headerlink" title="数据多表联结"></a>数据多表联结</h3><p>同一个数据源中有多个字段，通过其中的一些字段组合成一张新的表。</p>
+<p>在数据源界面分别双击两张表，就可以联结。对于重复的列，可以选择隐藏该列。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190428/pbhqUrUVjdLW.png?imageslim" alt="mark"></p>
+<p><strong>tableau 默认只能关联具有相同列名的两张表，如果两张表中的 id 字段不同，在关联时会出现感叹号</strong></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190429/MFuYbK5VYiyv.png?imageslim" alt="mark"></p>
+<p>这里可以人为选择关联字段。</p>
+<p>连结类型有内连结，左连结，右连结和并集联结。</p>
+<p>三张表关联，再拖动另一张表进去即可，通过字段名称匹配。</p>
+<h3 id="数据混合"><a href="#数据混合" class="headerlink" title="数据混合"></a>数据混合</h3><p>数据可能存储在不同数据库中，比如关系型数据库，Excel 文件加载到一起进行分析。</p>
+<p>可以先添加本地 excel 数据，然后再添加 mysql，填写 ip 地址，用户名和密码，选择数据库加载进来即可。</p>
+<h3 id="提取数据"><a href="#提取数据" class="headerlink" title="提取数据"></a>提取数据</h3><p>不需要数据源中的所有数据，像 SQL 数据库中的视图。避免数据传递，加载的内存消耗。</p>
+<p>通过数据源中的筛选器，不断添加数据源来实现</p>
+<p><img src="C:\Users\hotheat\AppData\Roaming\Typora\typora-user-images\1556534299835.png" alt="1556534299835"></p>
+<h2 id="工作表"><a href="#工作表" class="headerlink" title="工作表"></a>工作表</h2><h3 id="如何操作工作表"><a href="#如何操作工作表" class="headerlink" title="如何操作工作表"></a>如何操作工作表</h3><p>添加、重命名、删除、重新排序和移动（鼠标拖动）</p>
+<p>Ctrl + S 保存工作表</p>
+<h3 id="编辑元数据"><a href="#编辑元数据" class="headerlink" title="编辑元数据"></a>编辑元数据</h3><p>abc 代表字符型，# 代表数值型，还有日期类型</p>
+<ul>
+<li>可以更改数据类型</li>
+</ul>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190429/VlUOIOwG0OO9.png?imageslim" alt="mark"></p>
+<ul>
+<li><p>列的重命名和隐藏</p>
+<p>在数据源和工作表中可以操作，可以勾选显示隐藏字段，显示成灰色字段。</p>
+</li>
+<li><p>列别名</p>
+<p>对列里的值进行重命名，加强理解这一列的属性。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/kMP7CDGmAHQL.png?imageslim" alt="mark"></p>
+<p>所有编辑元数据的操作都不会影响到原始数据。</p>
+</li>
+</ul>
+<h3 id="字段操作"><a href="#字段操作" class="headerlink" title="字段操作"></a>字段操作</h3><h4 id="组合两个字段"><a href="#组合两个字段" class="headerlink" title="组合两个字段"></a>组合两个字段</h4><p>合并两个或多个列</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/QueHNqOgtnUa.png?imageslim" alt="mark"></p>
+<p>数据源中并没有合并到一起，但在工作表中是可以看到的。</p>
+<p>可以删除，编辑合并字段。双击加入到右侧的视图。</p>
+<p>合并字段后，原字段仍然存在</p>
+<h4 id="字段分层"><a href="#字段分层" class="headerlink" title="字段分层"></a>字段分层</h4><p>处理层次结构时用，比如大类别中包含小类别的情况。</p>
+<p>能够随时向下钻取数据。</p>
+<ul>
+<li>可以通过拖动或者选中加右键的方式创建。</li>
+</ul>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/dM614ETajuCb.png?imageslim" alt="mark"></p>
+<p>​       从上到下依次代表大类到小类。</p>
+<ul>
+<li>点击加号向下钻取</li>
+</ul>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/FWDN2STQFSk7.png?imageslim" alt="mark"></p>
+<ul>
+<li><p>日期字段会自动分层</p>
+<p>年/季度/月/日分层</p>
+</li>
+<li><p>字段分组</p>
+<p>按文件夹分组，分门别类的存放和管理字段</p>
+<p>在维度的空白位置右击</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/99fkpeqdx1vc.png?imageslim" alt="mark"></p>
+<p>右键移除文件夹，取消分组。</p>
+<p>按数据源分组，不同表代表不同的数据源</p>
+</li>
+</ul>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/NmQ3wUClPmtT.png?imageslim" alt="mark"></p>
+<h4 id="拆分字段"><a href="#拆分字段" class="headerlink" title="拆分字段"></a>拆分字段</h4><p>将一个字段拆分为多个字段，比如将姓氏和名字分开。</p>
+<p>数据源中</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/TWtgm0pFJ1Ta.png?imageslim" alt="mark"></p>
+<p>工作表中</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/Fge7igIGJa4Q.png?imageslim" alt="mark"></p>
+<p>保证需要拆分每一行的分隔符是相同的。</p>
+<p>拆分后可以在数据源中重命名。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/CPaVyNXlrj7m.png?imageslim" alt="mark"></p>
+<p>是否只选出拆分后的第一列</p>
+<h4 id="计算字段"><a href="#计算字段" class="headerlink" title="计算字段"></a>计算字段</h4><p>通过计算重新创建新的字段。tableau 可以配合公式来做，但是性能可能不够高。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/Qb9i9xlquT0K.png?imageslim" alt="mark"></p>
+<p>可以拖动进去或使用 <code>[字段]</code> 代表字段的引用。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/zRYfTmRGaKyO.png?imageslim" alt="mark"></p>
+<p>数据源中的标记多了一个 <code>=</code>，并且有了一个[计算]标记。</p>
+<h4 id="集"><a href="#集" class="headerlink" title="集"></a>集</h4><p>集是根据某些条件定义数据子集的自定义字段，可以基于计算条件建立。</p>
+<p>比如<strong>集成员对总额的贡献程度如何</strong>，如：至少购买 5k 元商品的销售额占总客户的比例</p>
+<p><img src="C:\Users\hotheat\AppData\Roaming\Typora\typora-user-images\1556609636372.png" alt="1556609636372"></p>
+<p><img src="C:\Users\hotheat\AppData\Roaming\Typora\typora-user-images\1556609686392.png" alt="1556609686392"></p>
+<p>创建后出现交集的形式，加入到视图后，会出现内/外的形式。</p>
+<p>内指集内的数据，外指集外的数据。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/A1bMxRF2NfoB.png?imageslim" alt="mark"></p>
+<p>另一个用法是<strong>比较数据子集或者成批数据</strong>，例如，有多少客户在去年和今年购买过产品，或者购买过特定产品，是否购买其他产品？求两个集的交集或并集。</p>
+<p>比如有多少客户在 2015 和 2016 年都购买过产品？</p>
+<ol>
+<li><p>选择 2015 年客户购买的产品集</p>
+<p>通过筛选器筛选出来数据，在数据上右击，选择创建集</p>
+</li>
+<li><p>选择 2016 年客户购买的产品集</p>
+</li>
+<li><p>选择 [2015&amp;2016] 年客户购买的产品交集</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/nGvMQtIQUCvs.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/0MGbVdhLJYrF.png?imageslim" alt="mark"></p>
+</li>
+<li><p>结合筛选器进行图表显示</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190430/WkIF0169mm47.png?imageslim" alt="mark"></p>
+<p>计数不同代表选出唯一的客户</p>
+</li>
+</ol>
+<p>如果要做 2015，2016，2017 三年的交集，需要拿 2017 客户与 （2015&amp;2016客户）做交集即可。</p>
+<h2 id="函数与计算"><a href="#函数与计算" class="headerlink" title="函数与计算"></a>函数与计算</h2><h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><h4 id="常规运算符"><a href="#常规运算符" class="headerlink" title="常规运算符"></a>常规运算符</h4><p><code>+</code>：添加两个数字，连接两个字符串，增加日期天数</p>
+<p><code>-</code>：减去两个数字，从日期中减去天数</p>
+<h4 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h4><p><code>*/%^</code>：乘/除/取余/指数运算</p>
+<h4 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h4><p><code>=</code>：等于，<code>==</code> 代表绝对相等（不常用）。</p>
+<p><code>!=</code>：不等于</p>
+<p><code>&gt;</code>：大于</p>
+<p><code>&gt;=</code>：大于等于</p>
+<h4 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h4><p><code>AND/OR/NOT</code></p>
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p><code>负号&gt;power&gt;*, /, %&gt;+, -&gt;=, !=, &gt;</code></p>
+<p>运算符和表达式不区分大小写。</p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>官方网站的<a href="https://onlinehelp.tableau.com/current/pro/desktop/zh-cn/functions.htm" target="_blank" rel="noopener">函数列表</a>。</p>
+<h4 id="数字函数"><a href="#数字函数" class="headerlink" title="数字函数"></a>数字函数</h4><p><code>CEILING(number)</code>：向上取整 <code>CEILING(2.145) = 3</code></p>
+<p><code>FLOOR(number)</code>：向下取整</p>
+<p><code>POWER(5, 3)</code>：指数函数</p>
+<p><code>ROUND(数字，[小数])</code>：控制小数点后的位数，会四舍五入。默认取到整数</p>
+<p><code>DIV()</code>：取除数</p>
+<h4 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h4><p><code>LEN(string)</code>：字符串长度</p>
+<p><code>Contains(string, substring)</code>：是否包含子字符串，返回布尔值，区分大小写</p>
+<p><code>ENDSWITH(string, substring)</code>：是否以子字符串作为结尾，会忽略空格；<code>STARTSWITH(string， substring)</code>： string 是否以 substring 开头的。返回布尔值。</p>
+<p><code>FIND(string, substring, [start])</code>：返回子串第一次出现的索引位置。索引从 1 开始，如果没有，返回 0。从 start 处开始查找。</p>
+<p><code>LEFT(string, number)</code>：返回最左侧  number 个字符串；<code>RIGHT(string, number)</code>，返回右侧起 number 个字符串</p>
+<p><code>LOWER()UPPER()LEN()</code></p>
+<p><code>LTRIM()</code>：移到左侧开始的空格；<code>RTIRM()</code>；<code>TRIM()</code></p>
+<p><code>REPLACE(string, substring, replacement)</code>：替换字符串</p>
+<p><code>SPACE(number)</code>：返回 number 个空格。<code>&quot;A&quot;+SPACE(4)+&quot;B&quot;</code></p>
+<p><code>SPLIT(string, delimiter, token_number)</code>：<code>SPLIT(&quot;a-b-c-d&quot;, &quot;-&quot;, 2)=2</code>, <code>SPLIT(&quot;a-b-c-d&quot;, &quot;-&quot;, -2)</code>，负号代表从最右侧开始取</p>
+<h4 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h4><p><code>date_part</code> 是一个常量字符串参数，常使用的值为 “year”，”quarter”，”month”，”dayofyear”，”day”，”weekday”，”week”，”hour”，”minute”，”second”。</p>
+<p>日期用前后的两个 <code>#</code> 括起来。</p>
+<p><code>DATEADD(date_part, interval, date)</code>，返回日期 date2-date1，<code>DATEADD(&quot;month&quot;, 3, #04-13-2014#)</code>= “2014/7/13 00:00:00”</p>
+<p><code>DATEDIFF(date_part, date1, date2, [start of week])</code>，[start of week] 指定一周的开始是哪一天，默认是 “sunday”。</p>
+<p><code>MAKEDATE(year, month, day)</code>：组合日期；<code>MAKEDATETIME()</code></p>
+<p><code>DATENAME(date_part, date, [start of week])</code>：返回一个日期的 date_part。以字符串形式返回。date_part 是 Month，会返回 April 这种英文名称</p>
+<p><code>DATEPART()</code> 以整数形式返回 date 的 date_part。</p>
+<p><code>DAY(date)</code> 返回天数。<code>YEAR(date)</code> 返回年。<code>MONTH(date)</code> 返回月数。<code>DAY(#2017.08.10#)=10</code>。如果返回时/分/秒，可以使用 <code>DATEPART()</code></p>
+<p><code>ISDATE(string)</code> 判断是否是日期时间类型，支持多种格式。</p>
+<p><code>NOW()</code>返回当前时间；<code>TODAY()</code>返回当前日期</p>
+<h4 id="逻辑函数"><a href="#逻辑函数" class="headerlink" title="逻辑函数"></a>逻辑函数</h4><p><code>ISDATE()</code> 判断是否为日期</p>
+<p><code>ISNULL(expression)</code> ：判断表达式中是否含有 NULL 值，<code>ISNULL([profit])</code> 返回布尔值</p>
+<p><code>IFNULL(expr1, expr2)</code>：如果表达式 expr1 不为 NULL，返回该表达式，否则返回 expr2。例如，<code>IFNULL([profit], 0)</code> 将 profit 中的 NULL 值替换为 0。</p>
+<p><code>IIF(test, then, else, [unknown])</code>：检查条件如果为 True，返回一个值，如果为 Fasle，则返回另一个值。如果未知，返回第三个值或者 NULL。<code>IIF([Profit] &gt; 0, &#39;Profit&#39;, &#39;Loss&#39;)</code>。示例：</p>
+<p>添加计算字段，添加字段后，在数据源中可以查看<img src="http://qnpic.sijihaiyang.top/blog/20190501/IfRRyCUdezdc.png?imageslim" alt="mark"></p>
+<p><code>IF &lt;expr&gt; THEN &lt;then&gt; [ELSEIF &lt;expr2&gt; THEN &lt;then2&gt;...] [ELSE &lt;else&gt;] END</code>： <img src="http://qnpic.sijihaiyang.top/blog/20190501/iK0QnGnjlObu.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/UM6HyW3h0Ccx.png?imageslim" alt="mark"></p>
+<p><code>CASE &lt;expression&gt; WHEN &lt;value1&gt; THEN &lt;return1&gt; WHEN &lt;value2&gt; THEN &lt;return2&gt; ... ELSE &lt;default return&gt; END</code>：<img src="http://qnpic.sijihaiyang.top/blog/20190501/xhtpzT2TfLim.png?imageslim" alt="mark"></p>
+<h4 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h4><p><code>AVG(expression)</code> 通常会跟一个字段。<code>AVG([销售额])</code></p>
+<p><code>COUNT(expression)</code>  计数，不会去重，右键度量，会出现计数不同。</p>
+<h4 id="类型转换函数"><a href="#类型转换函数" class="headerlink" title="类型转换函数"></a>类型转换函数</h4><p>转换为特定数据类型。比如 <code>STR()</code>，<code>DATE()</code>，<code>DATETIME()</code>，<code>INT()</code>，<code>FLOAT()</code>。</p>
+<p><code>DATE()</code> 将字符串转换成日期格式</p>
+<p><code>DATEPARSE(format, string)</code> 将字符串按照某种格式转换成日期。<code>YEAR(DATEPARSE(&quot;dd-MM-YYYY&quot;, &quot;30-12-2018&quot;))=2018</code>，转换后就可以应用日期函数了。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/61CntgQQKmaP.png?imageslim" alt="mark"></p>
+<h3 id="计算字段-1"><a href="#计算字段-1" class="headerlink" title="计算字段"></a>计算字段</h3><p>函数的使用场景是什么？</p>
+<h4 id="创建公式"><a href="#创建公式" class="headerlink" title="创建公式"></a>创建公式</h4><p>有 5 个元素，分别是函数（淡蓝色），字段（[]或者拖动方式，橙色），运算符（黑色），参数（紫色）和注释（绿色， 以 // 开头）。</p>
+<p>在左下方会提示公式是否有效。</p>
+<h4 id="数值计算"><a href="#数值计算" class="headerlink" title="数值计算"></a>数值计算</h4><p>示例：研究不同邮寄方式的产品利润和折扣之间的差异；不同邮寄方式的聚合（AVG）计算字段。</p>
+<h4 id="字符串计算"><a href="#字符串计算" class="headerlink" title="字符串计算"></a>字符串计算</h4><p>字符串计算，比如比较，连接和替换等。</p>
+<p>包含”安”字城市的销售情况，结合筛选器选择出「真」的城市。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/fumE37z5A1TX.png?imageslim" alt="mark"></p>
+<h4 id="日期计算"><a href="#日期计算" class="headerlink" title="日期计算"></a>日期计算</h4><p>示例：每种商品的「订单日期」和「发货日期」的时间总间隔</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/U57wJY0Ub0K9.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/CdaCSDwfbyGo.png?imageslim" alt="mark"></p>
+<h4 id="表计算"><a href="#表计算" class="headerlink" title="表计算"></a>表计算</h4><p>表计算可以理解为一种功能更强大的计算字段。</p>
+<p>主要分为八种类型</p>
+<ul>
+<li><p>差异计算</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/wsqoNhREulhz.png?imageslim" alt="mark"></p>
+<p>上图是每一年/季度/月的订单销售额情况。</p>
+<p>如果更关注当前值与另一个值的差异，比如这个月比上个月增加了多少销售额。这种需求可以通过表计算来解决。</p>
+<p>原始视图</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/nXVFKUESiUD5.png?imageslim" alt="mark"></p>
+<p>差异计算：计算二月比一月销售额多了多少，三月比二月多了多少。<code>B-A</code></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/8qyKMHUskTiv.png?imageslim" alt="mark"></p>
+<p>横穿是横向比较，16 年 1 月与 15 年 1 月比较；向下是在列上比较，上一是只与上一个相比；第一个，只与第一个比。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190501/65FGrHfvjnXf.png?imageslim" alt="mark"></p>
+<p>编辑表计算，可以计算环比。</p>
+</li>
+<li><p>百分比差异计算</p>
+<p>这个值与另一个值的百分比差异，<code>(B-A)/A*100%</code>。</p>
+<p>选择百分比差异，调整成百分比格式</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190502/0OMMiGW7k7y9.png?imageslim" alt="mark"></p>
+</li>
+<li><p>百分比计算</p>
+<p>选择表计算中的「百分比」。<code>B/A*100%</code>。</p>
+</li>
+<li><p>总额百分比计算</p>
+<p><code>A/(A+B)*100%</code> 和 <code>B/(A+B)*100%</code>。</p>
+<p>编辑表计算中，选择合并百分比。</p>
+</li>
+<li><p>排名计算</p>
+<p>将每个值进行 RANK。选择排序，然后设置格式。下图不同的排序方式。降序指最高的数值排名第一。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190502/GGFAJG1QCYAG.png?imageslim" alt="mark"></p>
+</li>
+<li><p>百分位计算</p>
+<p>选择分位数即可。默认情况下，最低值的百分位为 0，最高值的百分位为 100。也就是分位数。</p>
+</li>
+<li><p>汇总计算</p>
+<p>选择汇总计算，选择计算类型</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190502/4JijCS2gn3uh.png?imageslim" alt="mark"></p>
+<p>这里显示出的是各个月份销售额的<strong>累加</strong>。</p>
+<p>可以在菜单中选择分析，合计，添加所有小计。</p>
+<p><strong>汇总计算和移动计算可以添加从属计算</strong>。比如计算基本年与上一年同期相比，每个月的累积差异百分比</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190502/4mW4mln02NsB.png?imageslim" alt="mark"></p>
+</li>
+<li><p>移动计算</p>
+<p>对当前值之前或之后的指定数目的值进行聚合（总和，平均值，最小值或最大值）,通常用于平滑短期数据波动，可以查看长期趋势。</p>
+<p>查看每一年每一季度的平均销售额，而不是季度末那一个月的平均销售额。</p>
+<p><code>上一个 2，下一个 0</code>代表前两个数据加当前数据；<code>当前值</code> 勾选代表考虑当前月份数值；<code>先向下再横穿</code> 意思先向下遍历，再横向遍历，比如计算 2016 年 1 月数据时，会考虑 2015 年 11 月，2015 年 12 月和 2016 年 1 月三个月份的数据。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190502/7Yd4RT5gnQdK.png?imageslim" alt="mark"></p>
+</li>
+</ul>
+<h3 id="快速表计算"><a href="#快速表计算" class="headerlink" title="快速表计算"></a>快速表计算</h3><p>为计算类型自动应用的表计算，可以理解为表计算的简化操作方式。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190503/p3kaWcUL1Dzz.png?imageslim" alt="mark"></p>
+<h3 id="临时计算"><a href="#临时计算" class="headerlink" title="临时计算"></a>临时计算</h3><p>几种方式：双击字段，双击行或列的空白区域等实现公式和函数的计算。</p>
+<p>多行公式计算：Shift + 回车键</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/d24f3c2e.html" rel="next" title="Tableau 数据可视化实战（一）">
+                <i class="fa fa-chevron-left"></i> Tableau 数据可视化实战（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/ed007eb9.html" rel="prev" title="Tableau-数据可视化实战（三）">
+                Tableau-数据可视化实战（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Tableau-初级篇"><span class="nav-number">1.</span> <span class="nav-text">Tableau 初级篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据源深入"><span class="nav-number">1.1.</span> <span class="nav-text">数据源深入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本操作"><span class="nav-number">1.1.1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据连接方式"><span class="nav-number">1.1.2.</span> <span class="nav-text">数据连接方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据多表联结"><span class="nav-number">1.1.3.</span> <span class="nav-text">数据多表联结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据混合"><span class="nav-number">1.1.4.</span> <span class="nav-text">数据混合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取数据"><span class="nav-number">1.1.5.</span> <span class="nav-text">提取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作表"><span class="nav-number">1.2.</span> <span class="nav-text">工作表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何操作工作表"><span class="nav-number">1.2.1.</span> <span class="nav-text">如何操作工作表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编辑元数据"><span class="nav-number">1.2.2.</span> <span class="nav-text">编辑元数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字段操作"><span class="nav-number">1.2.3.</span> <span class="nav-text">字段操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#组合两个字段"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">组合两个字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字段分层"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">字段分层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拆分字段"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">拆分字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算字段"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">计算字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集"><span class="nav-number">1.2.3.5.</span> <span class="nav-text">集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数与计算"><span class="nav-number">1.3.</span> <span class="nav-text">函数与计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运算符"><span class="nav-number">1.3.1.</span> <span class="nav-text">运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常规运算符"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">常规运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算术运算符"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">算术运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#比较运算符"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑运算符"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先级"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">优先级</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数字函数"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">数字函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串函数"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">字符串函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期函数"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">日期函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑函数"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">逻辑函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚合函数"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">聚合函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类型转换函数"><span class="nav-number">1.3.2.6.</span> <span class="nav-text">类型转换函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算字段-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">计算字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建公式"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">创建公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数值计算"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">数值计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串计算"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">字符串计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#日期计算"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">日期计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表计算"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">表计算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速表计算"><span class="nav-number">1.3.4.</span> <span class="nav-text">快速表计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#临时计算"><span class="nav-number">1.3.5.</span> <span class="nav-text">临时计算</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

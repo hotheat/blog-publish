@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="GBDT/XGBoost/Lightgbm 是在工业中最常用的集成方法。与 Adaboost 样本权重和分类器权重的更新方式不同，这三种方法的权重更新都是采用梯度更新的方法。但这几个模型的共性都是利用上一个弱分类器的结果对当前分类器的进行修正。 Lightgbm 是 17 年微软研究院发表出来的，也是当前比较火的机器学习框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集成算法（二）--GBDT&#x2F;XGB&#x2F;LGB">
+<meta property="og:url" content="https://www.hotheat.top/archives/7c0afd4b.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="GBDT/XGBoost/Lightgbm 是在工业中最常用的集成方法。与 Adaboost 样本权重和分类器权重的更新方式不同，这三种方法的权重更新都是采用梯度更新的方法。但这几个模型的共性都是利用上一个弱分类器的结果对当前分类器的进行修正。 Lightgbm 是 17 年微软研究院发表出来的，也是当前比较火的机器学习框架。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190218/QvCwbne5JqAB.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190218/e66PICbW7Sd5.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190219/A7vDP7cDIhBA.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190219/nBgnKVqMc0wU.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190219/r8QXQfWWpkUx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190219/7KGDljmcRc2C.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/bxSOdyewG6v3.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/HHTmqXqbUfMN.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/7J0Ptw1nTtwB.png?imageslim">
+<meta property="og:image" content="c:/Users/hotheat/AppData/Roaming/Typora/typora-user-images/1550753756330.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190408/uPk6s1djODQy.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190408/SnKunFW2Ue92.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190408/lp14H5cIlNRA.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190408/SmOGBpfk6ytx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190408/bm08B72bPnnV.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190408/z1gvfroBjFoT.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.308Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="集成算法（二）--GBDT&#x2F;XGB&#x2F;LGB">
+<meta name="twitter:description" content="GBDT/XGBoost/Lightgbm 是在工业中最常用的集成方法。与 Adaboost 样本权重和分类器权重的更新方式不同，这三种方法的权重更新都是采用梯度更新的方法。但这几个模型的共性都是利用上一个弱分类器的结果对当前分类器的进行修正。 Lightgbm 是 17 年微软研究院发表出来的，也是当前比较火的机器学习框架。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190218/QvCwbne5JqAB.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/7c0afd4b.html">
+
+
+
+
+
+  <title>集成算法（二）--GBDT/XGB/LGB | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/7c0afd4b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">集成算法（二）--GBDT/XGB/LGB</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-14T13:59:58+08:00">
+                2019-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/集成算法/" itemprop="url" rel="index">
+                    <span itemprop="name">集成算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>GBDT/XGBoost/Lightgbm 是在工业中最常用的集成方法。与 Adaboost 样本权重和分类器权重的更新方式不同，这三种方法的权重更新都是采用<strong>梯度更新</strong>的方法。但这几个模型的共性都是利用上一个弱分类器的结果对当前分类器的进行修正。</p>
+<p>Lightgbm 是 17 年微软研究院发表出来的，也是当前比较火的机器学习框架。</p>
+<a id="more"></a>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><h2 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h2><p>样本 $x<em>i \in R^d​$ ，线性模型本质上就是学习参数 $w_i​$，通过 $\hat{y_i} = \sum_j w_j x</em>{ij}​$ 得到预测值 $\hat{y_i}​$。</p>
+<p>机器学习中的目标函数由训练误差和正则项组成，训练误差则衡量模型在训练集上的表现，正则项 $\Omega(w)​$ 则衡量了模型的复杂度，控制模型不要太复杂，防止过拟合。</p>
+<script type="math/tex; mode=display">
+Obj(\theta) = L(\theta) + \Omega(w)</script><ul>
+<li><p>损失函数：$L = \sum_{i=1}^n l(y_i, \tilde y_i)​$</p>
+</li>
+<li><p>正则项：</p>
+<ul>
+<li>$L_2​$ norm：$\Omega(w) = \lambda ||w||^2​$</li>
+<li>$L_1$ norm(lasso)：$\Omega = \lambda ||w||_1$</li>
+</ul>
+</li>
+<li><p>优化训练误差可以让模型具有预测性</p>
+</li>
+<li>优化正则项可以让模型简单一些，使其预测更加稳定</li>
+<li>欠拟合的模型常常导致高偏差，过拟合模型常常导致高方差。</li>
+</ul>
+<h2 id="回归树模型（CART）"><a href="#回归树模型（CART）" class="headerlink" title="回归树模型（CART）"></a>回归树模型（CART）</h2><ul>
+<li>决策规则和决策树一样，通过信息增益比或基尼系数决定分裂节点</li>
+<li>在每个叶节点都有一个预测分数</li>
+</ul>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190218/QvCwbne5JqAB.png?imageslim" alt="mark"></p>
+<h3 id="集成模型"><a href="#集成模型" class="headerlink" title="集成模型"></a>集成模型</h3><p><img src="http://qnpic.sijihaiyang.top/blog/20190218/e66PICbW7Sd5.png?imageslim" alt="mark"></p>
+<p>最终的预测结果是 K  棵树的加和，第 k 棵的预测结果称为 $f_k(x_i)$。</p>
+<h2 id="k-棵树集成模型的目标函数"><a href="#k-棵树集成模型的目标函数" class="headerlink" title="k 棵树集成模型的目标函数"></a>k 棵树集成模型的目标函数</h2><ul>
+<li><p>样本 $x_i$ 在集成模型上的预测值</p>
+<script type="math/tex; mode=display">
+\hat y_i = \sum_{k=1}^K f_k(x_i)</script></li>
+<li><p>总的代价函数是每次预测的损失加和，正则项也是每棵树 $f_k​$ 正则项的加和。</p>
+<script type="math/tex; mode=display">
+Obj = \sum_{i=1}^n l(y_i, \hat y_i) + \sum_{k=1}^K \Omega(f_k)</script></li>
+</ul>
+<h2 id="Gradient-Boosting"><a href="#Gradient-Boosting" class="headerlink" title="Gradient Boosting"></a>Gradient Boosting</h2><p>在上述的代价函数中，我们并没有办法用 SGD 去计算 $f_k​$。于是，就有了 Gradient Boosting 的方法，运用了 Additive Training 的思想。</p>
+<p>每一轮的预测结果 $\hat y_i^{(t)}​$ 等于上一轮的预测结果 $\hat y_i^{(t-1)}​$ 加上当前函数的预测结果 $f_t(x_i)​$。</p>
+<script type="math/tex; mode=display">
+\hat y_i^{(0)} = 0\\
+\hat y_i^{(1)} = f_1(x_i) = \hat y_i^{(0)} + f_1(x_i)\\
+\hat y_i^{(2)} = f_1(x_i)+f_2(x_i) = \hat y_i^{(1)} + f_2(x_i)\\
+...\\
+\hat y_i^{(t)} = \sum_{k=1}^tf_k(x_i) = \hat y_i^{(t-1)} + f_t(x_i)\\</script><p>$\hat y<em>i^{(t)} = \sum</em>{k=1}^K f_k(x_i)​$ 指训练 $t​$ 轮时的模型的预测结果，也就是函数 $f_t(x_i)​$ 的累加，$f_t(x_i)​$ 则是 $t​$ 轮预测时的新函数，是需要确定的。</p>
+<h2 id="Additive-training"><a href="#Additive-training" class="headerlink" title="Additive training"></a>Additive training</h2><p>问题在于在 $t​$ 轮预测时，如何确定函数 $f_t(x_i)​$ 呢？</p>
+<p>那么，在第 $t​$ 轮预测（并非总的代价函数）时的损失 $Obj^{(t)}​$ 可以得到</p>
+<script type="math/tex; mode=display">
+Obj^{(t)} = \sum_{i=1}^n l(y_i, \hat y_i^{(t)}) + \Omega(f_t) + constant\\
+= \sum_{i=1}^n l(y_i, \hat y_i^{(t-1)}+f_t(x_i)) + \Omega(f_t) + constant</script><p>以平方误差为例：</p>
+<script type="math/tex; mode=display">
+Obj^{(t)}= \sum_{i=1}^n [y_i-(\hat y_i^{(t-1)}+f_t(x_i))]^2 + \Omega(f_t) + constant</script><h2 id="泰勒展开式"><a href="#泰勒展开式" class="headerlink" title="泰勒展开式"></a>泰勒展开式</h2><p>二阶泰勒展开式</p>
+<script type="math/tex; mode=display">
+f(x+\Delta x) = f(x) + f'(x)\Delta x+ \frac{1}{2}f''(x)\Delta x^2</script><p>$t​$ 轮预测的损失为</p>
+<script type="math/tex; mode=display">
+Obj^{(t)} = \sum_{i=1}^n l(y_i, \hat y_i^{(t-1)}+f_t(x_i)) + \Omega(f_t) + constant</script><p>令</p>
+<script type="math/tex; mode=display">
+f(x) = l(x)\\
+x = y_i, \hat y(t-1) \\
+\Delta x = f_t(x_i) \\
+g_i = f'(x) = f'(y_i, \hat y^{(t-1)}) = \partial_{\hat y^{t-1}}l(y_i, \hat y^{(t-1)})\\
+h_i = f''(x) = f''(y_i, \hat y^{(t-1)}) = \partial^2_{\hat y^{t-1}}l(y_i, \hat y^{(t-1)})</script><p>由泰勒展开可以得</p>
+<script type="math/tex; mode=display">
+Obj^{(t)} = \sum_{i=1}^n [l(y_i, y^{(t-1)})+g_i f_t(x_i) + \frac{1}{2}h_i f_t^2(x_i)] + \Omega(f_t) + constant</script><p>$l(y_i, y^{(t-1)})$ 是上一次预测的损失函数，是个常数项。</p>
+<p>以平方误差损失为例，</p>
+<script type="math/tex; mode=display">
+g_i = \partial_{\hat y^{t-1}}(\hat y^{(t-1)} - y_i)^2 = 2(\hat y^{(t-1)} - y_i)\\
+h_i = 2</script><h2 id="新的目标函数"><a href="#新的目标函数" class="headerlink" title="新的目标函数"></a>新的目标函数</h2><p>去掉常数项后</p>
+<script type="math/tex; mode=display">
+Obj^{(t)} = \sum_{i=1}^n [g_i f_t(x_i) + \frac{1}{2}h_i f_t^2(x_i)] + \Omega(f_t)\\
+g_i = \partial_{\hat y^{t-1}}l(y_i, \hat y^{(t-1)})\\
+h_i = \partial^2_{\hat y^{t-1}}l(y_i, \hat y^{(t-1)})</script><p>利用泰勒展开式，使原先难以用 SGD 求解的目标函数转换成了类似多项式的目标函数。</p>
+<h2 id="关于树的定义"><a href="#关于树的定义" class="headerlink" title="关于树的定义"></a>关于树的定义</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190219/A7vDP7cDIhBA.png?imageslim" alt="mark"></p>
+<p>$q$ 代表一棵树结构，$w_{q(x)}$ 代表树中叶子节点 $q(x)$ 的权重。</p>
+<p>一个决策树的核心是树结构和叶权值。</p>
+<p>叶子节点包括两个东西：</p>
+<ul>
+<li>样本实例集</li>
+<li>样本实例的权重</li>
+</ul>
+<p>$I_i = {i|q(x_i) = i}​$ 代表在叶子节点 $j​$ 上的数据集合</p>
+<h2 id="正则项"><a href="#正则项" class="headerlink" title="正则项"></a>正则项</h2><p>正则项代表了模型的复杂度。对叶子节点个数 $T$ 和每个叶子节点权重做出惩罚。 </p>
+<script type="math/tex; mode=display">
+\Omega(f_t) = \gamma T + \frac{1}{2}\sum_{j=1}^Tw_j^2</script><p>$T$ 代表叶子节点的个数，$w_j$ 代表叶子节点 $j$ 的权重。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190219/nBgnKVqMc0wU.png?imageslim" alt="mark"></p>
+<h2 id="重回目标函数"><a href="#重回目标函数" class="headerlink" title="重回目标函数"></a>重回目标函数</h2><p>决策树的学习过程，就是构造如何使用特征得到划分，从而得到这些权值的过程。对于样本 $x​$ 最终会落在叶节点 $q​$ 上，所以样本 x 在决策树 t 上的预测可以用叶节点 q 的权值表示：$f<em>t(x) = w</em>{q(x)}​$。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190219/r8QXQfWWpkUx.png?imageslim" alt="mark"></p>
+<p>$i\in I_j$ 代表属于叶子节点 $j$ 的样本，在第 4 行从遍历样本转换成遍历样子节点个数。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190219/7KGDljmcRc2C.png?imageslim" alt="mark"></p>
+<p>$J(f_t)$ 便可以评估第 $t$ 棵树的质量。</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190220/bxSOdyewG6v3.png?imageslim" alt="mark"></p>
+<p>$Obj$ 代表了第 $f_t$ 棵树的评价指标，也是树的损失函数。</p>
+<h2 id="寻找最佳树结构"><a href="#寻找最佳树结构" class="headerlink" title="寻找最佳树结构"></a>寻找最佳树结构</h2><p>借鉴 ID3/C4.5/CART 的做法，使用贪心法进行划分。针对每个可行划分点，选择增益最大的划分，继续同样的操作，直到满足阈值或得到纯节点。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190220/HHTmqXqbUfMN.png?imageslim" alt="mark"></p>
+<p>具体来说，</p>
+<p>在每个节点，遍历所有的特征。对连续特征来说，对每个特征按值大小进行排序，使用线性搜索方法搜寻最佳切割点，计算哪个切割点的信息增益最大。</p>
+<p>这样会带来一些问题，对特征的值排序十分耗时，如果某个特征有 m 个值，那么会产生 m-1 个切割点，计算十分缓慢。针对每个特征分割点的计算上，XGBoost 实现了并行。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>在每一次迭代增加一个新树</p>
+</li>
+<li><p>•在每次迭代的开始，在每个样本上，利用泰勒展开式，计算</p>
+<script type="math/tex; mode=display">
+g_i = \partial_{\hat y^{t-1}}l(y_i, \hat y^{(t-1)})\\
+h_i = \partial^2_{\hat y^{t-1}}l(y_i, \hat y^{(t-1)})</script></li>
+<li><p>以贪心法寻找最佳树结构 $f_t(x)​$</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190220/7J0Ptw1nTtwB.png?imageslim" alt="mark"></p>
+</li>
+<li><p>将 $f_t(x)​$ 增加到模型上</p>
+<p>常用的方式是</p>
+<script type="math/tex; mode=display">
+\hat y_i^{(t)} = \sum_{k=1}^tf_k(x_i) = \hat y_i^{(t-1)} + \epsilon f_t(x_i)</script><p>$\epsilon​$ 叫做步长或者 shrinkage，经常设置在 0.1 附近的值。$\epsilon​$ 越小，计算越慢，产生的树的数量越多，有点像学习率。</p>
+</li>
+</ul>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
+<li><p>计算速度快，准确率高。</p>
+</li>
+<li><p>支持分布式，不同于 Bagging，Boosting 产生的每棵树都是依赖于上一棵树的预测结果，所以在每棵树的计算并不能实现并行，并行思路是体现在求每个特征的最佳分割点上。</p>
+</li>
+<li>和 GBDT 不同，基分类器不一定是 CART 树，可以是线性回归等其他分类器。</li>
+</ul>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><p>GBDT 中，无论分类还是回归都是 CART 树。和 Additive training 一样，假设在前一轮的学习器是 $f<em>{t-1}(x)​$，本轮迭代的目标是找到一个 CART 树模型的弱学习器 $h_t(x)​$，使本轮的损失函数 $L(y, f_t(x)) = L(y, f</em>{t-1}(x) + h_t(x))​$ 最小。</p>
+<ul>
+<li><p>损失怎么拟合？</p>
+<p>用损失函数的负梯度拟合本轮损失的近似值</p>
+</li>
+<li><p>选择什么样的损失函数？</p>
+<p>分类问题中常用交叉熵损失，回归问题中常用 MSE 损失。</p>
+</li>
+</ul>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>核心：用损失函数的负梯度拟合本轮损失的近似值。</p>
+<p><img src="C:\Users\hotheat\AppData\Roaming\Typora\typora-user-images\1550753756330.png" alt="1550753756330"></p>
+<p>目标是求近似函数 $f<em>m(x)$ 使损失函数 $\sum</em>{i=1}^nL(y<em>i, f_m(x))$ 最小。$f_m(x)$  是一组基函数的加权和 $f_m(x) = \sum</em>{i=0}^Mf_i(x)​$。</p>
+<p>假设第 m 棵树的参数是 $\theta_m$，也就是求 </p>
+<script type="math/tex; mode=display">
+\theta_m = argmin_{\theta_m}\sum_{i=1}^NL(y_i, f_{m-1}(x_i)+T(x_i;\theta_m))</script><ol>
+<li><p>初始化常数函数 $f_0(x)​$，估计使损失函数极小化的常数值，这个常数值不是随意初始化的，如果使用最小二乘构建损失函数时，即</p>
+<script type="math/tex; mode=display">
+L(y_i, f_m(x)) = \frac{1}{2}(y_i-f_m(x))^2</script><p>$f_0(x)​$ 值应该使所有 y 值均值，这样第一步的损失函数 $f_0(x)​$ 才会最小。如果是绝对值损失，应该取 y 值中位数。</p>
+</li>
+<li><p>遍历 M 轮。</p>
+<ol>
+<li>遍历每个样本，求出每个样本的负梯度。$r_{im}​$ 指损失函数的负梯度方向，对于平方损失函数，通常就是所说的残差；对于一般损失函数，就是残差的近似值。</li>
+<li>根据样本数据 x 和损失函数负梯度（残差）作为 y，通过线性搜索叶节点区域 $R<em>{jm}​$，使在每个叶节点的损失加和最小，生成一棵新的回归树 $T_m=\sum</em>{j=1}^{J<em>m}\gamma</em>{jm}I(x\in R_{jm})​$，作为第 m 轮的决策树。$J_m​$ 代表第 m 棵回归树的叶子节点个数。</li>
+<li>更新回归树</li>
+</ol>
+</li>
+<li><p>得到最终模型 $f_m(x)$。</p>
+</li>
+</ol>
+<p>参数《统计学习方法》</p>
+<h1 id="XGBoost-与-GBDT-的区别"><a href="#XGBoost-与-GBDT-的区别" class="headerlink" title="XGBoost 与 GBDT 的区别"></a>XGBoost 与 GBDT 的区别</h1><p>链接：<a href="https://www.zhihu.com/question/41354392/answer/98658997" target="_blank" rel="noopener">https://www.zhihu.com/question/41354392/answer/98658997</a></p>
+<ul>
+<li><p>传统 GBDT 以 CART 作为基分类器，xgboost 还支持线性分类器，这个时候 xgboost 相当于带 L1 和 L2 正则化项的 logistic 回归（分类问题）或者线性回归（回归问题）。</p>
+</li>
+<li><p>传统 GBDT 在优化时只用到一阶导数信息，xgboost 则对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数。顺便提一下，xgboost 工具支持自定义代价函数，只要函数可一阶和二阶求导。 </p>
+</li>
+<li><p>xgboost 在代价函数里加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数、每个叶子节点上输出的 score 的 L2 模的平方和。从 Bias-variance tradeoff 角度来讲，正则项降低了模型的variance，使学习出来的模型更加简单，防止过拟合，这也是 xgboost 优于传统 GBDT 的一个特性。 </p>
+</li>
+<li><p>Shrinkage（缩减），相当于学习速率（ xgboost 中的eta）。xgboost 在进行完一次迭代后，会将叶子节点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。实际应用中，一般把 eta 设置得小一点，然后迭代次数设置得大一点。（补充：传统GBDT的实现也有学习速率） </p>
+</li>
+<li><p>列抽样（column subsampling）。xgboost 借鉴了随机森林的做法，支持列抽样，不仅能降低过拟合，还能减少计算，这也是 xgboost 异于传统 gbdt 的一个特性。</p>
+</li>
+<li>对缺失值的处理。对于特征的值有缺失的样本，xgboost 可以自动学习出它的分裂方向。 </li>
+<li><p>xgboost 工具支持并行。boosting 不是一种串行的结构吗？怎么并行的？注意 xgboost 的并行不是 tree 粒度的并行，xgboost 也是一次迭代完才能进行下一次迭代的（第 t 次迭代的代价函数里包含了前面 t-1 次迭代的预测值）。xgboost 的并行是在特征粒度上的。我们知道，决策树的学习最耗时的一个步骤就是对特征的值进行排序（因为要确定最佳分割点），xgboost 在训练之前，预先对数据进行了排序，然后保存为 block 结构，后面的迭代中重复地使用这个结构，大大减小计算量。这个 block 结构也使得并行成为了可能，在进行节点的分裂时，需要计算每个特征的增益，最终选增益最大的那个特征去做分裂，那么各个特征的增益计算就可以开多线程进行。</p>
+</li>
+<li><p>（新）可并行的近似直方图算法。树节点在进行分裂时，我们需要计算每个特征的每个分割点对应的增益，即用贪心法枚举所有可能的分割点。当数据无法一次载入内存或者在分布式情况下，贪心算法效率就会变得很低，所以 xgboost 还提出了一种可并行的近似直方图算法，用于高效地生成候选的分割点。</p>
+</li>
+</ul>
+<h1 id="Lightgbm"><a href="#Lightgbm" class="headerlink" title="Lightgbm"></a>Lightgbm</h1><p>最大的特点：训练速度快，更节省内存。</p>
+<p>XGBoost 一个瓶颈是针对每个特征，它需要对<strong>每一个可能的分裂点扫描全部的样本</strong>来进行计算基尼系数，这是非常的耗时的。</p>
+<p>对于 XGboost 来说，如果有 m 个连续值的样本，需要先进行排序，然后分别选择 m-1 个分裂点计算基尼系数。Lightgbm 使用直方图算法（而非每个样本作为分裂点）在牺牲一定精度的条件下换取计算速度的提升和内存消耗的降低。直方图中有多少个 bins，就计算多少次分裂点，bin 的数量是远小于样本数量的。</p>
+<p>主要基于以下两种方法：</p>
+<ol>
+<li><p>Gradiant-based One-side Sampling (GOSS)</p>
+<p>GOSS 随机排除一些小梯度样本，用剩余的样本评估信息增益。抽样的方法保证计算速度提升的同时，也能够防止过拟合。</p>
+</li>
+<li><p>Exclusive Feature Bundling (EFB)</p>
+</li>
+</ol>
+<ul>
+<li>Lightgbm 采用 leaf_wise 策略，xgboost 采用 level_wise 策略</li>
+<li>Lightgbm 直接支持分类变量，而 xgboost 需要转换成 one-hot 编码</li>
+</ul>
+<h2 id="分裂方法"><a href="#分裂方法" class="headerlink" title="分裂方法"></a>分裂方法</h2><p>GOSS 和 EFB 两种分裂方法的出发点不同，GOSS 主要从样本角度除法，而 EFB 则通过 bundle 的方式降低特征数量，加快计算速度。</p>
+<h3 id="GOSS"><a href="#GOSS" class="headerlink" title="GOSS"></a>GOSS</h3><p>LightGBM 和 XGboost 同样是一种 Gradient Boosting 的方法，根据当前模型损失函数的负梯度训练新加入的基分类器，将训练好的基分类器以累加的形式加入到现有模型中。不同地方之一在于寻找分裂点的方式不一样。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190408/uPk6s1djODQy.png?imageslim" alt="mark"></p>
+<p>Histogram-based Algorithm 将连续型样本划分成不同的直方图，构成 usedRows。遍历每个特征和 usedRows 中的每个元素，寻找最佳分裂点。</p>
+<p>LGB 寻找最佳分裂点从两个方面进行了改进，一是采用直方图的算法，二是在训练模型数据集的选择上不同，先对每个样本上的梯度进行排序，分成大梯度和小梯度两部分，大梯度样本全部取出，小梯度样本随机进行抽样，然后组合到一起，对随机抽样的样本权重 $w​$ 乘以某个系数，用来训练新的模型。</p>
+<h3 id="EFB-了解"><a href="#EFB-了解" class="headerlink" title="EFB(了解)"></a>EFB(了解)</h3><p>高纬度数据通常是稀疏的，许多特征之间是互斥的，不会同时拥有非零值（假设）。我们可以把互斥的特征进行 bundle，通过算法可以对同一个 bundle 里的特征做相同的直方图，最后将 bundle 后的数据 merge。采用 bundle 的形式降低了特征的维度，从而加快了计算速度。复杂度从原来 $O(data\times feature)$ 降低到 $O(data \times bundle)​$。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190408/SnKunFW2Ue92.png?imageslim" alt="mark"></p>
+<h2 id="leaf-wise-与-level-wise"><a href="#leaf-wise-与-level-wise" class="headerlink" title="leaf-wise 与 level-wise"></a>leaf-wise 与 level-wise</h2><p>XGboost 对每一层的所有节点进行无差别分裂，可能有些节点的增益非常小，对结果影响不大，但是 xgboost 也对其进行分裂，这便浪费了资源。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190408/lp14H5cIlNRA.png?imageslim" alt="mark"></p>
+<p>LGB 对当前叶子节点选择分裂收益最大的节点进行分裂。但是这样容易造成过拟合，因为容易陷入较大的深度，所以必须设置树的深度。所以 LGB 中的 max-depth 和 num_leaves 参数很重要。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190408/SmOGBpfk6ytx.png?imageslim" alt="mark"></p>
+<h2 id="Categorical-Feature"><a href="#Categorical-Feature" class="headerlink" title="Categorical Feature"></a>Categorical Feature</h2><p>对于类别变量，XGboost 会转换成 one-hot 编码，耗用内存，并且引起树的不平衡，需要较大的树深才能达到较好的精度。</p>
+<p>一个可以替代的优化方法是对分类特征进行二分，比如一个类别变量有 $a_1, a_2, a_3, a_4$，可以有  $a_1|a_2, a_3, a_4$，$a_2,|a_1,a_3,a_4$ ，$a_3|a_1,a_2,a_4$，$a_4|a_1,a_2,a_3$，$a_1, a_2|a_3, a_4$，$a_1,a_3|a_2,a_4$，$a_2, a_3|a_1, a_4$ 七种分裂方式，如果有 k 类，会有 $2^{k-1}-1$ 个分裂点。</p>
+<p>LGB 的做法则是根据分类特征与目标变量的相关性进行重新排序。更详细的说，是根据分类特征的累积值（sum_gradient/sum_hessian）对其直方图进行重排，然后在排序好的直方图上寻找最佳分裂点。最终的时间复杂度是 $O(k\times log_k)​$。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190408/bm08B72bPnnV.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190408/z1gvfroBjFoT.png?imageslim" alt="mark"></p>
+<p>总结：</p>
+<p>LGB 在分类效果上和 XGboost 差不多，但是计算速度非常快，尤其是存在很多分类特征时，XGBoost 需要将分类特征转换成 one-hot 编码，内存很容易会爆掉，而 LGB 自身的机制便可以出来分类特征。</p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1Nzc1NjI0Nw==&amp;mid=2247483919&amp;idx=1&amp;sn=d7a3ec8a03fcb93260981629ada8eb18&amp;chksm=fc31b837cb46312188d509827b61a987933632dc9456694c2e8bd193a00824a55a251636c2f8&amp;mpshare=1&amp;scene=1&amp;srcid=#rd" target="_blank" rel="noopener">LightGBM</a></p>
+<p><a href="https://mp.weixin.qq.com/s/tuoUG08hBFwFh2x_XnZG0w" target="_blank" rel="noopener">GBDT原理及利用 GBDT 构造新的特征-Python 实现</a></p>
+<p><a href="https://mp.weixin.qq.com/s/fXICNSXb7sN9O4kpW8di7Q" target="_blank" rel="noopener">GBDT+LR算法解析及Python实现</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/7c10b52f.html" rel="next" title="KNN 与 KD 树">
+                <i class="fa fa-chevron-left"></i> KNN 与 KD 树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/2551ba75.html" rel="prev" title="指数族分布与广义线性模型">
+                指数族分布与广义线性模型 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost"><span class="nav-number">1.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数"><span class="nav-number">1.1.</span> <span class="nav-text">目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归树模型（CART）"><span class="nav-number">1.2.</span> <span class="nav-text">回归树模型（CART）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#集成模型"><span class="nav-number">1.2.1.</span> <span class="nav-text">集成模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-棵树集成模型的目标函数"><span class="nav-number">1.3.</span> <span class="nav-text">k 棵树集成模型的目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-Boosting"><span class="nav-number">1.4.</span> <span class="nav-text">Gradient Boosting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additive-training"><span class="nav-number">1.5.</span> <span class="nav-text">Additive training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泰勒展开式"><span class="nav-number">1.6.</span> <span class="nav-text">泰勒展开式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新的目标函数"><span class="nav-number">1.7.</span> <span class="nav-text">新的目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于树的定义"><span class="nav-number">1.8.</span> <span class="nav-text">关于树的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则项"><span class="nav-number">1.9.</span> <span class="nav-text">正则项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重回目标函数"><span class="nav-number">1.10.</span> <span class="nav-text">重回目标函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个例子"><span class="nav-number">1.11.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找最佳树结构"><span class="nav-number">1.12.</span> <span class="nav-text">寻找最佳树结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.13.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">1.14.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDT"><span class="nav-number">2.</span> <span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">2.1.</span> <span class="nav-text">算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost-与-GBDT-的区别"><span class="nav-number">3.</span> <span class="nav-text">XGBoost 与 GBDT 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lightgbm"><span class="nav-number">4.</span> <span class="nav-text">Lightgbm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分裂方法"><span class="nav-number">4.1.</span> <span class="nav-text">分裂方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GOSS"><span class="nav-number">4.1.1.</span> <span class="nav-text">GOSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EFB-了解"><span class="nav-number">4.1.2.</span> <span class="nav-text">EFB(了解)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leaf-wise-与-level-wise"><span class="nav-number">4.2.</span> <span class="nav-text">leaf-wise 与 level-wise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Categorical-Feature"><span class="nav-number">4.3.</span> <span class="nav-text">Categorical Feature</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

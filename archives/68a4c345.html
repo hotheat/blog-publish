@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在看别人写的二叉树遍历的代码时，看到了yield 和 yield from 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 协程的实现机理">
+<meta property="og:url" content="https://www.hotheat.top/archives/68a4c345.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="在看别人写的二叉树遍历的代码时，看到了yield 和 yield from 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/e9PhsES4BG8v.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/Hu0G6N0oGe3B.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/slHJjYAuNtsP.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/2aXOtIs0I5N3.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190220/L2QCqy3lDTn3.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190409/eGTy9osJXWkw.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/yrD9xyNgCDUF.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190409/KYLLNPh7rwSX.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190409/MQuGqWyGotBp.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190409/KSVTKkFXrOU5.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/3TjPupKbK7Xx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/lPksQUpmm4pe.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/rtQP5Qg4aXVx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/QlmCaV2Vqotz.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/2j1BqdIEknW6.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/e5HioVpTDxGP.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/PB8NnpVElnPG.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/1BrhsaCMJs8b.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190410/Fa27aOisVydt.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 协程的实现机理">
+<meta name="twitter:description" content="在看别人写的二叉树遍历的代码时，看到了yield 和 yield from 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190220/e9PhsES4BG8v.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/68a4c345.html">
+
+
+
+
+
+  <title>Python 协程的实现机理 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/68a4c345.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Python 协程的实现机理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T11:04:39+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/协程/" itemprop="url" rel="index">
+                    <span itemprop="name">协程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在看别人写的二叉树遍历的<a href="https://github.com/wangzheng0822/algo/blob/master/python/23_binarytree/binary_tree.py" target="_blank" rel="noopener">代码</a>时，看到了<code>yield</code> 和 <code>yield from</code> 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。</p>
+<a id="more"></a>
+<h1 id="从-generator-和-yield-表达式说起"><a href="#从-generator-和-yield-表达式说起" class="headerlink" title="从 generator 和 yield 表达式说起"></a>从 generator 和 yield 表达式说起</h1><p>关于生成器、迭代器、yield 关键字可以参考文章<a href="http://www.hotheat.top/archives/97e11c7c.html">什么是迭代器和生成器</a>，我们在写一个简单的生成器的时候有很多东西没有用到，特别是生成器的三个重要方法，一个是 next()、一个是 send()，一个是 throw()。</p>
+<h2 id="send-方法的使用"><a href="#send-方法的使用" class="headerlink" title="send()方法的使用"></a>send()方法的使用</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190220/e9PhsES4BG8v.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190220/Hu0G6N0oGe3B.png?imageslim" alt="mark"></p>
+<p>（4）在用 <code>g.send()</code> 后，yield 表达式执行，在下一次运行 <code>next()</code> 时，会直接输出 3，原来的 2 去哪里了？</p>
+<p>（5）如果再执行一次 <code>next(g)</code>，my_generator() 中的元素耗尽，会引发 <code>StopIteration</code> 异常。</p>
+<h2 id="yield-语句的用法总结"><a href="#yield-语句的用法总结" class="headerlink" title="yield 语句的用法总结"></a>yield 语句的用法总结</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190220/slHJjYAuNtsP.png?imageslim" alt="mark"></p>
+<h2 id="迭代器（生成器）的-send-方法详解"><a href="#迭代器（生成器）的-send-方法详解" class="headerlink" title="迭代器（生成器）的 send() 方法详解"></a>迭代器（生成器）的 send() 方法详解</h2><p>原来的 2 实际上就是 <code>send()</code> 的返回值。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190220/2aXOtIs0I5N3.png?imageslim" alt="mark"><br>  <img src="http://qnpic.sijihaiyang.top/blog/20190220/L2QCqy3lDTn3.png?imageslim" alt="mark"></p>
+<h2 id="生成器-throw-的方法用法"><a href="#生成器-throw-的方法用法" class="headerlink" title="生成器 throw 的方法用法"></a>生成器 throw 的方法用法</h2><p><code>g.throw()</code> 括号中的参数一个异常，作用是向生成器抛出一个异常，使这个生成器终止，后面的 <code>yield</code> 语句将不会执行。</p>
+<p><code>g.throw(StopIteration)</code> 会直接中断迭代器的执行。如果传入其他异常，这个异常被 <code>except</code> 接收，那后面的 <code>yield</code> 不会再执行，生成器终止，如果执行 <code>g.throw()</code> 会引发 <code>StopIteration</code> 异常。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190409/eGTy9osJXWkw.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/yrD9xyNgCDUF.png?imageslim" alt="mark"></p>
+<h2 id="生成器的启动与关闭-close"><a href="#生成器的启动与关闭-close" class="headerlink" title="生成器的启动与关闭 close"></a>生成器的启动与关闭 close</h2><p> 生成器启动有两种方式</p>
+<ol>
+<li>直接使用 <code>next()</code></li>
+<li><p>使用 <code>g.send(None)</code>，第一次启动的时候只能传入 None，如果传入其他具体的指则会报错。</p>
+<p>使用 <code>g.close()</code> 关闭，关闭后再启动将抛出 StopIteration 异常。</p>
+</li>
+</ol>
+<h2 id="生成器的终止迭代——StopIteration"><a href="#生成器的终止迭代——StopIteration" class="headerlink" title="生成器的终止迭代——StopIteration"></a>生成器的终止迭代——StopIteration</h2><p>除了 <code>g.close()</code> 方法外，遇到 <code>return</code> 语句也会抛出 StopIteration 异常。生成器没有办法使用 return 来返回值。因为 return 返回的那个值是通过 StopIteration 的异常信息返回的。</p>
+<p>抛出 StopIteration 异常的几种情况：</p>
+<ul>
+<li>generator 耗尽时，再调用 <code>next()</code> 或 <code>send()</code></li>
+<li>使用 <code>g.close()</code> 关闭迭代器</li>
+<li>使用 <code>g.throw(StopIteration)</code> 向生成器抛出异常</li>
+<li>生成器函数中遇到 <code>return</code> 语句</li>
+</ul>
+<p>获得 <code>return</code> 返回值的方法</p>
+<ol>
+<li><p>使用 <code>yield from</code> 语句</p>
+</li>
+<li><p>使用 StopIteration 类的 value 属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">g3</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="string">'a'</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'这是错误说明'</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="string">'b'</span></span><br><span class="line">g=g3()</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:   </span><br><span class="line">    print(next(g))  <span class="comment">#a</span></span><br><span class="line">    print(next(g))  <span class="comment">#触发异常</span></span><br><span class="line"><span class="keyword">except</span> StopIteration <span class="keyword">as</span> exc:</span><br><span class="line">    result=exc.value</span><br><span class="line">    print(result)</span><br><span class="line"><span class="string">'''运行结果为：</span></span><br><span class="line"><span class="string">a</span></span><br><span class="line"><span class="string">这是错误说明</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="python-协程的通俗理解以及使用-yield-关键字实现协程"><a href="#python-协程的通俗理解以及使用-yield-关键字实现协程" class="headerlink" title="python 协程的通俗理解以及使用 yield 关键字实现协程"></a>python 协程的通俗理解以及使用 yield 关键字实现协程</h1><h2 id="线程、进程和协程"><a href="#线程、进程和协程" class="headerlink" title="线程、进程和协程"></a>线程、进程和协程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
+<li><strong>操作系统</strong>进行资源调度和分配的基本单位，多个进程之间相互独立，进程间数据不共享，一个正在运行的应用程序在操作系统中被认为是一个进程。</li>
+<li><strong>进程可以包括一个或多个线程</strong></li>
+<li>稳定性好，如果一个进程崩溃，不影响其他进程，但是进程资源消耗大，开启的数量有限制。</li>
+</ul>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><ul>
+<li><strong>CPU</strong> 进行资源调度和分配的基本单位，线程是进程的一部分，是比进程更小的能够独立运行的基本单位。</li>
+<li>线程主要是由 CPU 寄存器、调用栈和线程本地存储器（Thread Local Storage，TLS）组成的。CPU 寄存器主要记录当前所执行线程的状态，调用栈主要用于维护线程所调用到的内存与数据，TLS 主要用于存放线程的状态信息。</li>
+<li>线程自己不拥有系统资源，只拥有一点在运行中必不可少的资源，但是一个进程下的所有线程可以共享该进程下的所有资源。</li>
+<li>线程本质上是操作系统提供的一段逻辑功能，是进程中一段并发运行的代码，所以线程需要操作系统投入 CPU资源来运行和调度</li>
+</ul>
+<h3 id="进程与线程的区别"><a href="#进程与线程的区别" class="headerlink" title="进程与线程的区别"></a>进程与线程的区别</h3><p>进程和线程的主要差别在于它们是不同的操作系统资源管理方式。进程有独立的<strong>地址空间</strong>，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的<strong>堆栈和局部变量</strong>，但线程之间没有单独的地址空间，<strong>一个线程死掉就等于整个进程死掉</strong>，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。但对于一些<strong>要求同时进行</strong>并且又要<strong>共享某些变量的并发操作</strong>，只能用线程，不能用进程。</p>
+<p>1) 简而言之，一个程序至少有一个进程，一个进程至少有一个线程。<br> 2) 线程的划分尺度小于进程，使得多线程程序的并发性高。<br> 3) 另外，进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率。<br> 4) 线程在执行过程中与进程还是有区别的。每个独立的进程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须<strong>依存在应用程序</strong>中，由应用程序提供多个线程执行控制。<br> 5) 从逻辑角度来看，<strong>多线程的意义在于一个应用程序中，有多个执行部分可以同时执行</strong>。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。这就是进程和线程的重要区别。</p>
+<p>如果 IO 操作密集，那么多线程效率会高，缺点是如果一个线程崩溃，会造成进程的崩溃。</p>
+<h3 id="GIL"><a href="#GIL" class="headerlink" title="GIL"></a>GIL</h3><p>Python 官方解释器（CPython 解释器）认为在内部不是线程安全的，因此有一个全局解释器锁（Global Interpreter Lock，简称 GIL），它使得在任何时刻都只有一个线程在执行 Python 字节码。简单来说，一个 Python 进程永远不能在同一时刻使用多个 CPU 核心。</p>
+<p>所以，Python 能够使用线程，而且这个特性使得 Python 特别适合 IO 密集的任务（这些任务不依赖于多核）。</p>
+<p>如果想要发挥多核的能力，规避 CPython GIL 带来的问题，可以用以下两种解决方案：</p>
+<ul>
+<li>用原生 C 代码编写，某些库（比如 Numpy）不会有 GIL 带来的问题。</li>
+<li>用多进程代替多线程。</li>
+</ul>
+<p>GIL 并不能保证编写的 Python 代码线程安全，但会保证某些 Python 基本操作原子性。其他一些 Python 实现，比如 Pypy 不会有相同的保证。</p>
+<h3 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h3><p>协程有点像多线程，但协程的特点在于一个线程执行，协程看上去像函数，但在执行过程中，在函数内部可以中断，不一定要一次性执行完才行，然后转而执行别的函数，在适当的时候返回来执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">优势一：最大的优势就是协程极高的执行效率。因为子程序切换不是线程切换，而是由程序自身控制，因此，没有线程切换的开销，和多线程比，线程数量越多，协程的性能优势就越明显。</span><br><span class="line">优势二：就是不需要多线程的锁机制，因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多。</span><br></pre></td></tr></table></figure>
+<p>比如说在等 IO 时，CPU 就不分配时间了，而是由编程者自己控制各个任务的执行顺序，从而最大可能的发挥 CPU 性能。</p>
+<h2 id="为什么-yield-可以实现协程"><a href="#为什么-yield-可以实现协程" class="headerlink" title="为什么 yield 可以实现协程"></a>为什么 yield 可以实现协程</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190409/KYLLNPh7rwSX.png?imageslim" alt="mark"></p>
+<h2 id="Python-实现协程的代码"><a href="#Python-实现协程的代码" class="headerlink" title="Python 实现协程的代码"></a>Python 实现协程的代码</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190409/MQuGqWyGotBp.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190409/KSVTKkFXrOU5.png?imageslim" alt="mark"></p>
+<p><code>c.send(None)</code> 启动生成器，相当于调用 consumer()，但是如果 consumer() 是个普通函数，会等待 consumer 执行完后，才会重新回到 producer 手中，现在，consumer 是生成器，所以在第一次遇到 yield 时暂停，直接执行 producer() 中的代码。</p>
+<p>进入 producer 的 while 循环体，n=1，打印<code>生产者正在生产 1</code>，调用 consumer()，打印<code>消费者正在消费 1</code>，赋值 r，又遇到 yield，暂停，并返回 变量 r 的值，回到 producer，打印返回值 <code>r</code>。</p>
+<p>准备进入下一个循环。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/3TjPupKbK7Xx.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/lPksQUpmm4pe.png?imageslim" alt="mark"></p>
+<h2 id="协程的状态查看"><a href="#协程的状态查看" class="headerlink" title="协程的状态查看"></a>协程的状态查看</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190410/rtQP5Qg4aXVx.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/QlmCaV2Vqotz.png?imageslim" alt="mark"></p>
+<h2 id="yield-实现协程的不足之处"><a href="#yield-实现协程的不足之处" class="headerlink" title="yield 实现协程的不足之处"></a>yield 实现协程的不足之处</h2><ol>
+<li><p>协程函数的返回值（return）不是特别方便获取，可以参见第一章节，只能够通过发出 <code>StopIteration</code> 异常，通过该异常的 value 属性获取。</p>
+</li>
+<li><p>Python 的生成器是协程 coroutine 的一种形式，但它的局限性在于只能向它的直接调用者每次 yield 一个值。这意味着那些包含 yield 的代码不能想其他代码那样被分离出来放到一个单独的函数中。这也正是 yield from 要解决的。</p>
+<p>总的来说，协程是一个可以暂停执行的函数，并且可以恢复执行。yield 已经可以暂停执行，如果在暂停后如果有办法将一些 value 发回到暂停执行的函数中，那么 Python 就有了协程。而这个“把东西发送到已经暂停的生成器中的”方法就是 <code>send()</code>。</p>
+</li>
+</ol>
+<h1 id="yield-from详解"><a href="#yield-from详解" class="headerlink" title="yield from详解"></a><strong>yield from详解</strong></h1><p>yield 是每次“惰性返回”一个值，yield from 是 yield 的改进升级版，可以理解成从“什么（迭代器）中返回”，这也构成了 yield from 的一般语法，yield from generator。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">In [3]: def generator1():</span><br><span class="line">   ...:     for i in range(10):</span><br><span class="line">   ...:         yield i</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [4]: def generator2():</span><br><span class="line">   ...:     yield 'a'</span><br><span class="line">   ...:     yield 'b'</span><br><span class="line">   ...:     yield 'c'</span><br><span class="line">   ...:     yield from generator1()</span><br><span class="line">   ...:     yield from [11, 22, 33, 44]</span><br><span class="line">   ...:     yield from (12, 23, 34)</span><br><span class="line">   ...:     yield from range(3)</span><br><span class="line">   ...:</span><br><span class="line"></span><br><span class="line">In [5]: for i in generator2():</span><br><span class="line">   ...:     print(i, end=',')</span><br><span class="line">   ...:</span><br><span class="line">a,b,c,0,1,2,3,4,5,6,7,8,9,11,22,33,44,12,23,34,0,1,2,</span><br></pre></td></tr></table></figure>
+<p>yield from 后面可以跟的可以是“ 生成器 、元组、 列表、range（）函数产生的序列等可迭代对象”<br>简单地说，yield from  generator 。实际上就是返回另外一个生成器。yield from iterable 的本质是 for item in iterable: yield item 的缩写版。</p>
+<h2 id="yield-from-的高级应用"><a href="#yield-from-的高级应用" class="headerlink" title="yield from 的高级应用"></a>yield from 的高级应用</h2><h3 id="针对-yiled-无法获取生成器-return-的返回值"><a href="#针对-yiled-无法获取生成器-return-的返回值" class="headerlink" title="针对 yiled 无法获取生成器 return 的返回值"></a><strong>针对 yiled 无法获取生成器 return 的返回值</strong></h3><p>在不使用 yield from 时，如果想要得到生成器函数中的返回值，需要通过捕捉 StopIteration 异常来做到。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/2j1BqdIEknW6.png?imageslim" alt="mark"></p>
+<p>但是现在有了 yield from，需要多一个包装函数，通过调用方-&gt;生成器包装函数-&gt;生成器函数来实现</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/e5HioVpTDxGP.png?imageslim" alt="mark"></p>
+<blockquote>
+<p>yield from iteration 结构会在内部自动捕获 iteration 生成器的 StopIteration 异常。这种处理方式与 for 循环处理 StopIteration 异常的方式一样。而且对 yield from 结构来说，解释器不仅会捕获 StopIteration 异常，还会把return 返回的值或者是 StopIteration 的 value 属性的值变成 yield from 表达式的值，即上面的 result。</p>
+</blockquote>
+<p>这里的做法也是通过一个包装函数变成了 yield from iteration 的形式。</p>
+<h3 id="yield-from-所实现的数据传输通道"><a href="#yield-from-所实现的数据传输通道" class="headerlink" title="yield from 所实现的数据传输通道"></a><strong>yield from 所实现的数据传输通道</strong></h3><p>yield 中涉及调用方和生成器两者，而 yield from 则涉及到委派生成器（yield from 构成），子生成器（yield）构成，调用方（main 函数）。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/PB8NnpVElnPG.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/1BrhsaCMJs8b.png?imageslim" alt="mark"></p>
+<h2 id="yield-from-的用法实例"><a href="#yield-from-的用法实例" class="headerlink" title="yield from 的用法实例"></a>yield from 的用法实例</h2><p>其实 yield from 相当于一个数据管道，这个数据管道的作用负责将任务传给子生成器，以及将子生成器的值返回给调用方，而且可以处理子生成器产生的 StopIteration 异常。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20190410/Fa27aOisVydt.png?imageslim" alt="mark"></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1MTk1MzU0Nw==&amp;mid=2247484309&amp;idx=1&amp;sn=aa494bf3cdc7ffa4546c26224f728241&amp;chksm=fb883671ccffbf673761ebbb724a8bc44e40aa5579cc98ee524d489eaa9bcb5db38ac3d9ac54&amp;mpshare=1&amp;scene=1&amp;srcid=0114dcxMhW53zpLjPjm7PvUn#rd" target="_blank" rel="noopener">Python协程系列（一）——从 generator 和 yield 表达式说起</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1MTk1MzU0Nw==&amp;mid=2247484319&amp;idx=1&amp;sn=7be6de5a04c01e834a3b098a4ff6b1f0&amp;chksm=fb88367bccffbf6deeb6cf6cbd6d4745875b51bcf0d4c443a1fe5996eeeab805a9949544fd1b&amp;mpshare=1&amp;scene=1&amp;srcid=0123lmMWgz6eDZ7bhS5Bsi9V#rd" target="_blank" rel="noopener">python协程系列（二）——协程的通俗理解及yield关键字实现协程</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1MTk1MzU0Nw==&amp;mid=2247484334&amp;idx=1&amp;sn=16ea953edf82073c42c38dddc8bffb7a&amp;chksm=fb88364accffbf5cd200991c56c8a0735eadf315155e4c102ffb4d7d521b9c21338765420a40&amp;mpshare=1&amp;scene=1&amp;srcid=0123FQxp8Ovi5nFw8HR30QK1#rd" target="_blank" rel="noopener">python协程系列（三）——yield from详解</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1MTk1MzU0Nw==&amp;mid=2247484345&amp;idx=1&amp;sn=b4da78fb0cc6438498f0b8cfb1e0240f&amp;chksm=fb88365dccffbf4b2acdf5db47e5f417680381e67cb3ddcf92edf98e6f60718e77b5f4609bd9&amp;mpshare=1&amp;scene=1&amp;srcid=0123nDiQgvpzzVaHWnZgGHaO#rd" target="_blank" rel="noopener">python协程系列（四）——详解『同步|异步』『并发|并行』『线程|进程』</a></p>
+<p><a href="https://juejin.im/post/5b3391a0518825748b56b42c" target="_blank" rel="noopener">Python的协程真的有那么难吗？</a></p>
+<p><a href="https://juejin.im/post/5b3af9fb51882507d4487144" target="_blank" rel="noopener">深入理解Python的yield from语法</a></p>
+<p><a href="https://mp.weixin.qq.com/s/5j5RdF1mAMIryIGCLqPDBQ" target="_blank" rel="noopener">Python的GIL是什么？</a></p>
+<p><a href="https://mp.weixin.qq.com/s/5j5RdF1mAMIryIGCLqPDBQ" target="_blank" rel="noopener">【意译】Python3中的线程，GIL，线程安全（上）</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/51ddfe42.html" rel="next" title="常见的数据可视化图表">
+                <i class="fa fa-chevron-left"></i> 常见的数据可视化图表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/9fdd0500.html" rel="prev" title="集成算法（一）--Bagging/Adaboost">
+                集成算法（一）--Bagging/Adaboost <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从-generator-和-yield-表达式说起"><span class="nav-number">1.</span> <span class="nav-text">从 generator 和 yield 表达式说起</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#send-方法的使用"><span class="nav-number">1.1.</span> <span class="nav-text">send()方法的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yield-语句的用法总结"><span class="nav-number">1.2.</span> <span class="nav-text">yield 语句的用法总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器（生成器）的-send-方法详解"><span class="nav-number">1.3.</span> <span class="nav-text">迭代器（生成器）的 send() 方法详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成器-throw-的方法用法"><span class="nav-number">1.4.</span> <span class="nav-text">生成器 throw 的方法用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成器的启动与关闭-close"><span class="nav-number">1.5.</span> <span class="nav-text">生成器的启动与关闭 close</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成器的终止迭代——StopIteration"><span class="nav-number">1.6.</span> <span class="nav-text">生成器的终止迭代——StopIteration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python-协程的通俗理解以及使用-yield-关键字实现协程"><span class="nav-number">2.</span> <span class="nav-text">python 协程的通俗理解以及使用 yield 关键字实现协程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程、进程和协程"><span class="nav-number">2.1.</span> <span class="nav-text">线程、进程和协程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">2.1.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">2.1.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程与线程的区别"><span class="nav-number">2.1.3.</span> <span class="nav-text">进程与线程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIL"><span class="nav-number">2.1.4.</span> <span class="nav-text">GIL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协程"><span class="nav-number">2.1.5.</span> <span class="nav-text">协程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么-yield-可以实现协程"><span class="nav-number">2.2.</span> <span class="nav-text">为什么 yield 可以实现协程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-实现协程的代码"><span class="nav-number">2.3.</span> <span class="nav-text">Python 实现协程的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协程的状态查看"><span class="nav-number">2.4.</span> <span class="nav-text">协程的状态查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yield-实现协程的不足之处"><span class="nav-number">2.5.</span> <span class="nav-text">yield 实现协程的不足之处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yield-from详解"><span class="nav-number">3.</span> <span class="nav-text">yield from详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yield-from-的高级应用"><span class="nav-number">3.1.</span> <span class="nav-text">yield from 的高级应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#针对-yiled-无法获取生成器-return-的返回值"><span class="nav-number">3.1.1.</span> <span class="nav-text">针对 yiled 无法获取生成器 return 的返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yield-from-所实现的数据传输通道"><span class="nav-number">3.1.2.</span> <span class="nav-text">yield from 所实现的数据传输通道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yield-from-的用法实例"><span class="nav-number">3.2.</span> <span class="nav-text">yield from 的用法实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

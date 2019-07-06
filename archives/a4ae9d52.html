@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="已经讲过的三大块重点，用计算图表示任何一个函数、两层神经网络和卷积神经网络。 卷积神经网络能够保持空间的输入结构。每个卷积核作为滤波器在空间上滑动，多个滤波器构成特定深度的输出。 需要的是学习这些所有的权重和系数。用 Mini-batch SGD 的方法。正向传播，loss，反向传播，梯度更新。 这节课讲的细节：  如何建立起神经网络 选择激活函数， 数据预处理，权重初始化，正则化，梯度检查 训练">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS231n Lecture6 笔记">
+<meta property="og:url" content="https://www.hotheat.top/archives/a4ae9d52.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="已经讲过的三大块重点，用计算图表示任何一个函数、两层神经网络和卷积神经网络。 卷积神经网络能够保持空间的输入结构。每个卷积核作为滤波器在空间上滑动，多个滤波器构成特定深度的输出。 需要的是学习这些所有的权重和系数。用 Mini-batch SGD 的方法。正向传播，loss，反向传播，梯度更新。 这节课讲的细节：  如何建立起神经网络 选择激活函数， 数据预处理，权重初始化，正则化，梯度检查 训练">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181120/bc863CUVkCl2.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181120/vnqqqOmTc1oA.png?imageslim">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=tanh%28x%29%3D2%5Csigma%282x%29-1">
+<meta property="og:image" content="https://pic3.zhimg.com/80/ccb56c1fb267bc632d6d88459eb14ace_hd.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/cf3fc543bf1dc81e2083530a4492b0ec_hd.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/4f8af027d6059549d160199a1717df14_hd.png">
+<meta property="og:image" content="https://pic3.zhimg.com/80/aae11de6e6a29f50d46b9ea106fbb02a_hd.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/EuIJ8irozEYW.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/0e08Bkmbpkld.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/JlkTA1vd24Hy.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/qN2YNNlW1QLx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/NnbhV7SQ6QI8.png?imageslim">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-c55d2949550196bc85de215a1f73e138_hd.jpg">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/5nYAWMQaN8YE.png?imageslim">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-6716c5582bb4d8d076b076dfb752d03a_hd.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-466b00409012a4fb0d7d3aa7c0862698_hd.jpg">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181126/rfWUxErWVjm2.png?imageslim">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+%5Cfrac%7Bdf%28x%29%7D%7Bdx%7D%3D%5Cfrac%7Bf%28x%2Bh%29-f%28x-h%29%7D%7B2h%7D%28use%5C+instead%29">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+%5Cfrac%7B%7Cf%27_a-f%27_n%7C%7D%7Bmax%28%7Cf%27_a%7C%2C%7Cf%27_n%7C%29%7D">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/PR8dQi0vgTtV.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181122/mxNGleyluSXp.png?imageslim">
+<meta property="og:image" content="https://pic3.zhimg.com/80/05a6960a01c0204ced8d875ac3d91fba_hd.jpg">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181122/yPLIvCiOJaAx.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/EuIJ8irozEYW.png?imageslim">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181121/0e08Bkmbpkld.png?imageslim">
+<meta property="og:image" content="https://pic3.zhimg.com/80/96573094f9d7f4b3b188069726840a2e_hd.png">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=w">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20181122/30E8hnCQ5vMW.png?imageslim">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+P%28y%3D1%7Cx%3Bw%2Cb%29%3D%5Cfrac%7B1%7D%7B1%2Be%5E%7B-%28w%5ETx%2Bb%29%7D%7D%3D%5Csigma%28w%5ETx%2Bb%29">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+P%28y%3D0%7Cx%3Bw%2Cb%29%3D1-P%28y%3D1%7Cx%3Bw%2Cb%29">
+<meta property="og:image" content="http://www.zhihu.com/equation?tex=%5Csigma%28w%5ETx%2Bb%29%3E0.5">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.290Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CS231n Lecture6 笔记">
+<meta name="twitter:description" content="已经讲过的三大块重点，用计算图表示任何一个函数、两层神经网络和卷积神经网络。 卷积神经网络能够保持空间的输入结构。每个卷积核作为滤波器在空间上滑动，多个滤波器构成特定深度的输出。 需要的是学习这些所有的权重和系数。用 Mini-batch SGD 的方法。正向传播，loss，反向传播，梯度更新。 这节课讲的细节：  如何建立起神经网络 选择激活函数， 数据预处理，权重初始化，正则化，梯度检查 训练">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20181120/bc863CUVkCl2.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/a4ae9d52.html">
+
+
+
+
+
+  <title>CS231n Lecture6 笔记 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/a4ae9d52.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CS231n Lecture6 笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T13:32:35+08:00">
+                2018-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DeepLearning/" itemprop="url" rel="index">
+                    <span itemprop="name">DeepLearning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DeepLearning/CS231n/" itemprop="url" rel="index">
+                    <span itemprop="name">CS231n</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>已经讲过的三大块重点，用计算图表示任何一个函数、两层神经网络和卷积神经网络。</p>
+<p>卷积神经网络能够保持空间的输入结构。每个卷积核作为滤波器在空间上滑动，多个滤波器构成特定深度的输出。</p>
+<p>需要的是学习这些所有的权重和系数。用 Mini-batch SGD 的方法。正向传播，loss，反向传播，梯度更新。</p>
+<p>这节课讲的细节：</p>
+<ol>
+<li>如何建立起神经网络</li>
+<li>选择激活函数，</li>
+<li>数据预处理，权重初始化，正则化，梯度检查</li>
+<li>训练中的动态变化，如何监控（Babysitting），如何选择参数的特定更新规则，怎样做超参数优化</li>
+<li>模型评估和模型集成</li>
+</ol>
+<a id="more"></a>
+<h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h1><p>激活函数至关重要，如果去掉，那么两个线性层会合二为一，重新变成一个线性函数。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181120/bc863CUVkCl2.png?imageslim" alt="mark"></p>
+<h2 id="sigmoid"><a href="#sigmoid" class="headerlink" title="sigmoid"></a>sigmoid</h2><p>每个元素都在 [0, 1] 范围内，中间区域可以看作线性函数。可以看作神经元的饱和放电率。</p>
+<p>若干问题：</p>
+<ol>
+<li><p>饱和神经元将使梯度消失。当输入值过大或过小（接近0或1）时会饱和，梯度接近 0，局部梯度非常小，乘以返回的上游梯度将得到一个很小的梯度，零梯度将阻止梯度传递。在权重初始化时需要特别留意，如果权重初始化过大，大多数神经元将饱和。</p>
+</li>
+<li><p>输出是非零中心的函数，假设对于 $wx + b$，若输入 x 一直为正，上游传回的梯度为正数或负数，对 w 求导后局部梯度为 x，乘以局部梯度后，w 的梯度将一直得到全是正数或负数，相当于沿上游梯度的正负号进行传递，总是沿同一个方向移动。</p>
+<p>对于梯度更新来说非常低效，以下图为例，第一象限和第三象限是全为正或全为负，蓝色箭头代表 w 的梯度方向，我们不能沿 w 的方向更新参数，而是只能沿红色箭头中表示的两个方向去更新梯度。出现z字型下降</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181120/vnqqqOmTc1oA.png?imageslim" alt="mark"></p>
+<p>如果使用均值为 0 的数据，将得到正和负的值，就不会陷入上述梯度更新的问题。</p>
+</li>
+<li><p>指数函数的计算代价有些高，但不需要太注意这点。</p>
+</li>
+</ol>
+<h2 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h2><script type="math/tex; mode=display">
+tanh(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}}\\
+=\frac{e^{2x}-1}{e^{2x}+1}\\
+= \frac{2}{e^{2x}+1} - \frac{e^{2x}+1}{e^{2x}+1}\\
+=2sigmoid(2x) -1</script><p>和 sigmoid 很类似，但是是以 0 为中心的，不会有上述第二个问题，但仍会有梯度消失的问题。</p>
+<p>可以看成是一个简单放大的 sigmoid 神经元，<img src="http://www.zhihu.com/equation?tex=tanh%28x%29%3D2%5Csigma%282x%29-1" alt></p>
+<h2 id="Relu"><a href="#Relu" class="headerlink" title="Relu"></a>Relu</h2><p>$f(x) = max(0, x)$</p>
+<p>在元素上进行操作。</p>
+<ol>
+<li>不会在正数区域产生饱和现象，输入空间的一半都不会有饱和</li>
+<li>计算速度快</li>
+<li>收敛速度快，比 sigmoid 和 tanh 快约 6 倍</li>
+</ol>
+<p>不是以 0 为中心，负半轴上梯度会消失。在 x=0 处导数不存在。</p>
+<p>负半轴上称为 dead ReLU，不会被激活和更新，可能的原因是权重初始化非常差；学习率太高，权值不断波动，被数据的多样性淘汰，通常在训练开始时较好，某个时间点后挂掉；大多数使用 ReLU 的网络会有部分的节点挂掉，通常还会再去检查。</p>
+<p>通过合理的设置学习率，可以是这种情况的概率降低。</p>
+<h2 id="其他-ReLU"><a href="#其他-ReLU" class="headerlink" title="其他 ReLU"></a>其他 ReLU</h2><p>Leaky ReLU：$f(x) = max(0.01x, x)$负轴上有一个微小的斜率，仍然收敛快，而且不会出现梯度消失。</p>
+<p>PReLU：$f(x) = max(\alpha x, x)$，倾斜区间斜率是一个超参数$\alpha$，可以进行学习。输出是以 0 为中心的。</p>
+<p>ELU，介于 ReLU 和 Leaky ReLU 之间，输出接近零值中心，但是在负区间没有倾斜，具有负饱和机制，对噪声有更强的鲁棒性。</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+f(x)=
+\begin{cases}
+x&  \text{if x > 0}\\
+\alpha(exp(x) - 1)&\text{if x <= 0}
+\end{cases}
+\end{equation}</script><h2 id="Maxout-“Neuron”"><a href="#Maxout-“Neuron”" class="headerlink" title="Maxout “Neuron”"></a>Maxout “Neuron”</h2><p>$max(w_1^Tx + b_1, w_2^T + b_2)$，参数数量由于 $w_1$ 和 $ｗ_2$ 会翻倍，具有ReLU单元的优点（线性操作和不饱和），但是梯度不会消失，也不会饱和。ReLU 和 Leaky ReLU 是 Maxout 的特殊情况，ReLU 是 $w_1, b_1=0$ 时。</p>
+<p>实际使用中，在同一网络中混用不同类型的神经元很少见，ReLU 是最常用的，设置好学习率，监控网络中死亡的神经元的比例，当有单元死亡问题困扰时，可以尝试 ReLU 的变体，但是不要使用 sigmoid。</p>
+<h1 id="神经网络相关"><a href="#神经网络相关" class="headerlink" title="神经网络相关"></a>神经网络相关</h1><p>当我们说 N 层神经网络时，没有把输入层算入。单层神经网络就是没有隐层的。</p>
+<p>输出层（最后一层）一般不会有激活函数的，因为最后的输出层大多用来表示分类评分值或者回归的实数值。</p>
+<p><img src="https://pic3.zhimg.com/80/ccb56c1fb267bc632d6d88459eb14ace_hd.png" alt></p>
+<p>神经网络的尺寸一般指神经元个数和参数个数，上述第二个网络的神经元个数是 $4+4+1=9$，参数为 $3\times4 + 4\times 4+4\times1=32$ 个权重，加 $4+4+1=9$ 个偏置，共41个学习的参数。</p>
+<h2 id="神经网络的表达能力"><a href="#神经网络的表达能力" class="headerlink" title="神经网络的表达能力"></a>神经网络的表达能力</h2><p>对于任意连续函数$f(x)$，都存在至少含1个隐层的神经网络$g(x)$（具有合理的激活函数），使得任意x，均有$|f(x)-g(x)|&lt;\epsilon$。也就是说，神经网络可以近似任意连续函数。</p>
+<h2 id="神经网络的层数"><a href="#神经网络的层数" class="headerlink" title="神经网络的层数"></a>神经网络的层数</h2><p>在实践中，3层的网络比2层的表现好，继续加深（比如4、5、6层后）很少有太大的帮助。卷积网络不同，在卷积网络中，深度是一个很重要的因素（以10为数量级），一个解释是图像拥有层次化的结构，比如脸由眼睛构成，眼睛又由边缘构成。</p>
+<h2 id="神经元个数"><a href="#神经元个数" class="headerlink" title="神经元个数"></a>神经元个数</h2><p><img src="https://pic1.zhimg.com/80/cf3fc543bf1dc81e2083530a4492b0ec_hd.png" alt></p>
+<p>上图表示只有一个隐层的，不同神经元个数的神经网络，更多的神经元可以分类更复杂的数据，但是可能对训练数据造成过拟合。对噪声有很强的拟合能力，没有重视数据间的潜在基本关系。而神经元数量较少时，在测试数据中的泛化能力会更好。</p>
+<p>在实践中，使用L2正则，dropout和输入噪音等控制过拟合的方法比减少神经元数目要好得多。</p>
+<p>一般不使用减少神经元数目来控制过拟合。因为小网络很难使用梯度下降等算法进行训练。虽然小的神经网络的局部极小值更少，而且也容易收敛到这些局部极小值，但是，这些最小值一般很差，损失值很高，呈现出多变性，运气好时收敛到一个好地方，运气不好时，收敛到一个不好的极值，大网络的局部极小值表现更好，损失更小。</p>
+<p>正则化强度是控制神经网络过拟合的好方法。随着正则化强度增加，决策边界变得更加光滑。</p>
+<p><img src="https://pic1.zhimg.com/80/4f8af027d6059549d160199a1717df14_hd.png" alt></p>
+<p>应该尽可能使用大网络（神经元数量多），使用正则化技巧来控制过拟合。</p>
+<h1 id="设置数据和模型"><a href="#设置数据和模型" class="headerlink" title="设置数据和模型"></a>设置数据和模型</h1><h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>normalize 的作用：</p>
+<p>如果 x 全为 0 或者有一些非零的数据，仍然会遇到前面讲过的梯度下降效率低，以及得到次最优的优化结果。</p>
+<p>均值减法：对数据的每个独立特征减去均值，在每个维度上将数据中心迁移到原点，对于$N\times D$的数据，$X-=np.mean(X,axis=0)$。在图片训练中，一般只做零均值处理就行，减去整个图像的均值（AlexNet）或每个 channel 上减去 channel 的均值（VGGNet）。</p>
+<p>机器学习中，要做最优化时，需要所有的特征在相同值域内，而且特征贡献相同，而图像中的像素已经确保得到了相对稳定的范围和分布，没必要归一化太多。对于 PCA 和白化也不会做太多。</p>
+<p>归一化：一般在每个维度上除以标准差或者使每个维度的最大和最小值是1和-1。这个操作在确信不同的输入特征有不同的值域范围时才有意义。</p>
+<p>零均值仅在第一层解决了 sigmoid 问题， 在后面的一些层中，这个问题可以还会更严重。</p>
+<h3 id="PCA-和白化"><a href="#PCA-和白化" class="headerlink" title="PCA 和白化"></a>PCA 和白化</h3><p>PCA 的一种解释是最大化投影方差，假设 $w$ 是投影方向，对于第 $i$ 个数据点 $x<em>i$ 在 $w$ 上的投影可以用 $x_i \cdot w = x_i^T w$ 来表示，$X={x_1, x_2, …x_n}$，$x_i$ 是列向量。投影后的方差为 $var=\frac{1}{n} \Sigma</em>{i=1}^{n}( x_i^T w-E(X^Tw))^2 = \frac{1}{n} (X^Tw-E(X^Tw))^T(X^Tw-E(X^Tw))$。</p>
+<p>如果对于 $x<em>i$ 中心化后，也就是 $u = \frac{1}{n}\Sigma</em>{i=1}^nx_i;x_i=x_i - u$，</p>
+<p>$E(X^Tw)= \frac{1}{n}\Sigma<em>{i=1}^nx_i^Tw=(\frac{1}{n}\Sigma</em>{i=1}^nx_i^T)w=0$，这也是进行中心化的意义。</p>
+<p>$var = \frac{1}{n} (X^Tw)^T(X^Tw) = \frac{1}{n} (w^TXX^Tw)$，因为做了中心化，$XX^T$ 就表示数据 X 的协方差矩阵，协方差矩阵的第 $(i, j)$ 个元素代表第 i 个和第 j 个维度的协方差，协方差矩阵是对称且正定的。$X^T X$ 是正定阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设输入数据矩阵X的尺寸为[N x D]</span></span><br><span class="line">X -= np.mean(X, axis = <span class="number">0</span>) <span class="comment"># 对数据进行零中心化(重要)</span></span><br><span class="line">cov = np.dot(X.T, X) / X.shape[<span class="number">0</span>] <span class="comment"># 得到数据的协方差矩阵</span></span><br><span class="line">U,S,V = np.linalg.svd(cov)</span><br></pre></td></tr></table></figure>
+<p>S 是特征值的平方构成的对角阵。</p>
+<p>PCA 降维：<strong>np.linalg.svd</strong> 返回的 U 是按特征值大小排列的，选择方差最大的前100维，丢弃那些没有方差或方差较小的数据，我们认为信号具有较大的方差，噪声具有较小的方差。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Xrot_reduced = np.dot(X, U[:,:<span class="number">100</span>]) <span class="comment"># Xrot_reduced 变成 [N x 100]</span></span><br></pre></td></tr></table></figure>
+<p>将已经去中心的数据投影到特征向量上，去除数据间的相关性，这一步可以理解成对数据 X 进行旋转，变换基向量为特征向量方向。旋转的操作将协方差矩阵变为对角阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Xrot = np.dot(X,U) <span class="comment"># 对数据去相关性</span></span><br></pre></td></tr></table></figure>
+<p>白化：</p>
+<p>输入数据是特征向量为基向量的数据，在各个方向上除以特征值（S 的开方），对每个维度进行归一化。几何解释是：协方差矩阵可以理解成空间中的椭圆或椭球体，主轴方向上的长度是协方差矩阵 $X^TX$ 的特征值的开方，根据 SVD 可以知道 $X^TX$ 的特征值为 $\sigma_1$，除以 S 的开方后，类似于将椭圆变成圆的操作，将协方差矩阵变为单位矩阵。</p>
+<script type="math/tex; mode=display">
+    A^TA = V\Sigma^TU^TU\Sigma V^{T} = V
+    \begin{pmatrix}
+    \sigma_1^2\\
+    &\sigma_2^2\\
+    &&&...\\
+    &&&&\sigma_r^2
+    \end{pmatrix}V^T</script><p><img src="https://pic3.zhimg.com/80/aae11de6e6a29f50d46b9ea106fbb02a_hd.png" alt></p>
+<p>1e-5 为了防止分母为 0。可能在变换过程中夸大数据的噪声，可以用更强的平滑解决，（采用比 1e-5 更大的值）</p>
+<p>实际上，在卷积网络中并不会采用这些变换，但是对数据零中心化还是非常重要的。</p>
+<p>实践</p>
+<p>先将数据分成训练、验证和测试集，然后从训练集中求图片平均值，从训练/验证/测试集中减去这个平均值，而不是针对所有的图片求平均，然后减去这个值。</p>
+<h1 id="权重初始化"><a href="#权重初始化" class="headerlink" title="权重初始化"></a>权重初始化</h1><p> 如果权重初始化为 0，所有的神经元将会做同样的事情，但并不是死掉，每个神经元将输出相同的数值，相同的梯度，以相同的方式更新，失去了神经元不对称性的源头。而我们希望的是每个神经元都可以做不同的事情。</p>
+<p>所有在初始化时，可以从一个概率分布中采样，小随机数初始化。</p>
+<script type="math/tex; mode=display">
+W = 0.01 * np.random.randn(D, H)</script><p>对于小型网络适用，但对于结构深的网络， 随着每次乘以一些较小的随机数，激活值会迅速减小，最后激活值将得到一堆 0。反向传播中，由于 $WX$ 对参数 w 求导后的局部梯度将得到 x，正向传播的 x 很小，所以局部梯度很小，所以本地梯度很小，所以参数几乎得不到更新。网络崩溃。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/EuIJ8irozEYW.png?imageslim" alt="mark"></p>
+<p>如果增大权重会怎样？网络饱和</p>
+<script type="math/tex; mode=display">
+W = 1.0 * np.random.randn(D, H)</script><p>权重变大，如果用 tanh 激活函数，将会变得饱和，反向传播中的梯度将一直为 0。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/0e08Bkmbpkld.png?imageslim" alt="mark"></p>
+<p>层数深的网络该如何初始化参数？</p>
+<p>Xavier 初始化。</p>
+<p>在上图中可以看出，如果每层采用零均值和标准差的高斯分布初始化参数，随着网络的深度增加，激活值会迅速减小，反向传播中的“梯度信号”下降，就会出现问题。也就是说，随机初始化的神经元在<strong>输出</strong>数据的分布的方差在增大。而我们希望得到的是每一层的输出方差尽可能相等。在除以输入数据的平方根后，是神经元的输出方差归一化到 1。实践证明这样做也可以提高收敛速度。</p>
+<script type="math/tex; mode=display">
+W = np.random.randn(fan\_in, fan\_out)/np.sqrt(fan\_in)</script><p>下面是证明过程：</p>
+<p>权重 $w$ 与输入 $x$ 内积为 $s = \Sigma_{i}^{n}w_ix_i$，还没有进行激活函数，$s$ 的方差</p>
+<p>$Var(s) = Var(\Sigma_i^nw_ix_i)$</p>
+<p>根据<a href="https://en.wikipedia.org/wiki/Variance" target="_blank" rel="noopener">方差的性质</a>，可以得到</p>
+<p>$Var(s) = \Sigma_i^nVar(w_ix_i) = \Sigma_i^n([E(w_i)]^2Var(x_i) + [E[(x_i)]^2Var(w_i) + Var(x_i)Var(w_i))$</p>
+<p>有了 BN 后， $x_i$ 是零均值，$w_i$ 初始化时满足零均值。</p>
+<p>$Var(s) = \Sigma_i^nVar(x_i)Var(w_i)$</p>
+<p>输入 x 和权重 w 满足独立同分布</p>
+<p>$Var(s) = (nVar(w))Var(x)$，要使输出方差 $Var(s)$ 等于 $Var(x)$，$Var(w) = \frac{1}{n}$</p>
+<p>要使方差等于 $\frac{1}{n}$，原来的$w$ 满足均值为0，方差为 1 的标准高斯分布，所以每个 $w_i$ 乘以 $\sqrt{\frac{1}{n}}$ 后，方差变为 $\frac{1}{n}$，于是就有了 $W = np.random.randn(fan_in, fan_out)/np.sqrt(fan_in)$。</p>
+<p>现在$w_i$ 的方差变成 $Var(w) = \frac{1}{fan_in}$，类似的，还有另外两种方差形式</p>
+<p>只考虑输出形式，$Var(w) = \frac{1}{fac_out}$；</p>
+<p>同时考虑输入和输出形式，$Var(w) = \frac{2}{fac_in+ fac_out }$，概率统计上均匀分布的方差为 $Var = \frac{(b-a)^2}{12}$，所以这种形式的初始化 w 服从以下均匀分布 $W\sim U[-\frac{\sqrt{6}}{\sqrt{fac<em>\in+fac_out}}, \frac{\sqrt{6}}{\sqrt{fac</em>\in+fac_out}}]$</p>
+<p><strong>实践中</strong>，针对 ReLU 神经元的特殊初始化，神经元的方差是 $\frac{2}{n}$。</p>
+<p>$W = np.random.randn(fan_in, fan_out)/np.sqrt(2/fan_in)$</p>
+<p>如果输入维度较小时，将得到一个较大的权重，以得到相同的输出方差；相反，输入维度较大时，得到的权重较小，来匹配输出方差。</p>
+<p>激活函数是 tanh 的权值分布</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/JlkTA1vd24Hy.png?imageslim" alt="mark"></p>
+<p>激活函数是 ReLU 的权值分布，每次会消除一半的神经元，相当于将方差减半，高斯分布会逐渐收缩，神经元越来越多地失活。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/qN2YNNlW1QLx.png?imageslim" alt="mark"></p>
+<p>可以通过除以 2 来解决这个问题。</p>
+<script type="math/tex; mode=display">
+W = np.random.randn(fan\_in, fan\_out)/np.sqrt(fan\_in/2)</script><p><img src="http://qnpic.sijihaiyang.top/blog/20181121/NnbhV7SQ6QI8.png?imageslim" alt="mark"></p>
+<p>一般的经验法则是从 Xavier 法开始。</p>
+<p>参考资料：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/21560667?refer=intelligentunit" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/21560667?refer=intelligentunit</a></p>
+<p><a href="https://blog.csdn.net/shuzfan/article/details/51338178" target="_blank" rel="noopener">https://blog.csdn.net/shuzfan/article/details/51338178</a></p>
+<h1 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h1><p>目的是单位高斯激活，在训练的每一层都能使数据保持高斯分布。因为神经网络中涉及很多层的叠加，每一层的参数更新会导致上层的输入数据分布发生变化，使每个神经元的输入数据不再是“独立同分布”。同时，下层的输入变化可能趋向于变大或变小，使上层落入饱和区，学习过早停止。也就是说，层内操作作用使各层的输出与对应的输入信号分布不同，差异随着网络深度增大而增大，这一误差随后又在梯度反向传播中被进一步放大。但是最终的 label 是不变的，这种训练过程中出现的分布与理想分布发生偏差的现象被成为Internal Covariate Shift。Covariate Shift的概念与2000年在统计学领域被提出，论文作者将原始的端到端的Covariate Shift引入到网络的每一层，因此称为Internal Covariate Shift。</p>
+<p><strong>BN的目标也就是解决分布偏差问题</strong></p>
+<p><img src="https://pic1.zhimg.com/80/v2-c55d2949550196bc85de215a1f73e138_hd.jpg" alt></p>
+<p>在 BN 之前多采用白化处理，但涉及协方差矩阵的计算，计算成本很高。</p>
+<p>对训练过程中 Batch 样本的每个维度分别计算均值和方差，经过减去均值除以方差后得到每个维度上均值为 0，方差为 1 的分布，随后在进行仿射变换，防止网络的表征能力下降。通常是在全连接层或卷积层之后，激活函数之前插入。在卷积层中，每个激活图都有一个均值和方差。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/5nYAWMQaN8YE.png?imageslim" alt="mark"></p>
+<p>BN 能够允许更高的学习率，减少了对初始化参数的依赖性。</p>
+<p>为了使模型的表达能力不因规范化而下降，获得非线性的表达能力需要再将平移参数和缩放参数加回去，比如采用 tanh 非线性函数时，这样的归一化操作，将数据限定在激活函数的线性区域中，避免出现过饱和，但有一点点饱和也无所谓。需要额外的缩放和平移操作。$\gamma$ 和 $\beta$ 需要通过学习得到。</p>
+<script type="math/tex; mode=display">
+y^{(k)} = \gamma ^{(k)} \hat{x}^{(k)}+ \beta ^{(k)}</script><p>BN 的具体算法过程如下</p>
+<p><img src="https://pic3.zhimg.com/80/v2-6716c5582bb4d8d076b076dfb752d03a_hd.jpg" alt></p>
+<p>反向传播中梯度</p>
+<p><img src="https://pic1.zhimg.com/80/v2-466b00409012a4fb0d7d3aa7c0862698_hd.jpg" alt></p>
+<p>利用各个 Batch 滑动平均的方法得到测试集上的平均值和方差。</p>
+<p>BN 的总结：</p>
+<ol>
+<li><p>放宽了对网络初始化的要求。对不好的初始值有更好的鲁棒性。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181126/rfWUxErWVjm2.png?imageslim" alt="mark"></p>
+<p>横坐标是 weight decay 值，范围为 $[10^{-4}, 10^{0}]$，可以看出 BN 有更好的稳定性。</p>
+</li>
+<li><p>BN 也可以看作是正则化的方法。通过对给定的训练样本进行批采样，对这一批样的输入数据进行归一化，不再对给定的训练样本提供确定的值，类似于向 x 中加入一些噪声和抖动。在一些任务中可以省去 Dropout。</p>
+</li>
+<li><p>放宽了对 learning rate 的要求。</p>
+</li>
+<li><p>测试集上的 BN 是针对所有 minibatch 的指数加权平均作为这一隐藏层的平均值和标准差。</p>
+</li>
+</ol>
+<p>但是对于 BN 放在什么位置，在哪些层增加BN？是否需要 Dropout？要不要使用 Weight Decay？这些需要找到一个平衡点。</p>
+<p>对于批量非常小时，应该如何处理？</p>
+<p>BN 更多的用在标准卷积网络中，对于像强化学习这种批次样本非常小时，准确率可能会变小，可能要用更多的样本计算均值和方差。</p>
+<p>卷积网络中通常希望保留一些空间结构，只找到训练样本的经验均值和方差。</p>
+<p>BN 的过程并没有改变权重。</p>
+<p>参考资料：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/33173246" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33173246</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/32243003" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32243003</a></p>
+<h1 id="Babysitting-the-Learning-Progress"><a href="#Babysitting-the-Learning-Progress" class="headerlink" title="Babysitting the Learning Progress"></a>Babysitting the Learning Progress</h1><p>如何观察训练过程以及在训练过程中调整参数？</p>
+<ol>
+<li>数据预处理</li>
+<li>确定网络结构</li>
+<li>初始化网络，确定损失函数是合理的，比如 Softmax loss 中，随机初始化参数后，在不用正则化的前提下，最终的损失是 $-log(0.1)$。</li>
+<li>加入正则项后，观察 loss 情况。loss 将会有上升。</li>
+<li>训练过程。最好先从小数据集开始，小数据集上会拟合得非常好，损失时是否能够降为 0，训练集上的正确率是 100%。比如说选择 20 个样本，关闭正则化，使用 sgd 下降等。</li>
+</ol>
+<h2 id="梯度检查"><a href="#梯度检查" class="headerlink" title="梯度检查"></a>梯度检查</h2><p><img src="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+%5Cfrac%7Bdf%28x%29%7D%7Bdx%7D%3D%5Cfrac%7Bf%28x%2Bh%29-f%28x-h%29%7D%7B2h%7D%28use%5C+instead%29" alt></p>
+<p>上述公式的误差可以看作是$O(h^2)$，是个二阶近似。</p>
+<p>使用相对误差</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+%5Cfrac%7B%7Cf%27_a-f%27_n%7C%7D%7Bmax%28%7Cf%27_a%7C%2C%7Cf%27_n%7C%29%7D" alt></p>
+<p>分母上取最大值或者取和。</p>
+<p>对于不可导的点，相对误差 &lt; 1e-4 就可以，如果是激活函数是连续函数（tanh或sigmoid），误差通常小于 1e-7。出现不可导的原因可能是ReLU、SVM损失、Maxout神经元引入等，数值梯度可能会突然计算出一个非零的梯度值。</p>
+<p>网络深度越深，相对误差越高。</p>
+<p>要确保用于比较的解析梯度和数值梯度不能过小，比如绝对值小于 1e-10，如果过小，可以暂时用常数将损失函数的数值扩展到更好的范围，比较理想的是浮点数的指数为 0 时的数量级。</p>
+<p>梯度检查中使用越少的数据点，含有不可导点的几率越低；h 要谨慎设置，一般为 1e-4 或 1e-6；为防止参数随机初始化可能导致的不正常边界情况，掩盖了梯度没有正确实现的事实，一般在网络学习一段时间后，等损失函数开始下降后再进行梯度检查。</p>
+<p>正则化损失可能会吞没掉数据损失，这种情况梯度主要来源于正则化部分。推荐先关掉正则化对数据损失单独检查，然后对正则化做检查，对正则化检查时，可以关掉数据损失或提高正则化强度。</p>
+<p>做梯度检查时要关闭 Dropout 和 augmentation。</p>
+<p>要确保所有不同的参数都抽取一部分来做梯度检查。</p>
+<h2 id="学习之前的合理性检查"><a href="#学习之前的合理性检查" class="headerlink" title="学习之前的合理性检查"></a>学习之前的合理性检查</h2><ul>
+<li>特定情况下的正确损失。比如不用正则化时，随机小参数初始化的 Softmax 的每个类别的损失为 $-log(0.1)$</li>
+<li>提高正则化强度后损失变大</li>
+<li>最重要的一步，不用正则化时，小数据集过拟合，损失为0。但可能由于某些错误可能对小数据过拟合，但整个数据集上没有任何泛化能力。</li>
+</ul>
+<h2 id="检查学习过程"><a href="#检查学习过程" class="headerlink" title="检查学习过程"></a>检查学习过程</h2><p>上述完整性检查结束后，拿出所有的训练数据，加上小的正则项。从较小的学习率开始调。学习率是最重要的参数。</p>
+<p>学习率太低时，loss 几乎不会下降，但是准确率却在上升，原因是虽然损失的分布仍然分散，但是所有的分布在朝着正确的方向移动，参数更新也在正确的方向上，准确率可能会发生突变。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/PR8dQi0vgTtV.png?imageslim" alt="mark"></p>
+<p>学习率太大时，cost 为 nan 时，需要你降低学习率了。一般用的交叉验证的学习率的范围是[1e-3, 1e-5]。</p>
+<h3 id="学习率"><a href="#学习率" class="headerlink" title="学习率"></a>学习率</h3><p>学习超参数，在训练集上训练，在验证集上验证。</p>
+<p>不同学习率下的 loss 曲线，一个epochs 代表每个样本数据都被观察过一次</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181122/mxNGleyluSXp.png?imageslim" alt="mark"></p>
+<p>过低的学习率导致算法的改善是线性的，过高的学习率可以让损失值快速下降，但最终停在一个不好的损失值上。因为学习率太高，引起随机震荡，不能停在较好的点上。</p>
+<p>loss 曲线的震荡程度和 batch size 有关，batch size 越小，震荡越大。</p>
+<h3 id="训练集和验证集准确率"><a href="#训练集和验证集准确率" class="headerlink" title="训练集和验证集准确率"></a>训练集和验证集准确率</h3><p><img src="https://pic3.zhimg.com/80/05a6960a01c0204ced8d875ac3d91fba_hd.jpg" alt></p>
+<p>训练集和验证集上的准确度曲线之间的空隙代表了模型过拟合的程度。相差太大时，可能是发生过拟合了。过拟合时，应该增大正则化强度（更高的 L2 权重惩罚和更多的随机失活）或收集更多的数据或减少隐藏层数量。如果训练集和验证集曲线几乎相同，那么应该增大模型容量。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181122/yPLIvCiOJaAx.png?imageslim" alt="mark"></p>
+<h3 id="权重更新前后比例"><a href="#权重更新前后比例" class="headerlink" title="权重更新前后比例"></a>权重更新前后比例</h3><p>通过比较更新前后参数的二范数的比例，通常比例在 1e-3 左右是可以的。当这个比值太小时，学习率可能太低或者不需要再训练了；如果比例太高，说明学习率可能太高。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">param_scale = np.linalg.norm(W.ravel()) <span class="comment"># 求二范数</span></span><br><span class="line">update = -learning_rate * dW</span><br><span class="line">update_scale = np.linalg.norm(update.ravel())</span><br><span class="line">W += update</span><br><span class="line">print(update_scale/ param_scale)</span><br></pre></td></tr></table></figure>
+<h3 id="确保每层的激活参数及梯度分布"><a href="#确保每层的激活参数及梯度分布" class="headerlink" title="确保每层的激活参数及梯度分布"></a>确保每层的激活参数及梯度分布</h3><p><img src="http://qnpic.sijihaiyang.top/blog/20181121/EuIJ8irozEYW.png?imageslim" alt="mark"></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181121/0e08Bkmbpkld.png?imageslim" alt></p>
+<p>如果每层权重呈现全是 0 或在 -1 和 1 上，那肯定是出问题了。</p>
+<h3 id="第一层特征可视化"><a href="#第一层特征可视化" class="headerlink" title="第一层特征可视化"></a>第一层特征可视化</h3><p><img src="https://pic3.zhimg.com/80/96573094f9d7f4b3b188069726840a2e_hd.png" alt></p>
+<p>左图特征充满了噪音，网络可以出问题，没有收敛，学习率不恰当，正则化的惩罚权重过低等。右图的特征不错，平滑，干净且种类繁多。</p>
+<h3 id="其他超参数"><a href="#其他超参数" class="headerlink" title="其他超参数"></a>其他超参数</h3><p>学习率衰减率，更新类型，正则化，网络结构（隐藏层数量、深度等）</p>
+<p>理解正则化，在SVM/Softmax的例子中，正则化损失从生物学角度可以看做<em>逐渐遗忘</em>，因为它的效果是让所有突触权重<img src="http://www.zhihu.com/equation?tex=w" alt="w">在参数更新过程中逐渐向着0变化。</p>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><p>如果 loss 在开始时很平滑，之后突然开始训练，可能是参数初始化不好，刚开始没学到东西，在某个点突然的变化。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/20181122/30E8hnCQ5vMW.png?imageslim" alt="mark"></p>
+<h1 id="数据损失"><a href="#数据损失" class="headerlink" title="数据损失"></a>数据损失</h1><p>$L = \frac{1}{N}\Sigma_{i}L_i$，最后的损失是每个样本损失的平均值。</p>
+<h2 id="分类问题"><a href="#分类问题" class="headerlink" title="分类问题"></a>分类问题</h2><p>SVM 损失</p>
+<script type="math/tex; mode=display">
+L_i = \Sigma_{j\neq y_i}max(0, f_j - f_{y_i} + 1)</script><p>平方折叶损失</p>
+<script type="math/tex; mode=display">
+L_i = \Sigma_{j\neq y_i}max(0, f_j - f_{y_i} + 1)^2</script><p>Softmax 损失</p>
+<script type="math/tex; mode=display">
+L_i = -log(\frac{e^{f_{y_i}}}{\Sigma_j e^{f_j}})</script><p>当标签机庞大时，使用分层 Softmax，将标签解析成一个树，每个标签表示成这个树上的一个路径，每个节点左右训练一个 Softmax 在左右枝间决策。</p>
+<h2 id="属性分类"><a href="#属性分类" class="headerlink" title="属性分类"></a>属性分类</h2><p>当一个样本上可能有多个标签时，对样本 $i$ 而言，为每个属性 $j$ 创建独立的二分类器，</p>
+<script type="math/tex; mode=display">
+L_i = \Sigma_jmax(0, 1-y_{ij} f_j)</script><p>当样本 i 包括属性 j 时，$y<em>{ij} = 1$，$1-y</em>{ij}f_j = 1-f_j$，当 $f_j$ 得分小于 1 时，会产生损失值；</p>
+<p>当样本 i 不包括属性 j 时，$y<em>{ij} = -1$，$1-y</em>{ij}f_j = 1+f_j$，当 $f_j$ 得分大于 -1 时，会产生损失值。</p>
+<p>第二种方法，利用 Logistic 回归二分类器</p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+P%28y%3D1%7Cx%3Bw%2Cb%29%3D%5Cfrac%7B1%7D%7B1%2Be%5E%7B-%28w%5ETx%2Bb%29%7D%7D%3D%5Csigma%28w%5ETx%2Bb%29" alt></p>
+<p><img src="http://www.zhihu.com/equation?tex=%5Cdisplaystyle+P%28y%3D0%7Cx%3Bw%2Cb%29%3D1-P%28y%3D1%7Cx%3Bw%2Cb%29" alt></p>
+<p>如果<img src="http://www.zhihu.com/equation?tex=%5Csigma%28w%5ETx%2Bb%29%3E0.5" alt>被划分成正样本。$\sigma(.)$ 是 sigmoid 函数。</p>
+<script type="math/tex; mode=display">
+L_i = \Sigma_j(y_{ij}log(\sigma(f_j)) + (1-y_{ij})log(1-\sigma(f_j)))</script><p>反向传播中：</p>
+<p>$\frac{\partial \sigma(f_j)}{f_j} = \sigma(f_j) (1-\sigma (f_j)) $</p>
+<script type="math/tex; mode=display">
+\frac{\partial L_i}{f_j} = (\frac{y_{ij}}{\sigma(f_j)}-  \frac{1-y_{ij}}{1-\sigma(f_j)})\frac{\partial \sigma(f_j)}{f_j} \\
+= (\frac{y_{ij}}{\sigma(f_j)}-  \frac{1-y_{ij}}{1-\sigma(f_j)})\sigma(f_j) (1-\sigma (f_j))\\
+= y_{ij} - \sigma(f_j)</script><h2 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a>回归问题</h2><p>回归问题中通常计算预测值和真实值之间的损失。采用 L2 范式或 L1 范式</p>
+<script type="math/tex; mode=display">
+L_i = ||f - y_i||^2\\ 
+L_i = |f - y_i|</script><p>如果是多个属性，用 $\Sigma_j$ 将所有属性加起来。对于 $f_j$ 求导，</p>
+<script type="math/tex; mode=display">
+\frac{\partial L_i}{\partial f_j} = (f_j - y_i)\\
+\frac{\partial L_i}{\partial f_j} = sign(f_j - y_i)</script><p>求导后，评分值的梯度要么与误差中的差值直接成比例，要么是固定的并从差值中继承sign。</p>
+<p><strong>在实践中</strong>，L2 损失优化比起 Softmax 损失，优化要困难得多。因为网络需要一个评分的正确值，而且在鲁棒性也不是很好，异常值可以导致很大的梯度。但是 Softmax 损失每个评分的准确值不那么重要，分类也能给出关于回归的分布。<strong>所以在面对回归任务时，尽量把输出变成二分类</strong>，变成一个分类问题。</p>
+<p>面对实际的回归问题时，先看能否将输出二值化，转化成多个二分类问题。比如对一个产品的星级进行预测时，使用5个独立的分类器对 1-5 星打分比回归损失要好得多。</p>
+<h1 id="结构化预测"><a href="#结构化预测" class="headerlink" title="结构化预测"></a>结构化预测</h1><p>需要设计一些特殊的解决方案。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/2a219ab1.html" rel="next" title="CS231n Lecture5 笔记">
+                <i class="fa fa-chevron-left"></i> CS231n Lecture5 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/68049dcc.html" rel="prev" title="CS231n Lecture7 笔记">
+                CS231n Lecture7 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#激活函数"><span class="nav-number">1.</span> <span class="nav-text">激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sigmoid"><span class="nav-number">1.1.</span> <span class="nav-text">sigmoid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tanh"><span class="nav-number">1.2.</span> <span class="nav-text">tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Relu"><span class="nav-number">1.3.</span> <span class="nav-text">Relu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-ReLU"><span class="nav-number">1.4.</span> <span class="nav-text">其他 ReLU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maxout-“Neuron”"><span class="nav-number">1.5.</span> <span class="nav-text">Maxout “Neuron”</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络相关"><span class="nav-number">2.</span> <span class="nav-text">神经网络相关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络的表达能力"><span class="nav-number">2.1.</span> <span class="nav-text">神经网络的表达能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络的层数"><span class="nav-number">2.2.</span> <span class="nav-text">神经网络的层数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经元个数"><span class="nav-number">2.3.</span> <span class="nav-text">神经元个数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置数据和模型"><span class="nav-number">3.</span> <span class="nav-text">设置数据和模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理"><span class="nav-number">3.1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PCA-和白化"><span class="nav-number">3.1.1.</span> <span class="nav-text">PCA 和白化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#权重初始化"><span class="nav-number">4.</span> <span class="nav-text">权重初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch-Normalization"><span class="nav-number">5.</span> <span class="nav-text">Batch Normalization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Babysitting-the-Learning-Progress"><span class="nav-number">6.</span> <span class="nav-text">Babysitting the Learning Progress</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度检查"><span class="nav-number">6.1.</span> <span class="nav-text">梯度检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习之前的合理性检查"><span class="nav-number">6.2.</span> <span class="nav-text">学习之前的合理性检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查学习过程"><span class="nav-number">6.3.</span> <span class="nav-text">检查学习过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习率"><span class="nav-number">6.3.1.</span> <span class="nav-text">学习率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练集和验证集准确率"><span class="nav-number">6.3.2.</span> <span class="nav-text">训练集和验证集准确率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权重更新前后比例"><span class="nav-number">6.3.3.</span> <span class="nav-text">权重更新前后比例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确保每层的激活参数及梯度分布"><span class="nav-number">6.3.4.</span> <span class="nav-text">确保每层的激活参数及梯度分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一层特征可视化"><span class="nav-number">6.3.5.</span> <span class="nav-text">第一层特征可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他超参数"><span class="nav-number">6.3.6.</span> <span class="nav-text">其他超参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他问题"><span class="nav-number">6.3.7.</span> <span class="nav-text">其他问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据损失"><span class="nav-number">7.</span> <span class="nav-text">数据损失</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类问题"><span class="nav-number">7.1.</span> <span class="nav-text">分类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性分类"><span class="nav-number">7.2.</span> <span class="nav-text">属性分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归问题"><span class="nav-number">7.3.</span> <span class="nav-text">回归问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结构化预测"><span class="nav-number">8.</span> <span class="nav-text">结构化预测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

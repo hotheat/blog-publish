@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="面试久谦咨询公司，提前在网上看了一下，有评价说这个公司的人都是铁打的，一天 24 小时都是工作时间，离职原因是“身体垮了”。面试约在 4.25 晚上 7 点开始，先是 DA 面，面了 90 分钟，后来说 DS 开会，需要等一下，等到 21:30，说一会要开会，明天再面，这个时间观念和工作强度，我已经提前感受到了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次面试经历 9k">
+<meta property="og:url" content="https://www.hotheat.top/archives/8b2ffd6.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="面试久谦咨询公司，提前在网上看了一下，有评价说这个公司的人都是铁打的，一天 24 小时都是工作时间，离职原因是“身体垮了”。面试约在 4.25 晚上 7 点开始，先是 DA 面，面了 90 分钟，后来说 DS 开会，需要等一下，等到 21:30，说一会要开会，明天再面，这个时间观念和工作强度，我已经提前感受到了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190425/Ae58bjTkKHez.png?imageslim">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.310Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录一次面试经历 9k">
+<meta name="twitter:description" content="面试久谦咨询公司，提前在网上看了一下，有评价说这个公司的人都是铁打的，一天 24 小时都是工作时间，离职原因是“身体垮了”。面试约在 4.25 晚上 7 点开始，先是 DA 面，面了 90 分钟，后来说 DS 开会，需要等一下，等到 21:30，说一会要开会，明天再面，这个时间观念和工作强度，我已经提前感受到了。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190425/Ae58bjTkKHez.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/8b2ffd6.html">
+
+
+
+
+
+  <title>记录一次面试经历 9k | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/8b2ffd6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">记录一次面试经历 9k</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T21:47:35+08:00">
+                2019-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>面试久谦咨询公司，提前在网上看了一下，有评价说这个公司的人都是铁打的，一天 24 小时都是工作时间，离职原因是“身体垮了”。面试约在 4.25 晚上 7 点开始，先是 DA 面，面了 90 分钟，后来说 DS 开会，需要等一下，等到 21:30，说一会要开会，明天再面，这个时间观念和工作强度，我已经提前感受到了。</p>
+<a id="more"></a>
+<h1 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h1><p>主要考察 pandas 的操作，比如 merge（DA 面又考察了两次），正则表达式，pandas 的基本操作，比如 append()，sort_values() 等等，其中有一个要求组合数的题目稍有难度。</p>
+<p>笔试结束后，约在第二天晚上面试。</p>
+<h1 id="DA-面"><a href="#DA-面" class="headerlink" title="DA 面"></a>DA 面</h1><p>先是自我介绍，主要介绍毕业学校，项目经历，机器学习的经历。问了一下之前的专业，我介绍了一下转行业的经历。</p>
+<h2 id="Python-基本操作热身"><a href="#Python-基本操作热身" class="headerlink" title="Python 基本操作热身"></a>Python 基本操作热身</h2><ol>
+<li><p>pandas 中的 loc 和 iloc 的区别</p>
+<p>这道题答上来了，是索引和值的区别</p>
+</li>
+<li><p>A = [1,2,3]，B=[3,4]，C=A.append(B)。问：A 和 C 分别等于什么？</p>
+<p>这道题 C 的取值答错了。A = [1,2,3,[3,4]]，C = None，C 是 append() 函数的返回值 None，这里想起来笔试中有一道，l1 = []，B = [l1.append(i) for i in range(3)]，问 B 等于什么？，也是考察 append() 返回值，B=[None, None, None]。</p>
+</li>
+<li><p><code>A = pd.Dataframe({&#39;x&#39;:[&#39;a&#39;] * 5})，B = pd.Dataframe({&#39;x&#39;: [&#39;a&#39;] * 4})</code>，问 A.merge(B) 返回多少行？</p>
+<p>这道题答错，考察 merge，考察笛卡儿积，返回 <code>4*5=20</code> 行</p>
+</li>
+<li><p>set() 的交集，并集和差集的操作是什么？set 与 list 的区别是什么？</p>
+<p>set 与 list 区别开始只答了 set 中元素不重复及 list 可以重复，以及 set 支持集合操作。后面面试官问有没有其他的了，又补充了一下查找时 $O(1)$ 和 $O(n)$ 复杂度的区别以及 set 分为可变类型和不可变类型，list 是可变类型，面完后在网上查了一下，set 不支持索引，list 支持索引和切片，以及一些常用方法的不同。</p>
+</li>
+</ol>
+<h2 id="项目相关"><a href="#项目相关" class="headerlink" title="项目相关"></a>项目相关</h2><h3 id="简历上的项目"><a href="#简历上的项目" class="headerlink" title="简历上的项目"></a>简历上的项目</h3><p>关于简历上的项目和每一句话，基本上每个都问到了，而且问的很详细很详细，即便是她不懂的基因组分析，也要问到很多细节出来，直到她确认这个项目真的是你在做，你在其中发挥的作用，以及里面的涉及的一些技术细节。感觉你要是编的项目，或者没有参与过的，真的会被问得哑口无言。</p>
+<ol>
+<li><p>关于转录组分析流程，具体你是如何来实现的，以及都用了哪些技术？</p>
+<p>说了一下 Jinja 模板，JSON 配置文件，整个代码的结构等</p>
+</li>
+<li><p>别人是如何使用你这个流程的，后面谈到了流程中用到的分析软件，以及一些 R 包，问：Python 中是如何调用 R 的？说到最后，面试官还进行了一些总结，感觉她总结得比我讲得都明白。。</p>
+</li>
+<li><p>简历里谈到 GB 和 TB 级数据处理，是如何做到的？</p>
+<p>主要通过切分文件和遍历来做的。</p>
+<p>为什么不用 spark？</p>
+<p>可能是集群不允许吧，因为集群的 qsub 结构还是 Sun 公司那套。（真的不清楚）</p>
+</li>
+<li><p>除了工作上的项目，还有其他项目可以谈谈嘛？</p>
+<p>说了一下匿名数据挖掘的项目</p>
+<p>你是如何来做特征，找出哪些特征是有效的？</p>
+<p>从缺失值比例，方差阈值，训练集和测试集上特征是否同分布来筛选。</p>
+<p>方差阈值如何确定的？</p>
+<p>我说当时就选了这个值。。</p>
+<p>继续说做特征的过程，通过一些地理位置经纬度，找到对应的城市，对城市进行分级，发现这是个很重要的特征</p>
+<p>如何发现这个特征有效的？</p>
+<p>通过在验证集上的表现，这里并没有用一些模型打分的方法（害怕当时问我模型打分的方法有哪些）</p>
+<p>又继续说做了一些交叉特征，因为匿名，没办法通过业务理解构建新特征，根据在 label 上的表现差异来做的。</p>
+<p>如何做模型验证的？</p>
+<p>交叉验证</p>
+<p>讲讲交叉验证？</p>
+<p>划分数据集，在验证集上取平均</p>
+<p>什么是过拟合和欠拟合？</p>
+<p>模型复杂度过高，学到了噪声，过拟合，表现为训练集上表现太好，测试集上不好且方差过大。</p>
+<p>讲讲 Precision 和 recall？</p>
+<p>这个本以为是送分题，可惜变成送命题了。开始说 precision 考察所有样本的预测正确样本的比例，recall 指所有正例样本中的比例，刚开始没理清，说得不清楚，我想用混淆矩阵来表示一下的，面试官说，那你说一下混淆矩阵吧，我那时候突然就不起混淆矩阵了。怎么想不起 TP，FP，FN 和 TN 了，给自己挖坑了。</p>
+<p>|               | （预测结果）+ | -    |<br>| ——————- | ——————- | —— |<br>| （实际结果）+ | TP            | FN   |<br>| -             | FP            | TN   |</p>
+<script type="math/tex; mode=display">
+Precison = TP/(TP+FP)\\
+Recall = TP/(TP+FN)</script></li>
+<li><p>然后又谈到之前切分文件的问题，切分文件之后做了什么工作？我又把从基因注释文件中提取 CDS，基因注释文件格式，后面做 KEGG 注释，Go 注释的过程以及 gff 文件去 overlap，感觉这块讲得太乱了，想到什么说什么，当时头已经有些懵了。</p>
+</li>
+<li><p>能不能再详细的讲讲你这些处理的过程</p>
+<p>我就觉得这部分是要体现你的代码能力。就又把组装后的结果评估，lastz 比对结果中染色体上出现空白区域如何来做等等说了一下。</p>
+</li>
+<li><p>用到这么大的数据，如何用 Pandas 读入的？</p>
+<p>我说这些一般是非结构化数据，就是采取切分文件的方式来做，又详细问切分文件的方法和结果输出等等。。</p>
+</li>
+</ol>
+<h2 id="业务理解面"><a href="#业务理解面" class="headerlink" title="业务理解面"></a>业务理解面</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190425/Ae58bjTkKHez.png?imageslim" alt="mark"></p>
+<ol>
+<li><p>这张表中，现在要求第一列进行降频，比如肯德基宅急送（大润发店），肯德基（沃尔玛店）都表示为肯德基，所有出现麦当劳的都归为麦当劳，表格共有几百万行，共有一千多个品牌。</p>
+<p>我开始的回答是利用正则表达式进行匹配，那每一行都要遍历这一千品牌嘛？效率有点低，把这一列取 unique，再做正则，建立哈希，再 map 回去。可以不能循环这一千个品牌嘛？</p>
+<p>最后给了两个答案：1. 去除一些特有的表示地点的词语或许能做 2. 做分词，计算每个词向量的距离，再做聚类。</p>
+</li>
+<li><p>现在要求给这些商品打上食材标签，比如麦辣鸡块打上鸡块，西红柿炒蛋打上西红柿和鸡蛋，原味板烧鸡腿堡中署套餐打上鸡腿，薯条等，一个商品可能对应多个不同食材。</p>
+<p>我开始想的方法，怕说错，一直没敢说，面试官一直鼓励，</p>
+<p>就说了一下是否可以利用神经网络中已有的训练好的模型，直接找到对应的方法。</p>
+<p>面试官给的答案是利用爬虫抓取网站上一些菜品和食材的对应关系，这是一种解决方法。</p>
+<p>如果爬下来的数据要和 sku_name 这一列做 merge，应该用什么方法？</p>
+<p>开始说 leftjoin，面试官说，一个菜品对应不同的食材呢，会出现什么情况？</p>
+<p>后来仔细想了想，还是笛卡尔积产生数据爆炸的问题。</p>
+</li>
+<li><p>如果有一个大型连锁超市，在各地区都有分布，现在要做一些销售额的预测，需要做哪些分析？</p>
+<p>谈了一下人均消费水平，人口流量时间，单位时间出货量，客单价，客户等级与消费金额等等</p>
+<p>如果要设计几张数据表，你该怎么来做？</p>
+<p>每说出一张表，面试官都会问这张表主键是什么？</p>
+<p>最后总结说出了四张表，</p>
+<p>消费者个人信息，主键 customerid，</p>
+<p>消费者订单，主键 orderid，</p>
+<p>订单表，主键 customerid，itemid，</p>
+<p>物品表 ，主键 itemid。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次面试自己评分 65 分，有很多地方答得不好，基础也不是很扎实。但是一次很好的学习机会，也感觉到现在要进互联网做数据分析，要求真得变高了，需要你进去真正能干事的，而不是靠几个临时项目拼凑出的。这也是大环境不好的一种体现。</p>
+<p>总结一下：Python 基础语法不扎实，项目描述比较混乱，业务理解不深。面试感觉不错，面试官很好，基本每个题都会告诉你答案和思路。</p>
+<p>后面好好再过一下自己做过的项目和思路，熟悉再熟悉一些。做个导图，准备二面。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/dfe8b6.html" rel="next" title="聚类算法笔记（四）--聚类算法的衡量指标">
+                <i class="fa fa-chevron-left"></i> 聚类算法笔记（四）--聚类算法的衡量指标
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/d24f3c2e.html" rel="prev" title="Tableau 数据可视化实战（一）">
+                Tableau 数据可视化实战（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#笔试"><span class="nav-number">1.</span> <span class="nav-text">笔试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DA-面"><span class="nav-number">2.</span> <span class="nav-text">DA 面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-基本操作热身"><span class="nav-number">2.1.</span> <span class="nav-text">Python 基本操作热身</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目相关"><span class="nav-number">2.2.</span> <span class="nav-text">项目相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简历上的项目"><span class="nav-number">2.2.1.</span> <span class="nav-text">简历上的项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务理解面"><span class="nav-number">2.3.</span> <span class="nav-text">业务理解面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

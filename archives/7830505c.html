@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="sgbv9ivj7v-Lbu8DQ9a8wgFq1alzYcXV1aUZ9zb6gwE">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="微积分,机器学习,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="微积分的本质微积分的三个中心思想：微分，积分和微分积分互逆。">
+<meta name="keywords" content="微积分,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3Blue1Brown-微积分的本质读书笔记">
+<meta property="og:url" content="https://www.hotheat.top/archives/7830505c.html">
+<meta property="og:site_name" content="Hotheat">
+<meta property="og:description" content="微积分的本质微积分的三个中心思想：微分，积分和微分积分互逆。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180824/0h3GBmlGLm.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/acb0KG8B9F.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/K1fi6gm18F.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/8GGK5E51ae.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/lFmEFaeaFd.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/1DD55753fj.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180920/Ig2JB5F65i.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/EED07aDgLf.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/J3cjb9H05L.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/hGF803kflj.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180920/FFibdakK4G.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/LAK057kL72.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/jI6mmbE65g.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/j1iEkI6iFE.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180826/fCde85DCDE.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180920/1lIK3i9H21.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/meDBmgf02F.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/cLiDKf2Hgb.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/7Kj9ILba1J.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/Egmf3C8cmg.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/A732EJDIHI.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/B65h9gHjcb.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/BagLifGLiI.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/aD3I5Hj9bD.png">
+<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/180827/li1kI09gJl.png">
+<meta property="og:updated_time" content="2019-07-05T02:16:12.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3Blue1Brown-微积分的本质读书笔记">
+<meta name="twitter:description" content="微积分的本质微积分的三个中心思想：微分，积分和微分积分互逆。">
+<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/180824/0h3GBmlGLm.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.hotheat.top/archives/7830505c.html">
+
+
+
+
+
+  <title>3Blue1Brown-微积分的本质读书笔记 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hotheat</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Hotheat Home</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/7830505c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">3Blue1Brown-微积分的本质读书笔记</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T18:28:43+08:00">
+                2018-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学/" itemprop="url" rel="index">
+                    <span itemprop="name">数学</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学/微积分/" itemprop="url" rel="index">
+                    <span itemprop="name">微积分</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="微积分的本质"><a href="#微积分的本质" class="headerlink" title="微积分的本质"></a>微积分的本质</h1><p>微积分的三个中心思想：微分，积分和微分积分互逆。</p>
+<a id="more"></a>
+<p>将半径为 $R$ 的圆剪成同心圆环，并计算每个圆环的面积后，相加可得。<br>圆环半径为 $r$，厚度为 $dr$，展开后面积等于 $2\pi rdr$。</p>
+<ol>
+<li>$dr$ 越小，矩形越多，近似越准确</li>
+<li>$0\le r\le R$</li>
+<li>$\pi R^2$ 的由来，即三角形的面积<br> <img src="http://qnpic.sijihaiyang.top/blog/180824/0h3GBmlGLm.png" alt="mark"></li>
+</ol>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>$dr$ 不仅是 $2\pi rdr$ 中的因子，更是不同 $r$ 值的间隔，且 $dr$ 越小，矩形面积加和的近似越精确。</p>
+<h2 id="核心"><a href="#核心" class="headerlink" title="核心"></a>核心</h2><p>圆环面积的和是对原问题的近似，等价于求图像的面积。<br>如果是不规则图形，用积分的思想。</p>
+<h2 id="微积分基本定理"><a href="#微积分基本定理" class="headerlink" title="微积分基本定理"></a>微积分基本定理</h2><p>将曲线下面积的变化看作关于 $x$ 的函数 $A(x)$<br>$\frac{dA}{dx}\approx x^2$</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/acb0KG8B9F.png" alt="mark"></p>
+<p>当 $dx$ 越来越小时，根据导数的概念，$\frac{dA}{dx} = f(x)$，<br>$A(x)$ 的导数等于 $f(x)$。</p>
+<p><strong>导数衡量的是函数对取值的微小变化有多敏感。</strong></p>
+<h1 id="导数的悖论"><a href="#导数的悖论" class="headerlink" title="导数的悖论"></a>导数的悖论</h1><p>速度的定义：单位时间内运动的距离。</p>
+<h2 id="矛盾"><a href="#矛盾" class="headerlink" title="矛盾"></a>矛盾</h2><p>我们想在某个时间点上关联一个速度值，但计算速度却需要比较两个时间点上的距离。<br>现实中，并不是计算瞬时变化率，而是非常小的一段时间 $dt$ 内的距离的变化 $ds$，<br>$ds/dt$ 即为 $t$ 时刻速度。</p>
+<h2 id="导数的意义"><a href="#导数的意义" class="headerlink" title="导数的意义"></a>导数的意义</h2><p>$\frac{ds}{dt}$ 是关于时间 $t$ 的函数，也就把速度看作关于时间的函数。<br>当 $dt$ 趋近于 0 时，$t$ 时刻的导数逼近于 $t$ 时刻图像切线的斜率。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/K1fi6gm18F.png" alt="mark"></p>
+<ol>
+<li>$dt$ 并不是趋近于无穷小，$dt$ 也不是 0，只是非常接近 0。</li>
+<li>并非瞬时变化率，而是某一点附近的变化率的最佳近似，即该点处函数的斜率。</li>
+</ol>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/8GGK5E51ae.png" alt="mark"></p>
+<h2 id="导数的求法"><a href="#导数的求法" class="headerlink" title="导数的求法"></a>导数的求法</h2><p>将 $t+dt$ 和 $t$ 代入 $s(t)$函数中, 求解 $\lim_{dt \to 0}\frac{(t+dt)^3 - {t}^3}{dt}$,<br>将右侧展开，利用 $dt$ 趋近于0，即得导数值。<br><img src="http://qnpic.sijihaiyang.top/blog/180826/lFmEFaeaFd.png" alt="mark"><br><img src="http://qnpic.sijihaiyang.top/blog/180826/1DD55753fj.png" alt="mark"></p>
+<p><strong>导数不是来强调瞬时变化的，比如，$t=0$ 的速度仅仅是近似于 0。</strong></p>
+<h1 id="用几何来求导"><a href="#用几何来求导" class="headerlink" title="用几何来求导"></a>用几何来求导</h1><p><strong>导数本质是微小变化量！</strong></p>
+<h2 id="正方形面积"><a href="#正方形面积" class="headerlink" title="正方形面积"></a>正方形面积</h2><p>正方形面积表示为 $f(x) = x^2$<br>$x$ 代表边长，$f(x)$ 代表面积<br>$dx$ 表示微小的增量，$df$ 表示面积的增量<br>${dx}^2$ 可以小到忽略不计</p>
+<p>$\frac{df}{dx} = 2x$</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180920/Ig2JB5F65i.png" alt="mark"></p>
+<h2 id="立方体体积"><a href="#立方体体积" class="headerlink" title="立方体体积"></a>立方体体积</h2><p>立方体体积表示 $f(x) = x^3$</p>
+<p>当增加 $dx$ 时，面积的增量 $df = 3x^2dx + 3x dx^2 + dx^3$</p>
+<p>$dx​$ 趋向于 0 时，$\frac{df}{dx}​$ 只剩下 $3x^2​$ 项</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/EED07aDgLf.png" alt="mark"></p>
+<h2 id="x-n-的导数意义"><a href="#x-n-的导数意义" class="headerlink" title="$x^n$ 的导数意义"></a>$x^n$ 的导数意义</h2><p>将 $f(x) = x^n$ 展开，得到如下公式。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/J3cjb9H05L.png" alt="mark"></p>
+<p>${(x+dx)}^n - {x}^n$ 的增量除以 $dx$ 后只保留了 $nx^{n-1}$</p>
+<h2 id="frac-1-x-的导数意义"><a href="#frac-1-x-的导数意义" class="headerlink" title="$\frac{1}{x}$ 的导数意义"></a>$\frac{1}{x}$ 的导数意义</h2><p>$f(x) = \frac{1}{x}$ 的图像如下，矩形面积等于 $x * f(x) = 1$ </p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/hGF803kflj.png" alt="mark"></p>
+<p>为使面积为 1，横坐标 $x$ 变化时，纵坐标相应的变化为 $\frac{1}{x}$<br>当 $x$ 增加 $dx$ 时，为使面积不变，把高度的变化量记为 $\frac{1}{x}$<br>$\frac{d(\frac{1}{x})}{dx} = \frac{\frac{1}{x+dx} - \frac{1}{x}}{dx} = -\frac{1}{x^2}$</p>
+<h2 id="frac-1-sqrt-x-的导数意义"><a href="#frac-1-sqrt-x-的导数意义" class="headerlink" title="$\frac{1}{\sqrt{x}}$ 的导数意义"></a>$\frac{1}{\sqrt{x}}$ 的导数意义</h2><p>$f(x) = \frac{1}{\sqrt x}$<br>令 $\sqrt x = t$<br>$df = \frac{2\sqrt tdt}{d\sqrt{t}}$<br>$\frac{d\sqrt{t}}{dt} = \frac{1}{2\sqrt t}$</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180920/FFibdakK4G.png" alt="mark"></p>
+<h2 id="sin-theta-的导数意义"><a href="#sin-theta-的导数意义" class="headerlink" title="$sin\theta$ 的导数意义"></a>$sin\theta$ 的导数意义</h2><p>$f(\theta) = sin\theta$<br>$\frac{d (sin\theta)}{d \theta} = $邻边/斜边 = $cos \theta$</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/LAK057kL72.png" alt="mark"></p>
+<h1 id="链式法则和乘积"><a href="#链式法则和乘积" class="headerlink" title="链式法则和乘积"></a>链式法则和乘积</h1><p>包含函数相加，相乘和复合函数</p>
+<h2 id="加法法则"><a href="#加法法则" class="headerlink" title="加法法则"></a>加法法则</h2><p>$f(x) = sin(x) + x^2$<br>$df = d(sin(x)) + d(x^2)$<br>$\frac{df}{dx} = cos(x) + 2x$</p>
+<p>$f(0.5)$ 的变化等于 $sin(0.5)$ 的变化加上 $0.5^2$ 的变化</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/jI6mmbE65g.png" alt="mark"></p>
+<h2 id="乘法法则"><a href="#乘法法则" class="headerlink" title="乘法法则"></a>乘法法则</h2><p>$f(x) = sin(x)x^2$<br>用盒子面积 $sin(x) * x^2$  定义乘积 $f(x)$</p>
+<p>当 $x$ 增加 $dx$ 时，$sin(x)$ 增加 $d(sin(x))$，$x^2$ 增加 $d(x^2)$</p>
+<p>$d(x^2)d(sin(x))$ 面积忽略不计</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/j1iEkI6iFE.png" alt="mark"></p>
+<p><strong>总结：左乘右导 + 右乘左导</strong></p>
+<h2 id="复合函数"><a href="#复合函数" class="headerlink" title="复合函数"></a>复合函数</h2><p>$f(x) = sin(x^2)$<br>$h(x) = x^2$<br>$d(sin(h)) = cos(h)dh<br>= cos(x^2)d(x^2) = cos(x^2)2xdx$</p>
+<p>从上到下三条轴分别表示 $x$，$x^2$，$sin(x^2)$</p>
+<p>第三条轴的变化量 $d(sin(h)) = cos(h)dh$，只与中间变量 $h$ 有关。</p>
+<p>第二条轴的变化量 $d(h)$，只与变量 $x$ 有关。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180826/fCde85DCDE.png" alt="mark"></p>
+<p>链式法则:<br>$\frac{d}{dx}g(h(x)) = \frac{dg}{dh}\frac{dh}{dx}$</p>
+<h1 id="指数函数求导"><a href="#指数函数求导" class="headerlink" title="指数函数求导"></a>指数函数求导</h1><h2 id="M-t-2-t"><a href="#M-t-2-t" class="headerlink" title="$M(t) = 2^t$"></a>$M(t) = 2^t$</h2><p>$\frac{dM}{dt}(t) = \frac{2^{t+dt}-2^t}{dt} = 2^t\frac{2^{dt}-1}{dt}$<br>当 $t$ 代表离散变量天数时，导数等于其本身。<br>当 $dt$ 趋近于 0 时，$\frac{2^{dt}-1}{dt}$ 趋近于一个常数，这使得导数 $\frac{dM}{dt}(t)$ 与其自身 $2^t$ 成正比例，这个常数便是 $ln2$。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180920/1lIK3i9H21.png" alt="mark"></p>
+<h2 id="关于-e-的定义"><a href="#关于-e-的定义" class="headerlink" title="关于 e 的定义"></a>关于 e 的定义</h2><p>把右侧分式 $\frac{2^{dt}-1}{dt}$ 的底数 2 换成 e 变成 $\frac{e^{dt}-1}{dt}$</p>
+<p>我们定义 $\lim_{dt \to 0}\frac{e^{dt}-1}{dt}=1$，就好像把圆的周长比上直径等于 $\pi$ 一样</p>
+<p>所以 $e^t$ 的导数 $\frac{d(e^t)}{dt} = e^t * 1$</p>
+<h2 id="2-t-的导数"><a href="#2-t-的导数" class="headerlink" title="$2^t$ 的导数"></a>$2^t$ 的导数</h2><p>$\frac{d(e^{ct})}{dt} = ce^{ct}$<br>$2^t = e^{ln(2)t}$ </p>
+<p>利用复合函数求导</p>
+<p>$\frac{d(2^t)}{dt} = \frac{de^{ln(2)t}}{dt} = ln(2)e^{ln(2)t} = ln(2)2^t$</p>
+<ul>
+<li>指数函数常写成 $e^{ct}$形式</li>
+</ul>
+<h1 id="积分与微积分基本定理"><a href="#积分与微积分基本定理" class="headerlink" title="积分与微积分基本定理"></a>积分与微积分基本定理</h1><h2 id="已知-v-t-求-S-t"><a href="#已知-v-t-求-S-t" class="headerlink" title="已知 $v(t)$ 求 $S(t)$"></a>已知 $v(t)$ 求 $S(t)$</h2><p>已知速度时间函数 $v(t) = t(8-t)$，将行使过的距离用函数图像下面积表示。之前求路程时，近似成车在做匀速运动。但这次速度会<strong>不连续</strong>地“跳跃”。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/meDBmgf02F.png" alt="mark"></p>
+<p>每个间隔称为 $dt$，$\int$ 代表每个小矩形的加和，跳跃间隔 $dt$ 逐渐趋近于 0。<br>$\int_0^8v(t)dt$ 表示 $dt \to 0$ 时，加和的趋近值就是曲线下的面积。</p>
+<h2 id="s-T-int-0-Tv-t-dt"><a href="#s-T-int-0-Tv-t-dt" class="headerlink" title="$s(T) = \int_0^Tv(t)dt$"></a>$s(T) = \int_0^Tv(t)dt$</h2><p>我们将曲线下的面积看作是关于 $T$ 的函数。那么，面积函数 $s$ 的导数 $\frac{ds}{dT}$ 等于 $T$ 时刻的速度 $v(T)$。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/cLiDKf2Hgb.png" alt="mark"></p>
+<p>所以，任意函数图像下方面积的导数等于原先函数的本身。<br>距离函数 $s(T)$ 即 $v(T)$ 关于 $T$ 的积分。</p>
+<h2 id="关于积分的常数项-C"><a href="#关于积分的常数项-C" class="headerlink" title="关于积分的常数项 C"></a>关于积分的常数项 C</h2><p>常数 $C$ 的理解：上下移动距离函数 $s(T)$ 的图像并不影响时刻 $T$ 处的导数。<br><strong>定积分的常数项 $C$ 会被消掉。</strong></p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/7Kj9ILba1J.png" alt="mark"></p>
+<h2 id="微积分基本定理-1"><a href="#微积分基本定理-1" class="headerlink" title="微积分基本定理"></a>微积分基本定理</h2><h3 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h3><p>积分可理解为极限条件下，一定范围内的小矩形面积和。</p>
+<p>即将 $x$ 在一定范围内将 $f(x) \times dx$ 的值加起来，求 $dx \to 0 $ 时，加和趋近的值就是 $f(x)$ 在这个范围上积分。<br>$\frac{dF}{dx}(x) = f(x)$<br>$\int_a^bf(x)dx = F(b) - F(a)$</p>
+<h2 id="负面积"><a href="#负面积" class="headerlink" title="负面积"></a>负面积</h2><p>图像如果出现在横轴下方定义的面积为负数。</p>
+<h1 id="泰勒级数"><a href="#泰勒级数" class="headerlink" title="泰勒级数"></a>泰勒级数</h1><p>泰勒级数可以理解为是一个强大的函数近似工具，在某个点附近用<strong>多项式函数</strong>去近似其他函数。只要这个函数是可导的。</p>
+<h2 id="多项式近似"><a href="#多项式近似" class="headerlink" title="多项式近似"></a>多项式近似</h2><p>为保证多项式 $p(x) = c_0 + c_1x + c_2x^2$ 与 $cos(x)$ 足够近似。<br>分别令原函数，一阶导，二阶导（弯曲程度）在 $0$ 处值均相等，也就是求解</p>
+<p>$cos(0) = p(0) = c_0 = 1$</p>
+<p>$-sin(0) = p’(0) = c_1 + c_2 \times 0 = 0$</p>
+<p>$-cos(0) = p’’(0) = 2c_2 = -1$</p>
+<p>分别得到 $c_0, c_1, c_2$，也就定义了 $p(x) = 1-\frac{1}{2}x^2$</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/Egmf3C8cmg.png" alt="mark"></p>
+<p>依次类推，可以在多项式中得到 $c_3x^3, c_4x^4 …$ 项</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/A732EJDIHI.png" alt="mark"></p>
+<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
+<li><p>阶乘 $n!$ 的形式实际上是多项式 $x^n$ 求导法则一层套一层的结果<br>比如求 $x^4$ 前面的系数时，分母是阶乘形式 $4\times3\times2\times1$，分子是在 $x=0$ 处的高阶导数，比如 $cos(0) = 1$</p>
+</li>
+<li><p>当 $x = 0$ 时，添加高次项时，低次项的系数不会发生改变，每一阶系数都是固定且唯一的。</p>
+<p>当 $p(x) = c_0 + c_1x + c_2x^2$ 时，$p’(x) = c_1 + 2c_2x$，当 $x = 0$ 时，$2c_2x$ 并不影响 $c_1$ 的值。</p>
+</li>
+<li><p>在 $x = x_0$ 处，写成 $p(x)= c_0 + c_1(x-x_0)^1 + c_2(x-x_0)^2 + c_3(x-x_0)^3 + c_4(x-x_0)^4$。<br>代入 $x=x_0$，求导后可以消掉多项式除目标项外的所有部分。</p>
+</li>
+</ul>
+<h2 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h2><p><strong>本质上，泰勒级数将某一点处的导数值信息转换成这一点附近的函数值信息</strong>。在任一点 $a$ 处，可以调整多项式函数在 $a$ 处近似成原始函数 $P(x)$，并使得多项式的高阶导数与原始函数的高阶导数在 $a$ 处相等。</p>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/B65h9gHjcb.png" alt="mark"></p>
+<h2 id="通用的写法"><a href="#通用的写法" class="headerlink" title="通用的写法"></a>通用的写法</h2><ol>
+<li>$f(x)$ 在 $x = 0$ 处的泰勒级数可以表示成 $P(x) = f(0) + f’(0)\frac{x^1}{1!} + f’’(0)\frac{x^2}{2!} + f’’’(0)\frac{x^3}{3!} + …$</li>
+</ol>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/BagLifGLiI.png" alt="mark"></p>
+<ol>
+<li><p>$f(x)$ 在 $x = a$ 处的泰勒级数可以表示成<br> $P(x) = f(a) + f’(a)\frac{(x-a)^1}{1!} + f’’(a)\frac{(x-a)^2}{2!} + f’’’(a)\frac{(x-a)^3}{3!} + … + f^n(a)\frac{(x-a)^n}{n!} + R_n(x)$，</p>
+<p>皮亚诺余项 $R_n(x)$ 代表误差。</p>
+</li>
+</ol>
+<p><img src="http://qnpic.sijihaiyang.top/blog/180827/aD3I5Hj9bD.png" alt="mark"></p>
+<h2 id="几何解释泰勒多项式的二次项"><a href="#几何解释泰勒多项式的二次项" class="headerlink" title="几何解释泰勒多项式的二次项"></a>几何解释泰勒多项式的二次项</h2><p><img src="http://qnpic.sijihaiyang.top/blog/180827/li1kI09gJl.png" alt="mark"></p>
+<p>已知面积函数 $f_{area}$ 在 $a$ 附近的导数，要近似在 $x$ 处的面积 $f(x)$<br>横坐标的变化量 $(x-a)$</p>
+<p>黄色矩形面积等于 $\frac{df}{dx}(a)(x-a)$（微积分基本定理 $df$ = 矩形的高 $\times dx$）<br>粉红色三角形高等于图像斜率 $\times (x-a)$，图像斜率等于面积函数 $f$ 二阶导 $\frac{d^2f}{dx^2}(a)$，三角形面积等于 $\frac{1}{2}\frac{d^2f}{dx^2}(a)(x-a)^2$，也就是泰勒多项式的二次项。</p>
+<h2 id="泰勒级数-1"><a href="#泰勒级数-1" class="headerlink" title="泰勒级数"></a>泰勒级数</h2><p>级数收敛：累加无限项和后，收敛到某一个值<br>收敛半径：原始函数近似点周围能让多项式的和收敛的最大取值范围</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>泰勒公式实际用多项式函数 $p(x)$ 近似原函数在某一点附近的函数值，利用的是在该点处多项式和原函数的高阶导数相等。<br>阶乘是多项式求高阶导的结果，$(x-a)^n$ 使得在 $x = a$ 处求高阶项系数时，低阶项和更高阶项不受影响，仅与目标项有关。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微积分/" rel="tag"># 微积分</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/578b18fe.html" rel="next" title="Python 编程导论（第 2 版）读书笔记 1~8 章">
+                <i class="fa fa-chevron-left"></i> Python 编程导论（第 2 版）读书笔记 1~8 章
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/a5f4c049.html" rel="prev" title="Python-编程导论（第-2-版）读书笔记-9-10-章（搜索与排序）">
+                Python-编程导论（第-2-版）读书笔记-9-10-章（搜索与排序） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hotheat</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微积分的本质"><span class="nav-number">1.</span> <span class="nav-text">微积分的本质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">1.1.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心"><span class="nav-number">1.2.</span> <span class="nav-text">核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微积分基本定理"><span class="nav-number">1.3.</span> <span class="nav-text">微积分基本定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导数的悖论"><span class="nav-number">2.</span> <span class="nav-text">导数的悖论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#矛盾"><span class="nav-number">2.1.</span> <span class="nav-text">矛盾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导数的意义"><span class="nav-number">2.2.</span> <span class="nav-text">导数的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导数的求法"><span class="nav-number">2.3.</span> <span class="nav-text">导数的求法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用几何来求导"><span class="nav-number">3.</span> <span class="nav-text">用几何来求导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正方形面积"><span class="nav-number">3.1.</span> <span class="nav-text">正方形面积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#立方体体积"><span class="nav-number">3.2.</span> <span class="nav-text">立方体体积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-n-的导数意义"><span class="nav-number">3.3.</span> <span class="nav-text">$x^n$ 的导数意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#frac-1-x-的导数意义"><span class="nav-number">3.4.</span> <span class="nav-text">$\frac{1}{x}$ 的导数意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#frac-1-sqrt-x-的导数意义"><span class="nav-number">3.5.</span> <span class="nav-text">$\frac{1}{\sqrt{x}}$ 的导数意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sin-theta-的导数意义"><span class="nav-number">3.6.</span> <span class="nav-text">$sin\theta$ 的导数意义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链式法则和乘积"><span class="nav-number">4.</span> <span class="nav-text">链式法则和乘积</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加法法则"><span class="nav-number">4.1.</span> <span class="nav-text">加法法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#乘法法则"><span class="nav-number">4.2.</span> <span class="nav-text">乘法法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合函数"><span class="nav-number">4.3.</span> <span class="nav-text">复合函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指数函数求导"><span class="nav-number">5.</span> <span class="nav-text">指数函数求导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#M-t-2-t"><span class="nav-number">5.1.</span> <span class="nav-text">$M(t) = 2^t$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-e-的定义"><span class="nav-number">5.2.</span> <span class="nav-text">关于 e 的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-t-的导数"><span class="nav-number">5.3.</span> <span class="nav-text">$2^t$ 的导数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#积分与微积分基本定理"><span class="nav-number">6.</span> <span class="nav-text">积分与微积分基本定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#已知-v-t-求-S-t"><span class="nav-number">6.1.</span> <span class="nav-text">已知 $v(t)$ 求 $S(t)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#s-T-int-0-Tv-t-dt"><span class="nav-number">6.2.</span> <span class="nav-text">$s(T) = \int_0^Tv(t)dt$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于积分的常数项-C"><span class="nav-number">6.3.</span> <span class="nav-text">关于积分的常数项 C</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微积分基本定理-1"><span class="nav-number">6.4.</span> <span class="nav-text">微积分基本定理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#意义"><span class="nav-number">6.4.1.</span> <span class="nav-text">意义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负面积"><span class="nav-number">6.5.</span> <span class="nav-text">负面积</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#泰勒级数"><span class="nav-number">7.</span> <span class="nav-text">泰勒级数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多项式近似"><span class="nav-number">7.1.</span> <span class="nav-text">多项式近似</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">7.2.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本质"><span class="nav-number">7.3.</span> <span class="nav-text">本质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用的写法"><span class="nav-number">7.4.</span> <span class="nav-text">通用的写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几何解释泰勒多项式的二次项"><span class="nav-number">7.5.</span> <span class="nav-text">几何解释泰勒多项式的二次项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泰勒级数-1"><span class="nav-number">7.6.</span> <span class="nav-text">泰勒级数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hotheat</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
