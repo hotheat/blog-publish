@@ -74,7 +74,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="DT,Adaboost,">
 
 
 
@@ -85,32 +85,21 @@
 
 
 
-<meta name="description" content="本章节的重点是决策树部分，而理解熵的概念，不仅对于决策树有更好的认识，而且卷积神经网络中也经常使用交叉熵做为损失函数。">
+<meta name="description" content="决策树用于分类或回归的无参数的监督学习方法 主要包括三个步骤特征选择、决策树的生成和决策树的剪枝">
+<meta name="keywords" content="DT,Adaboost">
 <meta property="og:type" content="article">
-<meta property="og:title" content="熵和决策树">
+<meta property="og:title" content="树类模型">
 <meta property="og:url" content="https://www.hotheat.top/archives/2a0ca566.html">
 <meta property="og:site_name" content="Hotheat">
-<meta property="og:description" content="本章节的重点是决策树部分，而理解熵的概念，不仅对于决策树有更好的认识，而且卷积神经网络中也经常使用交叉熵做为损失函数。">
+<meta property="og:description" content="决策树用于分类或回归的无参数的监督学习方法 主要包括三个步骤特征选择、决策树的生成和决策树的剪枝">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/PyvdgnCSVS7v.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/VbfiFmumcfNm.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/skRE7FB6rruM.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/rd9NXS3EnYCU.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/L9Qlvmq0cmuI.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/8m6NHsHPjnPR.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/5r1auYooS4Hj.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/k5VeIblEnr9j.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/LpkRKXDuH2G5.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190123/KgPBwlxSOMam.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190122/PyvdgnCSVS7v.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190123/EVatTjL5oKNv.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190123/Gnc5e3YbrRmn.jpg?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190123/iU8y2aH8tCyd.png?imageslim">
-<meta property="og:updated_time" content="2019-07-05T02:16:12.307Z">
+<meta property="og:image" content="http://owzhgmyq5.bkt.clouddn.com/blog/181007/7H9l1IaiEj.png">
+<meta property="og:image" content="http://owzhgmyq5.bkt.clouddn.com/blog/181008/BjDfIE7CcK.png">
+<meta property="og:updated_time" content="2018-10-20T13:53:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="熵和决策树">
-<meta name="twitter:description" content="本章节的重点是决策树部分，而理解熵的概念，不仅对于决策树有更好的认识，而且卷积神经网络中也经常使用交叉熵做为损失函数。">
-<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190122/PyvdgnCSVS7v.png?imageslim">
+<meta name="twitter:title" content="树类模型">
+<meta name="twitter:description" content="决策树用于分类或回归的无参数的监督学习方法 主要包括三个步骤特征选择、决策树的生成和决策树的剪枝">
+<meta name="twitter:image" content="http://owzhgmyq5.bkt.clouddn.com/blog/181007/7H9l1IaiEj.png">
 
 
 
@@ -146,7 +135,7 @@
 
 
 
-  <title>熵和决策树 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>树类模型 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -332,7 +321,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">熵和决策树</h2>
+          <h2 class="post-title" itemprop="name headline">树类模型</h2>
         
 
         <div class="post-meta">
@@ -378,8 +367,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/决策树/" itemprop="url" rel="index">
-                    <span itemprop="name">决策树</span>
+                  <a href="/categories/机器学习/树模型/" itemprop="url" rel="index">
+                    <span itemprop="name">树模型</span>
                   </a>
                 </span>
 
@@ -451,95 +440,58 @@
       
 
       
-        <p>本章节的重点是决策树部分，而理解熵的概念，不仅对于决策树有更好的认识，而且卷积神经网络中也经常使用交叉熵做为损失函数。</p>
+        <h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><p>用于分类或回归的无参数的监督学习方法</p>
+<p>主要包括三个步骤特征选择、决策树的生成和决策树的剪枝</p>
 <a id="more"></a>
-<h2 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h2><h3 id="熵的直观理解"><a href="#熵的直观理解" class="headerlink" title="熵的直观理解"></a>熵的直观理解</h3><p>假设我们要定义一个新的物理量，叫事物的不确定性。经验上讲，事情发生的概率越小，事物的不确定性越大，带来的信息量越大，与概率 $p(x)$ 呈反比；第二点，假设 x 和 y 相互独立，$p(x, y) = p(x)p(y)$，我们希望 x 和 y 的不确定性是可以累加的，$h(x, y) = h(x) + h(y)$，而 log 函数恰好可以满足这种累加性，于是现在有了一个新的度量 $-lnp(x)$；最后我们希望能够获得平均信息量，也就是求 $-lnp(x)$ 的数学期望：$H[x] = -\sum_{x} p(x)ln p(x)$，这就是熵的概念，代表了随机事件 X 的信息量。</p>
-<p>总结来说，log 函数使熵变得可加，负号保证与经验相符，最终得到的是数学期望。</p>
-<h3 id="熵的定义"><a href="#熵的定义" class="headerlink" title="熵的定义"></a>熵的定义</h3><p>熵度量了事物的不确定性，熵越大，事物越不确定。</p>
+<p>剪枝为了防止过拟合</p>
+<h2 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h2><ul>
+<li>熵度量了事物的不确定性，熵越大，事物越不确定</li>
+</ul>
 <script type="math/tex; mode=display">
-H(X) = -\sum_{i=1}^np_ilogp_i</script><h3 id="两点分布的信息熵"><a href="#两点分布的信息熵" class="headerlink" title="两点分布的信息熵"></a>两点分布的信息熵</h3><p><img src="http://qnpic.sijihaiyang.top/blog/20190122/PyvdgnCSVS7v.png?imageslim" alt="mark"></p>
-<p>$p\in [0, 1]$</p>
-<p>因为数学上 $ln 0​$ 是没有意义的，保证代码上的严格性，加上 eps。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eps = <span class="number">1e-4</span></span><br><span class="line">p = np.linspace(eps, <span class="number">1</span> - eps, <span class="number">100</span>)</span><br><span class="line">h = -(<span class="number">1</span> - p) * np.log2(<span class="number">1</span> - p) - p * np.log2(p)</span><br><span class="line">plt.plot(p, h, <span class="string">'r-'</span>, lw=<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/VbfiFmumcfNm.png?imageslim" alt="mark"></p>
-<p>在 $p=0.5​$ 处的熵最大，意味着这个随机事件不确定程度最大。</p>
-<p>在 $p = 0$ 和 $p = 1$ 时，熵为 0，随机事件退化成必然事件。</p>
-<h3 id="均匀分布的信息熵"><a href="#均匀分布的信息熵" class="headerlink" title="均匀分布的信息熵"></a>均匀分布的信息熵</h3><p>假设离散分布取 N 个值，每个值的概率都是 $1/N​$，$p_i = 1/N​$。这个概率分布的熵就是</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/skRE7FB6rruM.png?imageslim" alt="mark"></p>
-<h2 id="联合熵"><a href="#联合熵" class="headerlink" title="联合熵"></a>联合熵</h2><script type="math/tex; mode=display">
-H(X, Y) = -\sum_{i=1}^np(x_i, y_i)logp(x_i, y_i)</script><p>指事件 X, Y 同时发生的不确定性。</p>
-<h2 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h2><p>条件熵 $H(Y|X)​$ 指在 $X​$ 发生的前提下，$Y​$ 的不确定性。</p>
-<p>H(X, Y) 指 X 和 Y 总的不确定度。如果 X 和 Y 独立，H(X, Y) = H(X) + H(Y)，值变成两个圆的加和。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/rd9NXS3EnYCU.png?imageslim" alt="mark"></p>
+H(X) = -\sum_{i=1}^np_ilogp_i</script><ul>
+<li>两个变量的联合熵</li>
+</ul>
+<script type="math/tex; mode=display">
+H(X, Y) = -\sum_{i=1}^np(x_i, y_i)logp(x_i, y_i)</script><ul>
+<li>条件熵 $H(Y|X)$ 指在 $X$ 发生的前提下，$Y$ 的熵（不确定性）</li>
+</ul>
 <script type="math/tex; mode=display">
 \begin{align}
 H(Y|X) =& H(X, Y) - H(X) \\
 =& -\sum_{i=1}^np(x_i, y_i)logp(y_i|x_i)\\
 =& \sum_{j=1}^np(x_j)H(Y|x_j) 
-\end{align}</script><p>证明如下：</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/L9Qlvmq0cmuI.png?imageslim" alt="mark"></p>
-<p>$p(x) = \Sigma_yp(x, y)$，边缘概率等于所有的联合概率加和。</p>
-<p>$p(y|x) = \frac{p(x, y)}{p(x)}$，条件概率公式。</p>
-<p>上面得到的公式好像并不对称，并没有得到 $-\Sigma_{x, y}p(y|x)logp(y|) = H(Y|X)​$ 的形式，这个式子继续推导…</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/8m6NHsHPjnPR.png?imageslim" alt="mark"></p>
-<p>也就是说，我们要的 $H(Y|X) = E_{p(x)}[H(Y|X=x)]$。给定 $X=x$，$H(Y|X=x)$ 在 $p(x)$ 下的期望。</p>
-<h2 id="交叉熵与相对熵"><a href="#交叉熵与相对熵" class="headerlink" title="交叉熵与相对熵"></a>交叉熵与相对熵</h2><h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>$H(p, q) = -\Sigma_x p(x)log q(x)$，我们假设 $p(x)$ 和 $q(x)$ 分别代表训练样本和模型预测的 label 分布。$H(p, q)$ 的意义是根据预测结果来衡量训练样本的不确定性（熵）。</p>
-<h3 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a>相对熵</h3><p>用 $H(p, q)$ 减去训练样本的熵值 $H(p)$ 得到两个熵之间的差值，称为相对熵 $D(p||q)$，是两个随机分布间距离的度量，用来评估这两个分布的差异性。</p>
-<p>相对熵又称 KL 散度，设 p(x)、q(x) 是两个概率分布，则 p 对 q 的相对熵是：</p>
-<script type="math/tex; mode=display">
-D(p||q) = H(p, q) - H(p)\\
-= -\sum_{x} p(x)logq(x) + \sum_{x} p(x)logp(x) \\
- = \sum_{x} p(x)log\frac{p(x)}{q(x)} =E_{p(x)}log\frac{p(x)}{q(x)}</script><p>相对熵一定是大于等于 0  的，可以用 Jensen 不等式证明。也可以这样理解，用预测样本 q(x) 衡量 p(x) 的不确定性是要大于 p(x) 本身的不确定性的，不确定性又可以用熵度量，$H(p, q) &gt;= H(p)$，当且仅当 p 和 q 两个分布相等时，等号成立。</p>
-<p>因此，相对熵可以衡量两个随机变量的<a href="http://www.hotheat.top/archives/af94264b.html">“距离”</a>，也可以作为损失函数。</p>
-<h2 id="互信息"><a href="#互信息" class="headerlink" title="互信息"></a>互信息</h2><p>互信息 $I(X, Y)​$ 也叫信息增益。两个随机变量 X，Y 的互信息，定义为 X，Y 的联合分布和独立分布乘积的相对熵。</p>
-<script type="math/tex; mode=display">
-I(X, Y) = D(p(x, y)||p(x)p(y))\\
-        = \sum_{x, y}log\frac{p(x, y)}{p(x)p(y)}</script><p>在上图的韦恩图中，互信息可以表示为 $I(X, Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)$ 。</p>
-<p>推导如下：</p>
-<script type="math/tex; mode=display">
-I(X, Y) = H(X) - H(X|Y) \\
-= -\sum p(x)logp(x) + \sum_{x, y}p(x, y)logp(y|x)\\
-= -\sum_{x, y}p(x, y)log p(x) + \sum_{x, y}p(x, y)log \frac{p(x, y)}{p(y)}\\
-=\sum_{x, y}log\frac{p(x, y)}{p(x)p(y)}</script><p>互信息的意义：衡量了在给定 $Y$ 时，X 的不确定性减少的程度，或者说在给定 $X$ 时，Y 的不确定性减少的程度。</p>
+\end{align}</script><ul>
+<li>信息增益（互信息） $I(X, Y)$</li>
+</ul>
+<p>$I(X, Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)$ </p>
+<p>衡量了在给定 $Y$ 时，X 的不确定性减少的程度，或者说在给定 $X$ 时，Y 的不确定性减少的程度。</p>
 <p>如果某个特征的信息增益越大，说明不确定性减少的越大，该特征越适合作为分裂点。</p>
-<h2 id="联合熵、条件熵和互信息的关系"><a href="#联合熵、条件熵和互信息的关系" class="headerlink" title="联合熵、条件熵和互信息的关系"></a>联合熵、条件熵和互信息的关系</h2><script type="math/tex; mode=display">
-H(Y|X) = H(X, Y) - H(X)\\
-H(Y|X) = H(Y) - I(X, Y)\\
-I(X, Y) = H(X) + H(Y) - H(X, Y)</script><h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><h2 id="直观理解"><a href="#直观理解" class="headerlink" title="直观理解"></a>直观理解</h2><p>用于分类或回归的<strong>无参数</strong>的监督学习方法。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/5r1auYooS4Hj.png?imageslim" alt="mark"></p>
-<p>如上图，如果有 4 个特征，m 个样本，训练集的矩阵是 $m\times 4$ 的，如果是二叉决策树，决策树的深度是 n，最多有 $2^n$ 个叶节点。</p>
-<p>对于离散数据，对每个叶子节点的样本个数计数，采用少数服从多数的原则，选择类别最多的类别作为这个叶子节点的类别，便可以做分类；对于连续数据，则经常选择<strong>平均值</strong>或<strong>中位数</strong>作为这个叶子节点的预测值。既能做分类又能做回归的决策树又叫 CART（Classification and Regression Tree）树。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/k5VeIblEnr9j.png?imageslim" alt="mark"></p>
-<p>多棵决策树形成的结果则是随机森林，比如上图中，对于 boy 的预测，上图是将两个预测值相加的结果。</p>
-<p>随机森林由多棵决策树构成，而构建一棵决策树的重点是如何选择分裂点对当前样本进行划分？划分的指标如何选择？</p>
-<p>下图是利用决策树对鸢尾花数据进行划分的结果。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/LpkRKXDuH2G5.png?imageslim" alt="mark"></p>
-<p>主要包括三个步骤特征选择、决策树的生成和决策树的剪枝。剪枝为了防止过拟合的发生。</p>
-<h2 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h2><p>选择信息增益最大的特征作为分裂点。</p>
-<h3 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h3><script type="math/tex; mode=display">
-I(D, A) = H(D) - H(D|A)</script><p>$I(D, A)$ 代表特征 A 对于数据集 D 的信息增益，H(D) 代表集合 D 的熵，H(D|A) 代表给定特征 A 时，数据集 D 的条件熵。</p>
+<ul>
+<li>联合熵、条件熵和互信息的关系</li>
+</ul>
 <script type="math/tex; mode=display">
-H(D) = -\sum_{k=1}^K\frac{|C_k|}{|D|}log\frac{|C_k|}{|D|}</script><p>$|D|​$ 代表数据集 D 的样本数目，$C_k​$ 代表第 k 个分类下的样本数目</p>
+H(X, Y) = H(X) + H(Y|X) = H(Y) + H(X|Y)\\
+H(Y) = H(Y|X) + I(X, Y)
+H(X) = H(X|Y) + I(X, Y)</script><p><img src="http://owzhgmyq5.bkt.clouddn.com/blog/181007/7H9l1IaiEj.png" alt="mark"></p>
+<h2 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h2><h3 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h3><script type="math/tex; mode=display">
+I(D, A) = H(D) - H(D|A)</script><p>$I(D, A)$ 代表特征 A 对于数据集 D 的信息增益，H(D) 代表集合 D 的经验熵，H(D|A) 代表给定特征 A 时，数据集 D 的经验条件熵。</p>
 <script type="math/tex; mode=display">
-H(D|A) = -\sum_{i=1}^nP(A_i)H(D|A_i)\\
-= -\sum_{i=1}^nP(A_i)\sum_{k=1}^KP(D_k|A_i)logP(D_k|A_i)\\
-=-\sum_{i=1}^n\frac{|D_i|}{|D|}\sum_{k=1}^K\frac{|D_{ik}|}{|D_i|}log\frac{|D_{ik}|}{|D_i|}</script><p>$|D_i|$ 代表特征 A 将数据集 D 划分成 $D_1$、$D_2$ … $D_n​$ 的样本个数</p>
-<p>$D_{ik}$ 代表第 k 个分类下，样本 $D_i$ 的样本个数。</p>
-<p>当叶子结点数量较少或已经做到完全分类（熵为 0）时，便不再划分。</p>
-<h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><blockquote>
-<p>如果某个特征被选为当前的分裂点，但是在现存数据中只有一个值，另一个值对应的记录为空，则这个时候针对<strong>不存在</strong>的特征值，将它标记为该特征在所有训练数据中所占比例的最大类型（李烨 Gitchat 课程）。</p>
-</blockquote>
+H(D) = -\sum_{k=1}^K\frac{|C_k|}{|D|}log\frac{|C_k|}{|D|}</script><p>$|D|$ 代表数据集 D 的样本数目，$C_k$ 代表第 k 个分类下的样本数目</p>
+<script type="math/tex; mode=display">
+H(D|A) = -\sum_{i=1}^nP(A_i)\sum_{k=1}^KP(D_k|A_i)logP(D_k|A_i)\\
+=-\sum_{i=1}^n\frac{|D_i|}{|D|}\sum_{k=1}^K\frac{|D_{ik}|}{|D_i|}log\frac{|D_{ik}|}{|D_i|}</script><p>$|D_i|$ 代表特征 A 将数据集 D 划分成 $D_1$、$D_2$ … $D_n$ 的样本个数</p>
+<p>$D_{ik}$ 代表第 k 个分类下，样本 $D_i$ 的样本个数</p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
 <li>不能处理连续特征</li>
-<li>容易偏向取值较多的特征，极端情况下，将 ID 作为一个特征时，形成多叉树，信息增益大，容易首先取到，但是没有意义。</li>
+<li>容易偏向取值较多的特征，极端情况下，将 ID 作为一个特征时，信息增益大，容易首先取到，但是没有意义。</li>
 <li>过拟合</li>
-<li>对特征缺失值比较敏感</li>
 </ul>
-<h2 id="C4-5"><a href="#C4-5" class="headerlink" title="C4. 5"></a>C4. 5</h2><h3 id="信息增益比"><a href="#信息增益比" class="headerlink" title="信息增益比"></a>信息增益比</h3><p>利用信息增益比克服将信息增益作为标准时，容易偏向取值较多的特征的问题。</p>
-<p>$I_R(D, A) = \frac{I(D, A)}{H_A(D)}​$</p>
-<p>$H_A(D)$ 指<strong>特征 A</strong> 的熵</p>
+<h2 id="C4-5"><a href="#C4-5" class="headerlink" title="C4. 5"></a>C4. 5</h2><h3 id="信息增益比"><a href="#信息增益比" class="headerlink" title="信息增益比"></a>信息增益比</h3><p>利用信息增益比克服将信息增益作为标准时，容易偏向取值较多的特征的问题</p>
+<p>$I_R(D, A) = \frac{I(D, A)}{H_A(D)}$</p>
+<p>$H_A(D)$ 指特征 A 的熵</p>
 <script type="math/tex; mode=display">
-H_A(D) = -\sum_{i=1}^n\frac{|D_i|}{|D|}log\frac{|D_i|}{|D|}</script><h3 id="特殊情况-1"><a href="#特殊情况-1" class="headerlink" title="特殊情况"></a>特殊情况</h3><p>当 $H_A(D)​$  趋向于 0 时，信息增益比 $I_R(D, A)​$ 趋向于 无穷，也就是说 $H_A(D)​$ 的分类本身已经足够好，所以熵值接近于 0。为避免这种情况发生，可以采用启发式的思路，先计算特征对应的信息增益，在信息增益较高的情况下，才应用信息增益率作为分裂标准。</p>
+H_A(D) = -\sum_{i=1}^n\frac{|D_i|}{|D|}log\frac{|D_i|}{|D|}</script><h3 id="连续特征离散化的方法"><a href="#连续特征离散化的方法" class="headerlink" title="连续特征离散化的方法"></a>连续特征离散化的方法</h3><p>比如特征 A 有 m 个样本，排序后 $a<em>1, a_2, a_3, … a_m$，取相邻两个样本的均值，一共 m-1 个划分点，其中第 i 个划分点使用 $T_i=(a_i+a</em>{(i+1)})/2$ 表示。分别计算这 m-1 个点的信息增益，选择信息增益最大的点作为该连续特征的二元离散分类点。</p>
+<p>还可以通过给定采样间隔或随机取值的方法使连续特征离散化。</p>
 <h3 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h3><ul>
 <li>生成多叉树</li>
 <li>只能用于分类</li>
@@ -547,55 +499,64 @@ H_A(D) = -\sum_{i=1}^n\frac{|D_i|}{|D|}log\frac{|D_i|}{|D|}</script><h3 id="特�
 </ul>
 <h2 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h2><p>最主流的决策树算法，既能生成分类树，又能生成回归树；</p>
 <p>处理连续值时，与 C4.5 类似，不同的是使用基尼系数作为特征选择指标；</p>
-<p>对于离散和连续特征，CART 构建的是二叉树而不是多叉树。</p>
+<p>对于离散特征，CART 构建的是二叉树而不是多叉树。</p>
 <h3 id="基尼系数"><a href="#基尼系数" class="headerlink" title="基尼系数"></a>基尼系数</h3><p>$Gini(p) = \sum_{k=1}^K p_k(1-p_k)$，$p_k$ 为第 k 个类别的概率。</p>
-<p>基尼系数代表模型的不纯度，基尼系数越小，纯度越高，特征越好。</p>
+<p>基尼系数代表模型的不纯度，基尼系数越小，不纯度越低，特征越好。</p>
 <p>对于样本 D，基尼系数的计算</p>
 <script type="math/tex; mode=display">
 Gini(p) = \sum_{k=1}^K p_k(1-p_k)\\
 =1 - \sum_{k=1}^Kp_k^2\\
-=1 - \sum_{k=1}^K (\frac{|C_k|}{|D|})^2</script><p>对于给定特征 A 和样本 D，特征 A 将样本分成 $D_1, D_2, …D_n​$</p>
-<p>$Gini(D, A) = \sum_{i=1}^n \frac{|D_i|}{|D|}Gini(D_i)​$</p>
-<h4 id="基尼系数与信息熵的近似"><a href="#基尼系数与信息熵的近似" class="headerlink" title="基尼系数与信息熵的近似"></a>基尼系数与信息熵的近似</h4><p>信息熵的公式 $H(X) = -\sum<em>{i=1}^np_ilogp_i = \sum</em>{i=1}^np_i(-logp_i)$</p>
-<p>基尼系数的公式</p>
-<p>$Gini(p) = \sum_{k=1}^K p_k(1-p_k)$</p>
-<p>也就是说，如果我们用 $1-p​$ 去近似 $-lnp​$，基尼系数就变成了熵的公式，在图像上的表示为用红线去近似蓝色线。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190123/KgPBwlxSOMam.png?imageslim" alt="mark"></p>
-<p>而且，$-lnx​$ 在 $x = 1​$ 处的一阶泰勒展开恰恰是 $1-x​$。所以，基尼系数也可以作为样本划分的依据。</p>
-<h4 id="二分类的熵和基尼系数"><a href="#二分类的熵和基尼系数" class="headerlink" title="二分类的熵和基尼系数"></a>二分类的熵和基尼系数</h4><p>$Gini(p) = 2p(1-p)​$</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190122/PyvdgnCSVS7v.png?imageslim" alt="mark"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">eps = <span class="number">1e-4</span></span><br><span class="line">p = np.linspace(eps, <span class="number">1</span> - eps, <span class="number">100</span>)</span><br><span class="line">x = np.sin(eps)</span><br><span class="line">h = -(<span class="number">1</span> - p) * np.log2(<span class="number">1</span> - p) - p * np.log2(p)</span><br><span class="line">gini = <span class="number">2</span> * (<span class="number">1</span> - p) * p <span class="comment"># 为了美观，gini 系数除以 2</span></span><br><span class="line">plt.plot(p, gini, <span class="string">'r-'</span>, lw=<span class="number">3</span>, label=<span class="string">'Gine'</span>)</span><br><span class="line">plt.plot(p, h / <span class="number">2</span>, <span class="string">'g-'</span>, lw=<span class="number">3</span>, label=<span class="string">'Entropy'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190123/EVatTjL5oKNv.png?imageslim" alt="mark"></p>
-<h4 id="基尼系数第二定义"><a href="#基尼系数第二定义" class="headerlink" title="基尼系数第二定义"></a>基尼系数第二定义</h4><p>衡量贫富差距的指标。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190123/Gnc5e3YbrRmn.jpg?imageslim" alt="mark"></p>
-<blockquote>
-<p>横轴为人口<strong>累计</strong>百分比（按财富值的最小值到最大值排序），纵轴为该部分人的收入占全部人口总收入的百分比，红色线段表示人口收入分配处于绝对平均状态，而橘色曲线就是劳伦茨曲线，表现的是实际的收入分配情况（李烨 Gitchat 课程）。</p>
-</blockquote>
-<p><strong>Gini 系数实际上就是 $\frac{A}{A+B}​$ 的比值</strong>，面积越大，财富分配越不均衡。</p>
-<p>在决策树中，应该选择使节点基尼系数最小的特征作为分裂点，也说明划分后的节点分布越不平均，越可以用来做分类。这里的基尼系数和统计意义的基尼系数表达的意思恰好相反。</p>
-<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>比如特征 A 有 $a_1, a_2, a_3$ 三个特征值，分别计算每个特征值对数据集 D 的基尼系数，比如计算特征值 $a_1$ 基尼系数时，会将 D 划分成 $D_1$ 和 非 $D_1$ 子集进行计算。选择基尼系数<strong>最小</strong>的特征（也就是选择父节点基尼系数差值最大，类比信息增益）及对应的特征值，建立左右两个节点，形成二叉树。</p>
+=1 - \sum_{k=1}^K (\frac{|C_k|}{|D|})^2</script><p>对于给定特征 A 和样本 D，特征 A 将样本分成 $D_1, D_2, …D_n$</p>
+<p>$Gini(D, A) = \sum_{i=1}^n \frac{|D_i|}{|D|}Gini(D_i)$</p>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>比如特征 A 有 $a_1, a_2, a_3$ 三个特征值，分别计算每个特征值对数据集 D 的基尼系数，比如计算特征值 $a_1$ 基尼系数时，会将 D 划分成 $D_1$ 和 非 $D_1$ 子集进行计算。选择基尼系数最小的特征及对应的特征值，建立左右两个节点，形成二叉树。</p>
 <h3 id="回归树"><a href="#回归树" class="headerlink" title="回归树"></a>回归树</h3><p>与分类树的主要区别：</p>
 <ul>
 <li>连续值的处理方式不同</li>
 <li>决策树建立后的预测方式不同</li>
 </ul>
-<h4 id="连续特征离散化的方法"><a href="#连续特征离散化的方法" class="headerlink" title="连续特征离散化的方法"></a>连续特征离散化的方法</h4><p>比如特征 A 有 m 个样本，排序后 $a<em>1, a_2, a_3, … a_m​$，取相邻两个样本的均值，一共 m-1 个划分点，其中第 i 个划分点使用 $T_i=(a_i+a</em>{(i+1)})/2​$ 表示。分别计算这 m-1 个点的信息增益，选择信息增益最大的点作为该连续特征的二元离散分类点。</p>
-<p>还可以通过给定采样间隔或随机取值的方法使连续特征离散化。</p>
-<h4 id="评价方式"><a href="#评价方式" class="headerlink" title="评价方式"></a>评价方式</h4><p>对于任意划分点 s，划分成集合 $D_1​$ 和 $D_2​$，使 $D_1​$ 和 $D_2​$ 的均方差最小，同时 $D_1​$ 和 $D_2​$ 的均方差之和最小的特征和特征值作为划分点</p>
+<h4 id="评价方式"><a href="#评价方式" class="headerlink" title="评价方式"></a>评价方式</h4><p>对于任意划分点 s，划分成集合 $D_1$ 和 $D_2$，使 $D_1$ 和 $D_2$ 的均方差最小，同时 $D_1$ 和 $D_2$ 的均方差之和最小的特征和特征值作为划分点</p>
 <script type="math/tex; mode=display">
-min_{A,s}[min_{c_1}\sum_{x_i\in D_1}(y_i - c_1)^2 + min_{c_2}\sum_{x_i\in D_2}(y_i - c_2)^2]</script><p>$c_1​$ 是数据集 $D_1​$ 的输出均值，$c_2​$ 是数据集 $D_2​$ 的输出均值，$y_i​$ 代表实际值</p>
+min_{A,s}[min_{c_1}\sum_{x_i\in D_1}(y_i - c_1)^2 + min_{c_2}\sum_{x_i\in D_2}(y_i - c_2)^2]</script><p>$c_1$ 是数据集 $D_1$ 的输出均值，$c_2$ 是数据集 $D_2$ 的输出均值，$y_i$ 代表实际值</p>
 <h4 id="预测结果"><a href="#预测结果" class="headerlink" title="预测结果"></a>预测结果</h4><p>分类树中，某一个叶节点的预测结果采用投票的方式进行决定；</p>
-<p>回归树中，叶节点的<strong>均值</strong>或<strong>中位数</strong>作为输出结果。</p>
-<h2 id="决策树的过拟合问题"><a href="#决策树的过拟合问题" class="headerlink" title="决策树的过拟合问题"></a>决策树的过拟合问题</h2><p>只要不存在矛盾样本（相同的 X 对应不同的 Y ）的情况下，决策树总可以使训练集上叶子节点的样本类别是相同的。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190123/iU8y2aH8tCyd.png?imageslim" alt="mark"></p>
-<p>随着树的深度增大，训练集上的错误率逐渐降低，但是在测试集上错误率增加。决策树深度等于 3 时，在测试集上的表现最好，实际操作时，采用<strong>交叉验证</strong>的方式来进行。</p>
-<h3 id="预剪枝"><a href="#预剪枝" class="headerlink" title="预剪枝"></a>预剪枝</h3><p>在树的生成过程中，当某个节点满足剪枝条件，比如样本数量过少、深度过深、或在验证集上不能带来准确率的提升时，停止分支的划分。</p>
-<p>根据交叉验证（gridsearchcv）的方式选择最优的超参数。</p>
-<h3 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h3><p>先生成决策树，再根据在验证集上的准确性决定是否剪掉这个节点。</p>
-<p>实际情况做的更多是预剪枝，而非后剪枝。（详细 CCP 算法参考《百面机器学习》中如何对决策树进行剪枝）</p>
-<h3 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h3><p>另外一种防止过拟合的方式是做随机森林。</p>
-<h2 id="对缺失值的处理"><a href="#对缺失值的处理" class="headerlink" title="对缺失值的处理"></a>对缺失值的处理</h2><p>处理缺失值时，常常是对特征中的非缺失值数据计算相对熵后，对相对熵乘以（非缺失数据/总样本）权重比例。</p>
-
+<p>回归树中，叶节点的均值或中位数作为输出结果。</p>
+<h1 id="集成算法"><a href="#集成算法" class="headerlink" title="集成算法"></a>集成算法</h1><p>组合多个基础模型的预测值，提高模型的泛化能力。</p>
+<p>主要有两个方法得到最终的预测值：</p>
+<ol>
+<li>Averaging：独立的建立多个模型对预测结果做平均或投票，又叫 Bagging。</li>
+<li>Boosting：有序列的，依赖多个基模型，用后一个模型修正前一个模型的 bias。</li>
+</ol>
+<h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p>集成规则有平均或少数服从多数的原则。</p>
+<p>每个基分类器的数据集是随机抽取得到的，通过引入随机性来减少方差。</p>
+<p>Boostrap 采样方法：</p>
+<p>有放回的随机采样，每次采集一个样本，然后放回，一轮随机采样的次数与样本集数目 m 相同，当 $m \rightarrow \infty$ 时，一轮随机采样中，样本不被采集到的概率是 </p>
+<script type="math/tex; mode=display">
+\lim_{m\rightarrow \infty}(1 - \frac{1}{m})^m = \frac{1}{e} \approx 0.368</script><p>这 36.8% 的数据作为 Out of Bag (OOB)，可以作为测试集，验证模型的泛化能力。这部分数据是没有被模型学到的。Bagging 不需要划分训练数据和测试数据。</p>
+<p>Bagging 对弱分类器没有限制，LR，DT，KNN，朴素贝叶斯，SVM 等基础模型都可以作为基本分类器。</p>
+<h2 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h2><p>属于 Bagging 的一种模型，基分类器是 CART 决策树。</p>
+<p>假设训练集有 m 个样本，一次决策树共做 m 次有放回采样，得到 m 个样本的采样集；</p>
+<p>每建一棵树时，特征是随机选择的，选择最优特征作为分裂点进行左右划分；</p>
+<p>共做 T 次决策，如果是分类决策，采用投票最多的样本类别；如果是回归算法，则取 T 个弱分类器结果的平均值作为输出。</p>
+<p>每建一棵树时，都可以计算一下 OOB Score，如果共做 T 次决策，则可以计算这 T 次 OOB Score 的平均值作为在测试集上的表现。</p>
+<h2 id="Adaboost"><a href="#Adaboost" class="headerlink" title="Adaboost"></a>Adaboost</h2><p>Boosting：下一个分类器的表现会依赖于上一次分类的结果。</p>
+<p>Adaboost，是一种比较经典的 boosting 思路，像 GBDT，XGboost，LGB 是基于梯度的 boosting 思路。</p>
+<p>主要思路同时给予分类器和每个样本权重，假设开始时每个样本的权重相同，每轮预测结束后，预测错误的样本权重上升，预测正确的样本权重下降。下一轮预测基于上一轮中预测错误的样本来进行，也就是权重变高的那些样本。最终的结果基于分类器的权重系数得到的。</p>
+<p><img src="http://owzhgmyq5.bkt.clouddn.com/blog/181008/BjDfIE7CcK.png" alt="mark"></p>
+<p>假设共有 m 个样本，迭代次数 T 次，第一次预测初始化每个样本的权值 $D^1(i)$ 分布为 $\frac{1}{m}$</p>
+<p>for  t=1, …, T do</p>
+<ul>
+<li><p>拿一个基本分类器做一次预测，比如 SVM，DT，LR 等做一次二分类</p>
+</li>
+<li><p>计算这个分类器的误差，也就是预测错误的部分，估计值 $f_t(X_i)$ 不等于 $y_i$ 的加和。</p>
+<p>误差率的计算将权值 $D^t(i)$ 也考虑进去，第二步公式等同于下式，$I$ 是指示函数。</p>
+<script type="math/tex; mode=display">
+\epsilon_t = \sum_{i=1}^m \omega_{ti}I\{f_t(X_i)\neq y_i\}</script></li>
+<li><p>计算系数 $\alpha_t$，这个系数会被认为是分类器 $f_t(X)$ 的权重，同时 $\alpha_t$ 也会用来计算下一次样本 $i$ 的权重。</p>
+</li>
+<li><p>更新每个样本的权重 $D^{(t+1)}(i)$，如果预测错误，$y_if_t(X_i) = -1$，$e^{-\alpha_t y_if_t(X_i)}$ 将大于 1，下一次该样本的权重将变大；同理，如果预测正确，$e^{-\alpha_t y_if_t(X_i)}$ 将小于 1，下一次预测该样本权重将变小；归一化因子 $Z^{(t)}$ 保证权重在变化后的加和仍然是 1，满足一个概率分布。</p>
+</li>
+</ul>
+<p>最终的分类器将是 T 个基本分类器 $f_t(X)$ 加上权重 $\alpha_t$ 加和的结果。</p>
+<h1 id><a href="#" class="headerlink" title=" "></a> </h1>
       
     </div>
     
@@ -609,6 +570,14 @@ min_{A,s}[min_{c_1}\sum_{x_i\in D_1}(y_i - c_1)^2 + min_{c_2}\sum_{x_i\in D_2}(y
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DT/" rel="tag"># DT</a>
+          
+            <a href="/tags/Adaboost/" rel="tag"># Adaboost</a>
+          
+        </div>
       
 
       
@@ -629,8 +598,8 @@ min_{A,s}[min_{c_1}\sum_{x_i\in D_1}(y_i - c_1)^2 + min_{c_2}\sum_{x_i\in D_2}(y
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/archives/2a0ca566.html" rel="prev" title="树类模型">
-                树类模型 <i class="fa fa-chevron-right"></i>
+              <a href="/archives/2a0ca566.html" rel="prev" title="熵和决策树">
+                熵和决策树 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -708,7 +677,7 @@ min_{A,s}[min_{c_1}\sum_{x_i\in D_1}(y_i - c_1)^2 + min_{c_2}\sum_{x_i\in D_2}(y
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -763,7 +732,7 @@ min_{A,s}[min_{c_1}\sum_{x_i\in D_1}(y_i - c_1)^2 + min_{c_2}\sum_{x_i\in D_2}(y
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#熵"><span class="nav-number">1.</span> <span class="nav-text">熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#熵的直观理解"><span class="nav-number">1.1.</span> <span class="nav-text">熵的直观理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熵的定义"><span class="nav-number">1.2.</span> <span class="nav-text">熵的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两点分布的信息熵"><span class="nav-number">1.3.</span> <span class="nav-text">两点分布的信息熵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#均匀分布的信息熵"><span class="nav-number">1.4.</span> <span class="nav-text">均匀分布的信息熵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联合熵"><span class="nav-number">2.</span> <span class="nav-text">联合熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件熵"><span class="nav-number">3.</span> <span class="nav-text">条件熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵与相对熵"><span class="nav-number">4.</span> <span class="nav-text">交叉熵与相对熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵"><span class="nav-number">4.1.</span> <span class="nav-text">交叉熵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对熵"><span class="nav-number">4.2.</span> <span class="nav-text">相对熵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互信息"><span class="nav-number">5.</span> <span class="nav-text">互信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联合熵、条件熵和互信息的关系"><span class="nav-number">6.</span> <span class="nav-text">联合熵、条件熵和互信息的关系</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#决策树"><span class="nav-number"></span> <span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#直观理解"><span class="nav-number">1.</span> <span class="nav-text">直观理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ID3"><span class="nav-number">2.</span> <span class="nav-text">ID3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益"><span class="nav-number">2.1.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊情况"><span class="nav-number">2.2.</span> <span class="nav-text">特殊情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C4-5"><span class="nav-number">3.</span> <span class="nav-text">C4. 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益比"><span class="nav-number">3.1.</span> <span class="nav-text">信息增益比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊情况-1"><span class="nav-number">3.2.</span> <span class="nav-text">特殊情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-1"><span class="nav-number">3.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CART"><span class="nav-number">4.</span> <span class="nav-text">CART</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基尼系数"><span class="nav-number">4.1.</span> <span class="nav-text">基尼系数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基尼系数与信息熵的近似"><span class="nav-number">4.1.1.</span> <span class="nav-text">基尼系数与信息熵的近似</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二分类的熵和基尼系数"><span class="nav-number">4.1.2.</span> <span class="nav-text">二分类的熵和基尼系数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基尼系数第二定义"><span class="nav-number">4.1.3.</span> <span class="nav-text">基尼系数第二定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树"><span class="nav-number">4.2.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归树"><span class="nav-number">4.3.</span> <span class="nav-text">回归树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#连续特征离散化的方法"><span class="nav-number">4.3.1.</span> <span class="nav-text">连续特征离散化的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#评价方式"><span class="nav-number">4.3.2.</span> <span class="nav-text">评价方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预测结果"><span class="nav-number">4.3.3.</span> <span class="nav-text">预测结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#决策树的过拟合问题"><span class="nav-number">5.</span> <span class="nav-text">决策树的过拟合问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预剪枝"><span class="nav-number">5.1.</span> <span class="nav-text">预剪枝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后剪枝"><span class="nav-number">5.2.</span> <span class="nav-text">后剪枝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机森林"><span class="nav-number">5.3.</span> <span class="nav-text">随机森林</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对缺失值的处理"><span class="nav-number">6.</span> <span class="nav-text">对缺失值的处理</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#决策树"><span class="nav-number">1.</span> <span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#熵"><span class="nav-number">1.1.</span> <span class="nav-text">熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ID3"><span class="nav-number">1.2.</span> <span class="nav-text">ID3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益"><span class="nav-number">1.2.1.</span> <span class="nav-text">信息增益</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.2.2.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C4-5"><span class="nav-number">1.3.</span> <span class="nav-text">C4. 5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息增益比"><span class="nav-number">1.3.1.</span> <span class="nav-text">信息增益比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续特征离散化的方法"><span class="nav-number">1.3.2.</span> <span class="nav-text">连续特征离散化的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CART"><span class="nav-number">1.4.</span> <span class="nav-text">CART</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基尼系数"><span class="nav-number">1.4.1.</span> <span class="nav-text">基尼系数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树"><span class="nav-number">1.4.2.</span> <span class="nav-text">二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归树"><span class="nav-number">1.4.3.</span> <span class="nav-text">回归树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#评价方式"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">评价方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预测结果"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">预测结果</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集成算法"><span class="nav-number">2.</span> <span class="nav-text">集成算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging"><span class="nav-number">2.1.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机森林"><span class="nav-number">2.2.</span> <span class="nav-text">随机森林</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adaboost"><span class="nav-number">2.3.</span> <span class="nav-text">Adaboost</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text"> </span></a></li></ol></div>
             
 
           </div>
