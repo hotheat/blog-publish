@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  
+                  1.6k
                 </span>
               
 
@@ -412,7 +412,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  
+                  8
                 </span>
               
             </div>
@@ -469,7 +469,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo 'export PATH="/home/ubuntu/miniconda3/envs/venv/bin:$PATH"'&gt;&gt;~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c anaconda jupyter</span><br></pre></td></tr></table></figure>
 <p>安装好 Jupyter 后需要配置一下服务器才能访问，配置主要参考 AWS 官网的教程。<a href="https://docs.aws.amazon.com/zh_cn/dlami/latest/devguide/setup-jupyter-config.html" target="_blank" rel="noopener">https://docs.aws.amazon.com/zh_cn/dlami/latest/devguide/setup-jupyter-config.html</a></p>
-<h2 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">mkdir ssl</span><br><span class="line">cd ssl</span><br><span class="line">sudo openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout "cert.key" -out "cert.pem" -batch</span><br><span class="line">ipython</span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行 from IPython.lib import passwd;passwd() 以设置密码，获得密码哈希，记录密码哈希</span></span><br></pre></td></tr></table></figure>
+<h2 id="设置密码"><a href="#设置密码" class="headerlink" title="设置密码"></a>设置密码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">mkdir ssl</span><br><span class="line">cd ssl</span><br><span class="line">sudo openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout "cert.key" -out "cert.pem" -batch</span><br><span class="line">ipython</span><br><span class="line"><span class="meta">#</span> 运行 from IPython.lib import passwd;passwd() 以设置密码，获得密码哈希，记录密码哈希</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.jupyter/jupyter_notebook_config.py # 如果没有请运行 jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
 <p>将以下文本粘贴到末尾</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = get_config()  <span class="comment"># Get the config object.</span></span><br><span class="line">c.NotebookApp.password = <span class="string">'sha1:fc216...密码哈希'</span></span><br></pre></td></tr></table></figure>
@@ -505,7 +505,7 @@
 <h1 id="Pytorch-安装"><a href="#Pytorch-安装" class="headerlink" title="Pytorch 安装"></a>Pytorch 安装</h1><p>Pytorch 采用官网的安装方式 <a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener">https://pytorch.org/get-started/locally/</a></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision cuda80 -c pytorch</span><br><span class="line">pip install torchvision</span><br></pre></td></tr></table></figure>
 <p>验证安装成功</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(venv) ubuntu@ip-172-31-18-15:~$ python</span><br><span class="line">Python 3.6.6 |Anaconda, Inc.| (default, Oct  9 2018, 12:34:16)</span><br><span class="line">[GCC 7.3.0] on linux</span><br><span class="line">Type "help", "copyright", "credits" or "license" for more information.</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; import torch</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; x_gpu = torch.Tensor([3]).cuda()</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span>(x_gpu)</span></span><br><span class="line">tensor([3.], device='cuda:0')</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; x = torch.Tensor([3])<span class="comment">## No GPU</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span>(x)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(venv) ubuntu@ip-172-31-18-15:~$ python</span><br><span class="line">Python 3.6.6 |Anaconda, Inc.| (default, Oct  9 2018, 12:34:16)</span><br><span class="line">[GCC 7.3.0] on linux</span><br><span class="line">Type "help", "copyright", "credits" or "license" for more information.</span><br><span class="line"><span class="meta">&gt;</span>&gt;&gt; import torch</span><br><span class="line"><span class="meta">&gt;</span>&gt;&gt; x_gpu = torch.Tensor([3]).cuda()</span><br><span class="line"><span class="meta">&gt;</span>&gt;&gt; print(x_gpu)</span><br><span class="line">tensor([3.], device='cuda:0')</span><br><span class="line"><span class="meta">&gt;</span>&gt;&gt; x = torch.Tensor([3])## No GPU</span><br><span class="line"><span class="meta">&gt;</span>&gt;&gt; print(x)</span><br></pre></td></tr></table></figure>
 <p>参考：</p>
 <p><a href="https://github.com/sharedeeply/DeepLearning-StartKit" target="_blank" rel="noopener">https://github.com/sharedeeply/DeepLearning-StartKit</a></p>
 <h1 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h1><p>环境搭建好后，记得创建镜像，下次开始时直接使用镜像（AMI）创建实例，不需要从头开始。</p>
@@ -720,7 +720,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count"></span>
+    <span title="Site words total count">123k</span>
   
 </div>
 
