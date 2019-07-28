@@ -85,22 +85,17 @@
 
 
 
-<meta name="description" content="在实际应用中，如何衡量一个聚类结果的好坏？">
+<meta name="description" content="在使用 sqlalchemy join 两个表时，遇到下面的报错： 1sqlalchemy.exc.InvalidRequestError: Can&apos;t join table/selectable &apos;gvidb_interpretation&apos; to itself 原因是 join 时的主表和副表判断错误导致的。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="聚类算法笔记（四）--聚类算法的衡量指标">
-<meta property="og:url" content="https://www.hotheat.top/archives/dfe8b6.html">
+<meta property="og:title" content="sqlalchemy 中 Join 表时的报错">
+<meta property="og:url" content="https://www.hotheat.top/archives/d4e7335.html">
 <meta property="og:site_name" content="Hotheat">
-<meta property="og:description" content="在实际应用中，如何衡量一个聚类结果的好坏？">
+<meta property="og:description" content="在使用 sqlalchemy join 两个表时，遇到下面的报错： 1sqlalchemy.exc.InvalidRequestError: Can&apos;t join table/selectable &apos;gvidb_interpretation&apos; to itself 原因是 join 时的主表和副表判断错误导致的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190221/hwVUnoHmOReF.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190221/8aPAhjwBSztj.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190221/FdHa2bsIJH8i.png?imageslim">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190221/rntrCRoiTU17.png?imageslim">
-<meta property="og:updated_time" content="2019-07-05T02:16:12.313Z">
+<meta property="og:updated_time" content="2019-07-28T06:05:24.151Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="聚类算法笔记（四）--聚类算法的衡量指标">
-<meta name="twitter:description" content="在实际应用中，如何衡量一个聚类结果的好坏？">
-<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190221/hwVUnoHmOReF.png?imageslim">
+<meta name="twitter:title" content="sqlalchemy 中 Join 表时的报错">
+<meta name="twitter:description" content="在使用 sqlalchemy join 两个表时，遇到下面的报错： 1sqlalchemy.exc.InvalidRequestError: Can&apos;t join table/selectable &apos;gvidb_interpretation&apos; to itself 原因是 join 时的主表和副表判断错误导致的。">
 
 
 
@@ -130,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://www.hotheat.top/archives/dfe8b6.html">
+  <link rel="canonical" href="https://www.hotheat.top/archives/d4e7335.html">
 
 
 
 
 
-  <title>聚类算法笔记（四）--聚类算法的衡量指标 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>sqlalchemy 中 Join 表时的报错 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -305,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/dfe8b6.html">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/d4e7335.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hotheat">
@@ -322,7 +317,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">聚类算法笔记（四）--聚类算法的衡量指标</h2>
+          <h2 class="post-title" itemprop="name headline">sqlalchemy 中 Join 表时的报错</h2>
         
 
         <div class="post-meta">
@@ -334,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T14:03:23+08:00">
-                2019-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-28T13:29:28+08:00">
+                2019-07-28
               </time>
             
 
@@ -357,8 +352,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
+                  <a href="/categories/Bug/" itemprop="url" rel="index">
+                    <span itemprop="name">Bug</span>
                   </a>
                 </span>
 
@@ -368,8 +363,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/聚类/" itemprop="url" rel="index">
-                    <span itemprop="name">聚类</span>
+                  <a href="/categories/Bug/sql/" itemprop="url" rel="index">
+                    <span itemprop="name">sql</span>
                   </a>
                 </span>
 
@@ -406,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  726
+                  261
                 </span>
               
 
@@ -431,42 +426,22 @@
       
 
       
-        <p>在实际应用中，如何衡量一个聚类结果的好坏？</p>
+        <p>在使用 sqlalchemy join 两个表时，遇到下面的报错：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlalchemy.exc.InvalidRequestError: Can't join table/selectable 'gvidb_interpretation' to itself</span><br></pre></td></tr></table></figure>
+<p>原因是 join 时的主表和副表判断错误导致的。</p>
 <a id="more"></a>
-<h1 id="聚类算法的衡量指标"><a href="#聚类算法的衡量指标" class="headerlink" title="聚类算法的衡量指标"></a>聚类算法的衡量指标</h1><h2 id="已知数据标签"><a href="#已知数据标签" class="headerlink" title="已知数据标签"></a>已知数据标签</h2><ul>
-<li>均一性</li>
-<li>完整性</li>
-<li>V-measure</li>
-<li>调整兰德系数（ARI）</li>
-<li>调整互信息（AMI）</li>
-</ul>
-<p>均一性和完整性有点像 Precision 和 Recall。V-measure 是对二者的折中。</p>
-<p>ARI 和 AMI 本质上就是混淆矩阵的推广，二者都是取 1 最优，取 -1 最差。</p>
-<p>可以参考 <a href="https://www.jianshu.com/p/1049db259d38" target="_blank" rel="noopener">08 聚类算法 - 聚类算法的衡量指标</a></p>
-<p>上述的这些指标（除轮廓系数外）的共性是要求有标签 y 的，但是聚类的使用场景一般是不知道标签是什么的，二者有矛盾。</p>
-<p>一般的做法是，从中选出一小部分样本，<strong>人工</strong>打上标签，再使用 Kmeans/DBSCAN/谱聚类/AP 等方法聚类，根据衡量指标，选择较好的聚类方法，应用到完整的数据集上。</p>
-<h2 id="未知数据标签"><a href="#未知数据标签" class="headerlink" title="未知数据标签"></a>未知数据标签</h2><ul>
-<li>轮廓系数</li>
-<li>均方根标准误差</li>
-<li>R 方</li>
-<li>$Hubert \Tau$ 统计</li>
-</ul>
-<h3 id="轮廓系数"><a href="#轮廓系数" class="headerlink" title="轮廓系数"></a>轮廓系数</h3><p>不需要真实类别 y 就可以度量无监督学习好坏。</p>
-<h4 id="簇内不相似度"><a href="#簇内不相似度" class="headerlink" title="簇内不相似度"></a>簇内不相似度</h4><p><img src="http://qnpic.sijihaiyang.top/blog/20190221/hwVUnoHmOReF.png?imageslim" alt="mark"></p>
-<p>簇间不相似度</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190221/8aPAhjwBSztj.png?imageslim" alt="mark"></p>
-<p>$b_i$ 等于样本 i 离其他簇平均距离的最小值。</p>
-<h4 id="样本-i-的轮廓系数"><a href="#样本-i-的轮廓系数" class="headerlink" title="样本 i 的轮廓系数"></a>样本 i 的轮廓系数</h4><p><img src="http://qnpic.sijihaiyang.top/blog/20190221/FdHa2bsIJH8i.png?imageslim" alt="mark"></p>
-<p>$s_i$ 越接近于 1，说明 $b(i)$ 越大，$a(i)$ 越小，样本 i 聚类越合理；$s_i$ 近似为 0，说明样本 i 在两个簇的边界上；$s_i$ 越接近于 -1，说明样本 i 越应该分类到另外的簇。</p>
-<h4 id="聚类的轮廓系数"><a href="#聚类的轮廓系数" class="headerlink" title="聚类的轮廓系数"></a>聚类的轮廓系数</h4><p><img src="http://qnpic.sijihaiyang.top/blog/20190221/rntrCRoiTU17.png?imageslim" alt="mark"></p>
-<h3 id="均方根标准误差-RMSSTD"><a href="#均方根标准误差-RMSSTD" class="headerlink" title="均方根标准误差(RMSSTD)"></a>均方根标准误差(RMSSTD)</h3><script type="math/tex; mode=display">
-RMSSTD = (\frac{\sum_i\sum_{i\in I_j}||x_i-c_i||^2}{P\sum_i{(n_i-1)}})^\frac{1}{2}</script><p>$c_i$ 是类簇的中心，$n_i$ 是类簇 i 的样本数量，P 是样本点的维度。可以看作是经过归一化后的标准差。RMSSTD 衡量了聚类结果的同质性，即紧凑程度，数值越小，聚类效果越好。</p>
-<h3 id="R-方"><a href="#R-方" class="headerlink" title="R 方"></a>R 方</h3><script type="math/tex; mode=display">
-RS = \frac{\sum_{x\in D}||x-c||^2-\sum_i\sum_{i\in C_i}||x_i-c_i||^2}{\sum_{x\in D}||x-c||^2}</script><p>分子上前半部分代表将数据集看作一个类簇的误差平方和，后半部分代表聚类后的误差平方和，R 方代表了聚类前后对应的误差平方和的改进程度，数值越大，聚类效果越好。</p>
-<h3 id="Huber-Tau-统计"><a href="#Huber-Tau-统计" class="headerlink" title="$Huber\Tau$ 统计"></a>$Huber\Tau$ 统计</h3><script type="math/tex; mode=display">
-\Tau = \frac{2}{n(n-1)}\sum_{x\in D}\sum_{y\in D}d(x, y)d_{x\in C_i, y\in C_j}(c_i, c_j)</script><p>$d(x, y)$ 表示两个点 $x$ 与 $y$ 之间的距离。$d_{x\in C_i, y\in C_j}(c_i, c_j)$ 代表 x 所属簇中心 $c_i$ 与 y 所属簇中心 $c_j$ 之间的距离，系数代表对所有 $(x, y)$ 点对的个数做了归一化处理。</p>
-<p>理想情况下，$d(x, y)$ 越小，$d(c_i, c_j)$ 越小，$d(x, y)$ 越大，$d(c_i, c_j)$ 越大，所以，</p>
-<p>$\Tau$ 值越大，说明与样本的原始距离越吻合，聚类效果越好。</p>
+<p>下面是一条利用 sqlalchemy join 两个表的正确示例，</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.query(SnvIndel.chrom, SnvIndel.pos, GvidbInterpretation.classification)</span><br><span class="line">.join(GvidbInterpretation, SnvIndel.var_id==GvidbInterpretation.var_id)</span><br><span class="line">.filter(SnvIndel.var_id == 'VARS20')</span><br></pre></td></tr></table></figure>
+<p>上面 sqlalchemy 语句的作用是将 SnvIndel 和 GvigbInterpretation 两个表 inner join 到一起。</p>
+<p>sqlalchemy 会默认将第一次出现的表标记为主表，也就是 SnvIdel 表，后面出现的表标记为副表，也就是 Interpretation。</p>
+<p>如果出现 .join() 方法，join() 中的表只能副表。否则就会报上面的错误，也就是说，主表不能 join 其本身。</p>
+<p><strong>下面这样就会报错</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.query(GvidbInterpretation.classification, SnvIndel.chrom, SnvIndel.pos)</span><br><span class="line">.join(GvidbInterpretation, SnvIndel.var_id==GvidbInterpretation.var_id)</span><br><span class="line">.filter(SnvIndel.var_id == 'VARS20')</span><br></pre></td></tr></table></figure>
+<p>同样，left_join 时，也会将先出现的表作为主表，后出现的作为副表，代码如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">session.query(SnvIndel.chrom, SnvIndel.pos, GvidbInterpretation.classification)</span><br><span class="line">.outerjoin(GvidbInterpretation, SnvIndel.var_id==GvidbInterpretation.var_id)</span><br><span class="line">.filter(SnvIndel.var_id == 'VARS20')</span><br></pre></td></tr></table></figure>
+<p>参考</p>
+<p><a href="https://ask.helplib.com/postgresql/post_12453266" target="_blank" rel="noopener">https://ask.helplib.com/postgresql/post_12453266</a></p>
+<p><a href="https://www.jianshu.com/p/bf9f98479026" target="_blank" rel="noopener">https://www.jianshu.com/p/bf9f98479026</a></p>
 
       
     </div>
@@ -491,8 +466,8 @@ RS = \frac{\sum_{x\in D}||x-c||^2-\sum_i\sum_{i\in C_i}||x_i-c_i||^2}{\sum_{x\in
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/archives/409af206.html" rel="next" title="机器学习面试每日一问">
-                <i class="fa fa-chevron-left"></i> 机器学习面试每日一问
+              <a href="/archives/94714099.html" rel="next" title="fork 其他人项目后如何 pull request">
+                <i class="fa fa-chevron-left"></i> fork 其他人项目后如何 pull request
               </a>
             
           </div>
@@ -500,10 +475,6 @@ RS = \frac{\sum_{x\in D}||x-c||^2-\sum_i\sum_{i\in C_i}||x_i-c_i||^2}{\sum_{x\in
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/archives/8b2ffd6.html" rel="prev" title="记录一次面试经历 9k">
-                记录一次面试经历 9k <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -555,17 +526,8 @@ RS = \frac{\sum_{x\in D}||x-c||^2-\sum_i\sum_{i\in C_i}||x_i-c_i||^2}{\sum_{x\in
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -625,22 +587,6 @@ RS = \frac{\sum_{x\in D}||x-c||^2-\sum_i\sum_{i\in C_i}||x_i-c_i||^2}{\sum_{x\in
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类算法的衡量指标"><span class="nav-number">1.</span> <span class="nav-text">聚类算法的衡量指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#已知数据标签"><span class="nav-number">1.1.</span> <span class="nav-text">已知数据标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未知数据标签"><span class="nav-number">1.2.</span> <span class="nav-text">未知数据标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#轮廓系数"><span class="nav-number">1.2.1.</span> <span class="nav-text">轮廓系数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#簇内不相似度"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">簇内不相似度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#样本-i-的轮廓系数"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">样本 i 的轮廓系数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚类的轮廓系数"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">聚类的轮廓系数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#均方根标准误差-RMSSTD"><span class="nav-number">1.2.2.</span> <span class="nav-text">均方根标准误差(RMSSTD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R-方"><span class="nav-number">1.2.3.</span> <span class="nav-text">R 方</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Huber-Tau-统计"><span class="nav-number">1.2.4.</span> <span class="nav-text">$Huber\Tau$ 统计</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

@@ -93,7 +93,7 @@
 <meta property="og:description" content="数据库中的常用操作">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190613/W6fUAeA1yoSN.png?imageslim">
-<meta property="og:updated_time" content="2019-07-05T07:33:32.338Z">
+<meta property="og:updated_time" content="2019-07-28T01:55:15.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库掏粪">
 <meta name="twitter:description" content="数据库中的常用操作">
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  322
+                  381
                 </span>
               
 
@@ -431,6 +431,8 @@
         <p>数据库中的常用操作</p>
 <a id="more"></a>
 <h1 id="操作与修改表"><a href="#操作与修改表" class="headerlink" title="操作与修改表"></a>操作与修改表</h1><h2 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h2><h3 id="增加表"><a href="#增加表" class="headerlink" title="增加表"></a>增加表</h3><h4 id="从同一-ip-下跨数据库复制"><a href="#从同一-ip-下跨数据库复制" class="headerlink" title="从同一 ip 下跨数据库复制"></a>从同一 ip 下跨数据库复制</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> report_tbl <span class="keyword">LIKE</span> vardb.report_tbl</span><br><span class="line"><span class="keyword">INSERT</span> report_tbl <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> vardb.report_tbl</span><br></pre></td></tr></table></figure>
+<p>这种复制表的方法没有将主键和外键约束复制过来，需要自己手动添加。</p>
+<p>在 Navicate 中，在表上直接右键，选择复制粘贴更方便，会将约束信息直接复制。</p>
 <h4 id="从文件中新建表"><a href="#从文件中新建表" class="headerlink" title="从文件中新建表"></a>从文件中新建表</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> <span class="keyword">infile</span> <span class="string">"/home/light/mysql/gps1.txt"</span> <span class="keyword">into</span> <span class="keyword">table</span> loadTable <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">"\n"</span>  (carflag, touchevent, opstatus,gpstime,gpslongitude,gpslatitude,gpsspeed,gpsorientation,gpsstatus);</span><br></pre></td></tr></table></figure>
 <h3 id="增加列"><a href="#增加列" class="headerlink" title="增加列"></a>增加列</h3><h4 id="增加单列"><a href="#增加单列" class="headerlink" title="增加单列"></a>增加单列</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> report_tbl <span class="keyword">add</span> haplotype <span class="built_in">varchar</span>(<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
 <p>默认时间为当前时间</p>
@@ -564,7 +566,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -575,7 +577,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -653,7 +655,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">123.3k</span>
+    <span title="Site words total count">123.9k</span>
   
 </div>
 

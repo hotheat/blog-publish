@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="Hotheat">
 <meta property="og:description" content="微信公众号历史文章爬取">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-09T18:36:16.701Z">
+<meta property="og:updated_time" content="2019-07-10T10:17:49.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信文章阅读量和点赞量的爬取">
 <meta name="twitter:description" content="微信公众号历史文章爬取">
@@ -390,7 +390,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  292
+                  392
                 </span>
               
 
@@ -419,7 +419,8 @@
 <a id="more"></a>
 <p>微信历史文章标题，时间，url 等信息利用 Chrome 插件 Webscraper 爬取的。</p>
 <p>Webscraper <a href="https://www.bilibili.com/video/av43641574/" target="_blank" rel="noopener">使用方法参考</a>。</p>
-<p>用 Webscraper 爬取微信公众号文章参考 <a href="https://zhuanlan.zhihu.com/p/42916422" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/42916422</a>。可以用 json 格式 import sitemap 或 create sitemap。</p>
+<p>用 Webscraper 爬取微信公众号文章参考 <a href="https://zhuanlan.zhihu.com/p/42916422" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/42916422</a>。如果出现验证页面，说明微信版本太高，具体参考 <a href="http://www.zsxq100.com/make-wechat-content-image/" target="_blank" rel="noopener">http://www.zsxq100.com/make-wechat-content-image/</a></p>
+<p>可以用 json 格式 import sitemap 或 create sitemap。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"_id"</span>: <span class="string">"testwechat"</span>,</span><br><span class="line">  <span class="attr">"startUrl"</span>: [</span><br><span class="line">    <span class="string">"https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzAxMjc2Nzk3OQ==&amp;scene=124&amp;#wechat_redirect"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"selectors"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"total"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"SelectorElementScroll"</span>,</span><br><span class="line">      <span class="attr">"parentSelectors"</span>: [</span><br><span class="line">        <span class="string">"_root"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"selector"</span>: <span class="string">"div.weui_media_box"</span>,</span><br><span class="line">      <span class="attr">"multiple"</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"delay"</span>: <span class="string">"3000"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"title"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"SelectorText"</span>,</span><br><span class="line">      <span class="attr">"parentSelectors"</span>: [</span><br><span class="line">        <span class="string">"total"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"selector"</span>: <span class="string">"h4.weui_media_title"</span>,</span><br><span class="line">      <span class="attr">"multiple"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"regex"</span>: <span class="string">""</span>,</span><br><span class="line">      <span class="attr">"delay"</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"abstract"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"SelectorText"</span>,</span><br><span class="line">      <span class="attr">"parentSelectors"</span>: [</span><br><span class="line">        <span class="string">"total"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"selector"</span>: <span class="string">"p.weui_media_desc"</span>,</span><br><span class="line">      <span class="attr">"multiple"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"regex"</span>: <span class="string">""</span>,</span><br><span class="line">      <span class="attr">"delay"</span>: <span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="string">"date"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"SelectorText"</span>,</span><br><span class="line">      <span class="attr">"parentSelectors"</span>: [</span><br><span class="line">        <span class="string">"total"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"selector"</span>: <span class="string">"p.weui_media_extra_info"</span>,</span><br><span class="line">      <span class="attr">"multiple"</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"regex"</span>: <span class="string">""</span>,</span><br><span class="line">      <span class="attr">"delay"</span>: <span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>link 属性如果通过 SelectorLink 拿不到的话，可以 「Element Attribute」方法得到。</p>
 <p>微信文章阅读量和点赞量信息在浏览器上是显示不出的，可以通过代理的方式批量获取。</p>
@@ -427,7 +428,18 @@
 <p>需要安装 anyproxy，在 pc 端和移动端安装证书。可以采用 pm2 管理 anyproxy，具体参考</p>
 <p><a href="https://www.jianshu.com/p/d978d3b8f2aa" target="_blank" rel="noopener">https://www.jianshu.com/p/d978d3b8f2aa</a>。</p>
 <p>安装证书步骤参考 <a href="http://anyproxy.io/cn/" target="_blank" rel="noopener">anyproxy 官网</a>。</p>
-<p>微信爬虫参考 Github [<a href="https://github.com/lqqyt2423/wechat_spider]。" target="_blank" rel="noopener">https://github.com/lqqyt2423/wechat_spider]。</a></p>
+<p>微信爬虫参考 Github <a href="https://github.com/lqqyt2423/wechat_spider。" target="_blank" rel="noopener">https://github.com/lqqyt2423/wechat_spider。</a></p>
+<p>其他注意的几点：</p>
+<ol>
+<li><p>Mongodb <a href="https://www.jianshu.com/p/5598f1dcbb98" target="_blank" rel="noopener">安装参考</a>。</p>
+<p>Mac: <code>https://www.runoob.com/mongodb/mongodb-osx-install.html</code></p>
+</li>
+<li><p>配置 Chromedriver 时，版本需要与 Chrome 浏览器版本相同。</p>
+</li>
+<li><p>运行 anyproxy 时，在 8001 端口出现报错 <code>Error: connect ECONNREFUSED 127.0.0.1:80
+at TCPConnectWrap.afterConnect [as oncomplete]</code>。暂时忽视这个错误。</p>
+</li>
+</ol>
 
       
     </div>
@@ -461,6 +473,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/94714099.html" rel="prev" title="fork 其他人项目后如何 pull request">
+                fork 其他人项目后如何 pull request <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -528,7 +544,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -539,7 +555,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -601,7 +617,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">123.3k</span>
+    <span title="Site words total count">123.9k</span>
   
 </div>
 
