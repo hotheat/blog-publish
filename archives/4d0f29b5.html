@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="Hotheat">
 <meta property="og:description" content="Pandas 掏粪技能">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-06T09:36:48.740Z">
+<meta property="og:updated_time" content="2019-09-16T07:02:38.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pandas 掏粪">
 <meta name="twitter:description" content="Pandas 掏粪技能">
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  45
+                  157
                 </span>
               
 
@@ -428,7 +428,16 @@
       
         <p>Pandas 掏粪技能</p>
 <a id="more"></a>
-<h1 id="Jupyter-notebook"><a href="#Jupyter-notebook" class="headerlink" title="Jupyter notebook"></a>Jupyter notebook</h1><h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示所有列</span></span><br><span class="line">pd.set_option(<span class="string">'display.max_columns'</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="comment">#显示所有行</span></span><br><span class="line">pd.set_option(<span class="string">'display.max_rows'</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="comment">#设置value的显示长度为100，默认为50</span></span><br><span class="line">pd.set_option(<span class="string">'max_colwidth'</span>,<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="Jupyter-notebook"><a href="#Jupyter-notebook" class="headerlink" title="Jupyter notebook"></a>Jupyter notebook</h1><h1 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h1><h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示所有列</span></span><br><span class="line">pd.set_option(<span class="string">'display.max_columns'</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="comment">#显示所有行</span></span><br><span class="line">pd.set_option(<span class="string">'display.max_rows'</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="comment">#设置value的显示长度为100，默认为50</span></span><br><span class="line">pd.set_option(<span class="string">'max_colwidth'</span>,<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="采用科学计数法时保留两位有效数字"><a href="#采用科学计数法时保留两位有效数字" class="headerlink" title="采用科学计数法时保留两位有效数字"></a>采用科学计数法时保留两位有效数字</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pd.set_option(<span class="string">'display.precision'</span>, <span class="number">2</span>)</span><br><span class="line">pd.set_option(<span class="string">'chop_threshold'</span>, <span class="number">1e-3</span>)  <span class="comment"># maybe this should be 0.005, not sure of order of operations, but I get issues either way</span></span><br></pre></td></tr></table></figure>
+<p>注：</p>
+<ol>
+<li><p><strong>对于 <code>set_option</code> 修改的，只会在打印 df 时生效，而 <code>df.to_csv</code> 或 <code>df.values()</code> 的修改均不生效</strong></p>
+</li>
+<li><p>修改科学计数法的小数保留位数用以下代码</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">format_scientific_notion</span><span class="params">(self, value)</span>:</span></span><br><span class="line">	    <span class="keyword">if</span> isinstance(value, float):</span><br><span class="line">        f = <span class="keyword">lambda</span> x: <span class="string">'%.2e'</span> % Decimal(x)</span><br><span class="line">        <span class="keyword">return</span> f(value)</span><br><span class="line">	    <span class="keyword">else</span>:</span><br><span class="line">	        <span class="keyword">return</span> value</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
@@ -542,7 +551,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -553,7 +562,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -597,7 +606,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jupyter-notebook"><span class="nav-number">1.</span> <span class="nav-text">Jupyter notebook</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置"><span class="nav-number">1.1.</span> <span class="nav-text">设置</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jupyter-notebook"><span class="nav-number">1.</span> <span class="nav-text">Jupyter notebook</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pandas"><span class="nav-number">2.</span> <span class="nav-text">Pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置"><span class="nav-number">2.1.</span> <span class="nav-text">设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#采用科学计数法时保留两位有效数字"><span class="nav-number">2.2.</span> <span class="nav-text">采用科学计数法时保留两位有效数字</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -631,7 +640,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">123.9k</span>
+    <span title="Site words total count">124.2k</span>
   
 </div>
 

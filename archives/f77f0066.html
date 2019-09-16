@@ -85,20 +85,18 @@
 
 
 
-<meta name="description" content="朴素贝叶斯（Naive Bayes）主要特点 前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。 朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y​$。">
+<meta name="description" content="朴素贝叶斯（Naive Bayes）主要特点 前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。 朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y$。">
 <meta name="keywords" content="ML,朴素贝叶斯">
 <meta property="og:type" content="article">
 <meta property="og:title" content="朴素贝叶斯">
 <meta property="og:url" content="https://www.hotheat.top/archives/f77f0066.html">
 <meta property="og:site_name" content="Hotheat">
-<meta property="og:description" content="朴素贝叶斯（Naive Bayes）主要特点 前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。 朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y​$。">
+<meta property="og:description" content="朴素贝叶斯（Naive Bayes）主要特点 前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。 朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y$。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://qnpic.sijihaiyang.top/blog/20190214/b6pXJpPAVuVh.png?imageslim">
-<meta property="og:updated_time" content="2019-07-05T02:16:12.307Z">
+<meta property="og:updated_time" content="2018-10-11T10:49:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯">
-<meta name="twitter:description" content="朴素贝叶斯（Naive Bayes）主要特点 前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。 朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y​$。">
-<meta name="twitter:image" content="http://qnpic.sijihaiyang.top/blog/20190214/b6pXJpPAVuVh.png?imageslim">
+<meta name="twitter:description" content="朴素贝叶斯（Naive Bayes）主要特点 前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。 朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y$。">
 
 
 
@@ -404,7 +402,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  149
                 </span>
               
 
@@ -431,65 +429,9 @@
       
         <h1 id="朴素贝叶斯（Naive-Bayes）"><a href="#朴素贝叶斯（Naive-Bayes）" class="headerlink" title="朴素贝叶斯（Naive Bayes）"></a>朴素贝叶斯（Naive Bayes）</h1><h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
 <li>前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。</li>
-<li>朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y​$。</li>
+<li>朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y$。</li>
 </ol>
 <a id="more"></a>
-<p>朴素贝叶斯有个非常强的假设，特征与特征之间时条件独立的，所谓的条件就是在给定某个分类的情况，可能在一些非线性及相关性比较强的场景中表现不太好，但是在文本分类、情感分析和垃圾邮件识别中应用广泛。</p>
-<h1 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h1><p>贝叶斯定理如下：</p>
-<script type="math/tex; mode=display">
-P(A_i|B) = \frac{P(A_i)P(B|A_i)}{\sum_jP(A_j, B)}\\
-=\frac{P(A_i)P(B|A_i)}{\sum_jP(A_j)P(B|A_j)}\\</script><p>分母是全概率公式，$P(A_i)$ 称为先验概率，$P(A_i|B)​$ 称为后验概率，也称条件概率。</p>
-<h1 id="朴素贝叶斯模型"><a href="#朴素贝叶斯模型" class="headerlink" title="朴素贝叶斯模型"></a>朴素贝叶斯模型</h1><ul>
-<li><p>训练数据集是由<strong>独立同分布</strong>产生的， 样本之间相互独立，所有样本符合同一个分布，或者是高斯分布，或者是伯努利分布产生的 $P(X, Y)$。</p>
-<p>$T={(x_1,y_1 ),(x_2,y_2 ),…,(x_m,y_m )}$</p>
-</li>
-<li><p>先验概率是指 y 属于某个类别的概率，由极大似然估计产生。</p>
-<p>$P(Y=C_k), k=1, 2, …, K$</p>
-<p>以二项分布的极大似然估计为例，某个事件的发生概率等于该事件的发生次数除以总事件的次数。</p>
-<p><img src="http://qnpic.sijihaiyang.top/blog/20190214/b6pXJpPAVuVh.png?imageslim" alt="mark"></p>
-</li>
-<li><p>条件概率，给定一个类别 $C_k​$，求出每个样本 $x​$ 的概率</p>
-<p>$P(X=x|Y=C_k)$，假设 $x$ 由特征 $x_1, x_2, …, x_n​$ 构成，类比一篇文章由很多个单词构成。</p>
-</li>
-<li><p>我们想要的结果是 $P(Y=C_k|X=x)​$，给定一个样本，求样本属于某个分类的概率变得可行。</p>
-<script type="math/tex; mode=display">
-P(Y=C_k|X=x) = \frac{P(X=x|Y=C_k)P(Y=C_k)}{P(X=x)}</script></li>
-<li><p>问题在于 $P(X=x|Y=C_k)​$ 是个十分复杂的分布，所以又做出了一个假设，在给出 $C_k​$ 时，$x_1,x_2,x_3…​$ 之间是相互独立的。</p>
-<script type="math/tex; mode=display">P(X=x|Y=C_k)\\ = P(X_1=x_1, X_2=x_2, ..., X_n=x_n|Y=C_k)\\ =P(X_1=x_1|Y=C_k)P(X_2=x_2|Y=C_k)...P(X_n=x_n|Y=C_k)​</script></li>
-</ul>
-<p>到此，朴素贝叶斯做出的假设</p>
-<ol>
-<li>样本 $x​$ 之间是独立同分布的，类比很多篇文章是独立同分布的</li>
-<li>样本的特征之间是条件独立的，类似文章中的各个单词是条件独立的</li>
-</ol>
-<h1 id="朴素贝叶斯算法"><a href="#朴素贝叶斯算法" class="headerlink" title="朴素贝叶斯算法"></a>朴素贝叶斯算法</h1><p>给定输入 $x$，得到后验概率 $P(Y=C_k|X=x)$ 最大，也就是属于哪个分类的概率最大。</p>
-<script type="math/tex; mode=display">
-P(Y=C_k|X=x) \\= \frac{P(X=x|Y=C_k)P(Y=C_k)}{\sum_{j}P(X=x|Y=C_j)P(Y=C_j)}\\
-=\frac{\prod_i P(X_i=x_i|Y=C_k)P(Y=C_k)}{\sum_j\prod_i P(X_i=x_i|Y=C_j)P(Y=C_j)}</script><p>对于每个样本来说，分母是全概率公式，都是相同的，目的也就变成求</p>
-<p>$argmax_{C_k} P(Y=C_k)\prod_i^nP(X_i=x_i|Y=C_k)P(Y=C_k)$</p>
-<h1 id="朴素贝叶斯的参数估计—-极大似然估计"><a href="#朴素贝叶斯的参数估计—-极大似然估计" class="headerlink" title="朴素贝叶斯的参数估计—-极大似然估计"></a>朴素贝叶斯的参数估计—-极大似然估计</h1><ul>
-<li><p>$P(Y=C<em>k) = \frac{\sum</em>{i=1}^n I(y_i=C_k)}{N}$ </p>
-</li>
-<li><p>设第 $i​$ 个特征 $x<em>i​$可能取值的集合为 ${a</em>{1},a<em>{2},…a</em>{j} }​$，条件概率的极大似然估计是</p>
-<script type="math/tex; mode=display">
-P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k)}{\sum_{i=1}^NI(y_i=C_k)}</script></li>
-</ul>
-<p>注意：</p>
-<ul>
-<li>连续特征可能需要离散化。</li>
-<li>连乘的可能会导致小数溢出，可能取 log 后再相加。</li>
-<li>针对计算出的每个分类概率需要做归一化，使最终得到的概率加和为 1。</li>
-</ul>
-<h1 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h1><p>当某个特征 $x_i​$ 属于每个分类的概率为 0 时，可能会影响到后验概率的计算结果。</p>
-<p>这时，需要采用贝叶斯估计的方法，我们假设先验概率也是满足某种分布的，这种分布同后验概率分布形成共轭分布，最终去求期望。比如二项分布的共轭分布是 Beta 分布，多项分布的共轭分布是 Dirichlet 分布。</p>
-<p>先验概率的贝叶斯估计为</p>
-<script type="math/tex; mode=display">
-P_\lambda(Y=C_k) = \frac{\sum_{i=1}^nI(y_i=C_k)+\lambda}{N + K\lambda}</script><p>$K​$ 是所有的分类数量。</p>
-<p>条件概率的贝叶斯估计为</p>
-<script type="math/tex; mode=display">
-P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k) + \lambda}{\sum_{i=1}^NI(y_i=C_k)+S_j \lambda}</script><p>$S_j$ 指特征 $x_i$ 所有可能取值。</p>
-<p>$\lambda=1$  时称为拉普拉斯平滑；$\lambda=0$ 时，称为 Lidstone 平滑；$\lambda=0$ 时，则是极大似然估计。</p>
-
       
     </div>
     
@@ -521,8 +463,8 @@ P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k) + \lambda}{\sum_{i=1}^NI(y_
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/archives/2a0ca566.html" rel="next" title="树类模型">
-                <i class="fa fa-chevron-left"></i> 树类模型
+              <a href="/archives/2a0ca566.html" rel="next" title="熵和决策树">
+                <i class="fa fa-chevron-left"></i> 熵和决策树
               </a>
             
           </div>
@@ -610,7 +552,7 @@ P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k) + \lambda}{\sum_{i=1}^NI(y_
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-count">77</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -621,7 +563,7 @@ P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k) + \lambda}{\sum_{i=1}^NI(y_
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -665,7 +607,7 @@ P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k) + \lambda}{\sum_{i=1}^NI(y_
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯（Naive-Bayes）"><span class="nav-number">1.</span> <span class="nav-text">朴素贝叶斯（Naive Bayes）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要特点"><span class="nav-number">1.1.</span> <span class="nav-text">主要特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">2.</span> <span class="nav-text">贝叶斯定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯模型"><span class="nav-number">3.</span> <span class="nav-text">朴素贝叶斯模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯算法"><span class="nav-number">4.</span> <span class="nav-text">朴素贝叶斯算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯的参数估计—-极大似然估计"><span class="nav-number">5.</span> <span class="nav-text">朴素贝叶斯的参数估计—-极大似然估计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯估计"><span class="nav-number">6.</span> <span class="nav-text">贝叶斯估计</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯（Naive-Bayes）"><span class="nav-number">1.</span> <span class="nav-text">朴素贝叶斯（Naive Bayes）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要特点"><span class="nav-number">1.1.</span> <span class="nav-text">主要特点</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -699,7 +641,7 @@ P(X_i=x_i|Y=C_k) = \frac{\sum_j^nI(x_i=a_j, y_i=C_k) + \lambda}{\sum_{i=1}^NI(y_
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">123.9k</span>
+    <span title="Site words total count">124.2k</span>
   
 </div>
 
