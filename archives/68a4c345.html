@@ -88,7 +88,7 @@
 <meta name="description" content="在看别人写的二叉树遍历的代码时，看到了yield 和 yield from 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python 协程的实现机理">
-<meta property="og:url" content="https://www.hotheat.top/archives/68a4c345.html">
+<meta property="og:url" content="https://www.hotheat.xyz/archives/68a4c345.html">
 <meta property="og:site_name" content="Hotheat">
 <meta property="og:description" content="在看别人写的二叉树遍历的代码时，看到了yield 和 yield from 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。">
 <meta property="og:locale" content="zh-Hans">
@@ -145,7 +145,7 @@
 
 
 
-  <link rel="canonical" href="https://www.hotheat.top/archives/68a4c345.html">
+  <link rel="canonical" href="https://www.hotheat.xyz/archives/68a4c345.html">
 
 
 
@@ -320,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.hotheat.top/archives/68a4c345.html">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.xyz/archives/68a4c345.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hotheat">
@@ -448,7 +448,7 @@
       
         <p>在看别人写的二叉树遍历的<a href="https://github.com/wangzheng0822/algo/blob/master/python/23_binarytree/binary_tree.py" target="_blank" rel="noopener">代码</a>时，看到了<code>yield</code> 和 <code>yield from</code> 的用法，不是很理解，发现 yield 与 Python 协程十分相关，在网上找到两个很好的谈协程的系列。</p>
 <a id="more"></a>
-<h1 id="从-generator-和-yield-表达式说起"><a href="#从-generator-和-yield-表达式说起" class="headerlink" title="从 generator 和 yield 表达式说起"></a>从 generator 和 yield 表达式说起</h1><p>关于生成器、迭代器、yield 关键字可以参考文章<a href="http://www.hotheat.top/archives/97e11c7c.html">什么是迭代器和生成器</a>，我们在写一个简单的生成器的时候有很多东西没有用到，特别是生成器的三个重要方法，一个是 next()、一个是 send()，一个是 throw()。</p>
+<h1 id="从-generator-和-yield-表达式说起"><a href="#从-generator-和-yield-表达式说起" class="headerlink" title="从 generator 和 yield 表达式说起"></a>从 generator 和 yield 表达式说起</h1><p>关于生成器、迭代器、yield 关键字可以参考文章<a href="http://www.hotheat.top/archives/97e11c7c.html" target="_blank" rel="noopener">什么是迭代器和生成器</a>，我们在写一个简单的生成器的时候有很多东西没有用到，特别是生成器的三个重要方法，一个是 next()、一个是 send()，一个是 throw()。</p>
 <h2 id="send-方法的使用"><a href="#send-方法的使用" class="headerlink" title="send()方法的使用"></a>send()方法的使用</h2><p><img src="http://qnpic.sijihaiyang.top/blog/20190220/e9PhsES4BG8v.png?imageslim" alt="mark"></p>
 <p><img src="http://qnpic.sijihaiyang.top/blog/20190220/Hu0G6N0oGe3B.png?imageslim" alt="mark"></p>
 <p>（4）在用 <code>g.send()</code> 后，yield 表达式执行，在下一次运行 <code>next()</code> 时，会直接输出 3，原来的 2 去哪里了？</p>
@@ -673,7 +673,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
