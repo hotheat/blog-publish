@@ -85,17 +85,17 @@
 
 
 
-<meta name="description" content="使用 hexo d -g 推送博客和使用 ssh -T git@github.com 验证 github 连接时，出现以下报错：">
+<meta name="description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo deploy 时的报错">
-<meta property="og:url" content="https://www.hotheat.xyz/archives/fb81ec3d.html">
+<meta property="og:title" content="sqlalchemy 连接超时引起的问题">
+<meta property="og:url" content="https://www.hotheat.xyz/archives/f1a4cdc1.html">
 <meta property="og:site_name" content="Hotheat">
-<meta property="og:description" content="使用 hexo d -g 推送博客和使用 ssh -T git@github.com 验证 github 连接时，出现以下报错：">
+<meta property="og:description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-05T02:16:12.302Z">
+<meta property="og:updated_time" content="2019-10-11T09:52:34.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo deploy 时的报错">
-<meta name="twitter:description" content="使用 hexo d -g 推送博客和使用 ssh -T git@github.com 验证 github 连接时，出现以下报错：">
+<meta name="twitter:title" content="sqlalchemy 连接超时引起的问题">
+<meta name="twitter:description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
 
 
 
@@ -125,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://www.hotheat.xyz/archives/fb81ec3d.html">
+  <link rel="canonical" href="https://www.hotheat.xyz/archives/f1a4cdc1.html">
 
 
 
 
 
-  <title>hexo deploy 时的报错 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>sqlalchemy 连接超时引起的问题 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -300,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.hotheat.xyz/archives/fb81ec3d.html">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.xyz/archives/f1a4cdc1.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hotheat">
@@ -317,7 +317,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">hexo deploy 时的报错</h2>
+          <h2 class="post-title" itemprop="name headline">sqlalchemy 连接超时引起的问题</h2>
         
 
         <div class="post-meta">
@@ -329,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-13T08:59:59+08:00">
-                2019-06-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T17:52:07+08:00">
+                2019-10-10
               </time>
             
 
@@ -363,8 +363,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bug/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
+                  <a href="/categories/Bug/sql/" itemprop="url" rel="index">
+                    <span itemprop="name">sql</span>
                   </a>
                 </span>
 
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  63
+                  321
                 </span>
               
 
@@ -426,11 +426,35 @@
       
 
       
-        <p>使用 <code>hexo d -g</code> 推送博客和使用 <code>ssh -T git@github.com</code> 验证 github 连接时，出现以下报错：</p>
+        <p>在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：</p>
+<blockquote>
+<p>StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]</p>
+</blockquote>
+<p>或者是</p>
+<blockquote>
+<p>raised unexpected: OperationalError(“(_mysql_exceptions.OperationalError) (2006, ‘MySQL server has gone away’)”,)</p>
+</blockquote>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mux_client_request_session: read from master failed:</span><br></pre></td></tr></table></figure>
-<p>解决方法：</p>
-<p>将 <code>~/.ssh/</code> 下的文件删除，只保留 <code>guojiao1.ppk</code>，<code>id_rsa</code>，<code>id_rsa.pub</code> 文件，再重新进行验证。</p>
+<blockquote>
+<p> 错误是 SQLAlchemy 抛出。原因是你从 pool 拿的 connection 没有以 session.commit 或 session.rollback 或者 session.close 放回 pool 里。这时 connection 的 transaction 没有完结（rollback or commit)。 而不知什么原因（recyle 了，timeout 了）你的 connection 又死掉了，你的 sqlalchemy 尝试重新连接。由于 transaction 还没完结，无法重连。</p>
+<p> <strong>正确用法</strong>是<strong>确保 session 在使用完成后用 session.close, session.commit 或者 session.rollback 把连接还回 pool</strong>。</p>
+</blockquote>
+<p>主要进行以下几个方面设置：</p>
+<ol>
+<li><p>增加装饰器函数，确保在每次请求，访问操作数据库后，transaction 能够终止，而不是一直开放。</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">session_wrapper</span><span class="params">(session)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">        @functools.wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                r = func(*args, **kwargs)</span><br><span class="line">                <span class="keyword">return</span> r</span><br><span class="line">            <span class="keyword">except</span> IntegrityError <span class="keyword">as</span> e:</span><br><span class="line">                name, message = <span class="string">'NOT_UPDATED'</span>, <span class="string">'sqlalchemy session rollback'</span></span><br><span class="line">                log(name, message)</span><br><span class="line">                session.rollback()</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                session.commit()</span><br><span class="line">                session.close()</span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置 pool_recycle 时间</p>
+<p> <code>app.config[&#39;SQLALCHEMY_POOL_RECYCLE&#39;] = 3600</code></p>
+</li>
+<li><p>通过 <code>db.create_scoped_session()</code> 保证线程安全</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">session = db.create_scoped_session(</span><br><span class="line">    options=dict(</span><br><span class="line">        bind=engine,</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>参考文章：</p>
+<p><a href="http://einverne.github.io/post/2017/05/sqlalchemy-session.html" target="_blank" rel="noopener">http://einverne.github.io/post/2017/05/sqlalchemy-session.html</a></p>
+<p><a href="https://my.oschina.net/sukai/blog/879152" target="_blank" rel="noopener">https://my.oschina.net/sukai/blog/879152</a></p>
+<p><a href="https://stackoverflow.com/questions/31121948/flask-sqlalchemy-cant-reconnect-until-invalid-transaction-is-rolled-back" target="_blank" rel="noopener">https://stackoverflow.com/questions/31121948/flask-sqlalchemy-cant-reconnect-until-invalid-transaction-is-rolled-back</a></p>
 
       
     </div>
@@ -455,8 +479,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/archives/675bc382.html" rel="next" title="数据库掏粪">
-                <i class="fa fa-chevron-left"></i> 数据库掏粪
+              <a href="/archives/da6eb629.html" rel="next" title="gitlab 中修改已经 commit 的信息">
+                <i class="fa fa-chevron-left"></i> gitlab 中修改已经 commit 的信息
               </a>
             
           </div>
@@ -464,10 +488,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/archives/38aa7b8c.html" rel="prev" title="win10亮度无法调节">
-                win10亮度无法调节 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
