@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="Hotheat">
 <meta property="og:description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-11T09:52:34.452Z">
+<meta property="og:updated_time" content="2019-10-17T06:04:36.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqlalchemy 连接超时引起的问题">
 <meta name="twitter:description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  321
+                  415
                 </span>
               
 
@@ -441,14 +441,19 @@
 </blockquote>
 <p>主要进行以下几个方面设置：</p>
 <ol>
-<li><p>增加装饰器函数，确保在每次请求，访问操作数据库后，transaction 能够终止，而不是一直开放。</p>
+<li><p><del>增加装饰器函数，确保在每次请求，访问操作数据库后，transaction 能够终止，而不是一直开放。</del> </p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">session_wrapper</span><span class="params">(session)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">        @functools.wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                r = func(*args, **kwargs)</span><br><span class="line">                <span class="keyword">return</span> r</span><br><span class="line">            <span class="keyword">except</span> IntegrityError <span class="keyword">as</span> e:</span><br><span class="line">                name, message = <span class="string">'NOT_UPDATED'</span>, <span class="string">'sqlalchemy session rollback'</span></span><br><span class="line">                log(name, message)</span><br><span class="line">                session.rollback()</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                session.commit()</span><br><span class="line">                session.close()</span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>利用 @main.before_request 在请求开始时打开 session，利用 @main.teardown_request 在请求结束时关闭 session</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@main.before_request</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">before_request</span><span class="params">()</span>:</span></span><br><span class="line">    log(<span class="string">'请求开始'</span>)</span><br><span class="line">    g = AppConfig</span><br><span class="line">    g.brdb_engine = g.db.get_engine(g.app, bind=BRDB)</span><br><span class="line">    g.brdb_session = g.db.create_scoped_session(</span><br><span class="line">        options=dict(</span><br><span class="line">            bind=g.brdb_engine,</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    g.brp_engine = g.db.get_engine(g.app, bind=BRP)</span><br><span class="line">    g.brp_session = g.db.create_scoped_session(</span><br><span class="line">        options=dict(</span><br><span class="line">            bind=g.brp_engine,</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@main.teardown_request</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">teardown_request</span><span class="params">(exception)</span>:</span></span><br><span class="line">    g = AppConfig</span><br><span class="line">    sessions = [g.brdb_session, g.brp_session]</span><br><span class="line">    close_sessions(sessions, exception)</span><br><span class="line">    log(<span class="string">'请求结束'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
 <li><p>设置 pool_recycle 时间</p>
-<p> <code>app.config[&#39;SQLALCHEMY_POOL_RECYCLE&#39;] = 3600</code></p>
+<p><code>app.config[&#39;SQLALCHEMY_POOL_RECYCLE&#39;] = 3600</code></p>
 </li>
 <li><p>通过 <code>db.create_scoped_session()</code> 保证线程安全</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">session = db.create_scoped_session(</span><br><span class="line">    options=dict(</span><br><span class="line">        bind=engine,</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">session = db.create_scoped_session(</span><br><span class="line">    options=dict(</span><br><span class="line">        bind=engine,</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>参考文章：</p>
@@ -488,6 +493,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/a9c5e1c3.html" rel="prev" title="Mysql本地导入和导出操作">
+                Mysql本地导入和导出操作 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -555,7 +564,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -628,7 +637,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">124.6k</span>
+    <span title="Site words total count">125.3k</span>
   
 </div>
 

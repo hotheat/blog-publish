@@ -297,6 +297,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.hotheat.xyz/archives/dd5856e4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hotheat">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hotheat">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/archives/dd5856e4.html" itemprop="url">L1 L2 正则化理解</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-22T15:52:09+08:00">
+                2018-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/正则化/" itemprop="url" rel="index">
+                    <span itemprop="name">正则化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在深度学习的线性分类中的损失函数通常是下面的样子</p>
+<script type="math/tex; mode=display">
+L(W) = \frac{1}{N}\Sigma_{i=1}^nL_i(f(x_i, W), y_i) + \lambda R(W)</script><p>前半部分称为 Data loss，$R(W)$ 称为正则化惩罚项，超参数 $\lambda$ 可以通过交叉验证的方式来获得。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/archives/dd5856e4.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.hotheat.xyz/archives/cf1b5064.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1643,7 +1823,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  149
+                  1.2k
                 </span>
               
 
@@ -1671,7 +1851,7 @@
         
           <h1 id="朴素贝叶斯（Naive-Bayes）"><a href="#朴素贝叶斯（Naive-Bayes）" class="headerlink" title="朴素贝叶斯（Naive Bayes）"></a>朴素贝叶斯（Naive Bayes）</h1><h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
 <li>前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。</li>
-<li>朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y$。</li>
+<li>朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y​$。</li>
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1824,7 +2004,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  149
                 </span>
               
 
@@ -1852,189 +2032,11 @@
         
           <h1 id="朴素贝叶斯（Naive-Bayes）"><a href="#朴素贝叶斯（Naive-Bayes）" class="headerlink" title="朴素贝叶斯（Naive Bayes）"></a>朴素贝叶斯（Naive Bayes）</h1><h2 id="主要特点"><a href="#主要特点" class="headerlink" title="主要特点"></a>主要特点</h2><ol>
 <li>前提假设是特征与特征之间是条件独立的，比如在文本分类中，在已知文章所属分类的条件下，假设单词与单词之间是相互独立，互不影响的。</li>
-<li>朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y​$。</li>
+<li>朴素贝叶斯是一种生成模型，不同于回归模型这样的判别模型，利用输入变量和参数直接计算出目标变量 $y$，NB 则是利用输入变量的条件概率分布，通过贝叶斯定理获得最大后验概率的输出 $y$。</li>
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/archives/f77f0066.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.hotheat.xyz/archives/2a0ca566.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hotheat">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hotheat">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/archives/2a0ca566.html" itemprop="url">熵和决策树</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-07T18:01:12+08:00">
-                2018-10-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/决策树/" itemprop="url" rel="index">
-                    <span itemprop="name">决策树</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                  <span class="post-meta-divider">|</span>
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.6k
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本章节的重点是决策树部分，而理解熵的概念，不仅对于决策树有更好的认识，而且卷积神经网络中也经常使用交叉熵做为损失函数。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/archives/2a0ca566.html#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2122,7 +2124,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2195,7 +2197,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">124.6k</span>
+    <span title="Site words total count">125.3k</span>
   
 </div>
 
