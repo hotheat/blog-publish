@@ -85,17 +85,17 @@
 
 
 
-<meta name="description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
+<meta name="description" content="记录 sqlalchemy 使用中遇到的一些问题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sqlalchemy 连接超时引起的问题">
+<meta property="og:title" content="sqlalchemy 踩坑集锦">
 <meta property="og:url" content="https://www.hotheat.xyz/archives/f1a4cdc1.html">
 <meta property="og:site_name" content="Hotheat">
-<meta property="og:description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
+<meta property="og:description" content="记录 sqlalchemy 使用中遇到的一些问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-17T06:04:36.722Z">
+<meta property="og:updated_time" content="2019-11-25T12:20:47.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sqlalchemy 连接超时引起的问题">
-<meta name="twitter:description" content="在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：  StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]  或者是  raised unexpected:">
+<meta name="twitter:title" content="sqlalchemy 踩坑集锦">
+<meta name="twitter:description" content="记录 sqlalchemy 使用中遇到的一些问题">
 
 
 
@@ -131,7 +131,7 @@
 
 
 
-  <title>sqlalchemy 连接超时引起的问题 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>sqlalchemy 踩坑集锦 | Hotheat</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -317,7 +317,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">sqlalchemy 连接超时引起的问题</h2>
+          <h2 class="post-title" itemprop="name headline">sqlalchemy 踩坑集锦</h2>
         
 
         <div class="post-meta">
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  415
+                  758
                 </span>
               
 
@@ -426,7 +426,9 @@
       
 
       
-        <p>在更改 SQLAlchemy Session 从每次请求都创建到共享同一个 Session 之后遇到了如下问题：</p>
+        <p>记录 sqlalchemy 使用中遇到的一些问题</p>
+<a id="more"></a>
+<h1 id="全局-Session-导致的-connection-go-away"><a href="#全局-Session-导致的-connection-go-away" class="headerlink" title="全局 Session 导致的 connection go away"></a>全局 Session 导致的 connection go away</h1><p>在更改 SQLAlchemy Session 从每次请求都创建到一个全局 Session 之后遇到了如下问题：</p>
 <blockquote>
 <p>StatementError: (sqlalchemy.exc.InvalidRequestError) Can’t reconnect until invalid transaction is rolled back [SQL: ]</p>
 </blockquote>
@@ -434,14 +436,13 @@
 <blockquote>
 <p>raised unexpected: OperationalError(“(_mysql_exceptions.OperationalError) (2006, ‘MySQL server has gone away’)”,)</p>
 </blockquote>
-<a id="more"></a>
+<p>错误是 SQLAlchemy 抛出。原因是你从 pool 拿的 connection 没有以 session.commit 或 session.rollback 或者 session.close 放回 pool 里。这时 connection 的 transaction 没有完结（rollback or commit)。 而不知什么原因（recyle 了，timeout 了）你的 connection 又死掉了，你的 sqlalchemy 尝试重新连接。由于 transaction 还没完结，无法重连。</p>
 <blockquote>
-<p> 错误是 SQLAlchemy 抛出。原因是你从 pool 拿的 connection 没有以 session.commit 或 session.rollback 或者 session.close 放回 pool 里。这时 connection 的 transaction 没有完结（rollback or commit)。 而不知什么原因（recyle 了，timeout 了）你的 connection 又死掉了，你的 sqlalchemy 尝试重新连接。由于 transaction 还没完结，无法重连。</p>
 <p> <strong>正确用法</strong>是<strong>确保 session 在使用完成后用 session.close, session.commit 或者 session.rollback 把连接还回 pool</strong>。</p>
 </blockquote>
 <p>主要进行以下几个方面设置：</p>
 <ol>
-<li><p><del>增加装饰器函数，确保在每次请求，访问操作数据库后，transaction 能够终止，而不是一直开放。</del> </p>
+<li><p><del>增加装饰器函数，确保在每次请求，访问操作数据库后，transaction 能够终止，而不是一直开放。</del> 后面发现这种方法不是最优的，仍然没有解决问题。</p>
  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">session_wrapper</span><span class="params">(session)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">        @functools.wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                r = func(*args, **kwargs)</span><br><span class="line">                <span class="keyword">return</span> r</span><br><span class="line">            <span class="keyword">except</span> IntegrityError <span class="keyword">as</span> e:</span><br><span class="line">                name, message = <span class="string">'NOT_UPDATED'</span>, <span class="string">'sqlalchemy session rollback'</span></span><br><span class="line">                log(name, message)</span><br><span class="line">                session.rollback()</span><br><span class="line">            <span class="keyword">finally</span>:</span><br><span class="line">                session.commit()</span><br><span class="line">                session.close()</span><br><span class="line">        <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>利用 @main.before_request 在请求开始时打开 session，利用 @main.teardown_request 在请求结束时关闭 session</p>
@@ -456,6 +457,22 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">session = db.create_scoped_session(</span><br><span class="line">    options=dict(</span><br><span class="line">        bind=engine,</span><br><span class="line">    )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h1 id="在利用-session-进行-update-或-add-后，查询不到记录的问题"><a href="#在利用-session-进行-update-或-add-后，查询不到记录的问题" class="headerlink" title="在利用 session 进行 update 或 add 后，查询不到记录的问题"></a>在利用 session 进行 update 或 add 后，查询不到记录的问题</h1><p>flask-sqlalchemy 查询结果有两种形式，</p>
+<p>一种是利用 <code>Table.query.filter()</code> 进行查询，</p>
+<p>一种利用 <code>session.query(Table).filter</code> 进行查询。</p>
+<p>在利用 session.update() 或者 session.add() 进行更新时，如果在 session.flush() 后仍使用第一种查询方法，常常会出现一些问题</p>
+<ol>
+<li><p>在执行 <code>session.add()</code> 后，使用 <code>Table.query.filter()</code> 没有查询到插入的变异，发生以下报错</p>
+<p> <code>sqlalchemy.exc.IntegrityError: (pymysql.err.IntegrityError) (1062, &quot;Duplicate entry &#39;cn_del-exon12-13-2501&#39; for key &#39;cnv_unique_idx&#39;&quot;)</code></p>
+</li>
+<li><p>在更新后，执行 <code>session.flush()</code> 时，出现以下错误，启用的两次不同的 session</p>
+<p> <code>sqlalchemy.exc.InvalidRequestError: Object &#39;&lt;Sample at 0x7f38809d32e8&gt;&#39; is already attached to session &#39;1&#39; (this is &#39;2&#39;)</code></p>
+</li>
+</ol>
+<p>所以，在执行查询时，尽量保证全局使用的同一个 session，出现 sqlalchemy 报错时，首先应该想到的是，是不是 session 不统一导致的。</p>
+<h1 id="数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里"><a href="#数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里" class="headerlink" title="数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里"></a>数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里</h1><p>在 query 之后出现一下报错</p>
+<p><code>SQLAlchemy LookupError: “DIVERSE” is not among the defined enum values</code></p>
+<p>这时需要修改数据库中的值或者修改 Table 中枚举类型字段值</p>
 <p>参考文章：</p>
 <p><a href="http://einverne.github.io/post/2017/05/sqlalchemy-session.html" target="_blank" rel="noopener">http://einverne.github.io/post/2017/05/sqlalchemy-session.html</a></p>
 <p><a href="https://my.oschina.net/sukai/blog/879152" target="_blank" rel="noopener">https://my.oschina.net/sukai/blog/879152</a></p>
@@ -548,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -610,6 +636,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#全局-Session-导致的-connection-go-away"><span class="nav-number">1.</span> <span class="nav-text">全局 Session 导致的 connection go away</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在利用-session-进行-update-或-add-后，查询不到记录的问题"><span class="nav-number">2.</span> <span class="nav-text">在利用 session 进行 update 或 add 后，查询不到记录的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里"><span class="nav-number">3.</span> <span class="nav-text">数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -637,7 +679,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">125.3k</span>
+    <span title="Site words total count">125.6k</span>
   
 </div>
 

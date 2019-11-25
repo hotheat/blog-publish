@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="Hotheat">
 <meta property="og:description" content="在使用 pymysql 操作数据库时，使用多行字符串作为 SQL 语句进行更新时，出现报错">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-06T02:56:15.334Z">
+<meta property="og:updated_time" content="2019-10-31T11:44:03.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pymysql 使用多行字符串报错">
 <meta name="twitter:description" content="在使用 pymysql 操作数据库时，使用多行字符串作为 SQL 语句进行更新时，出现报错">
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  216
+                  222
                 </span>
               
 
@@ -435,6 +435,7 @@
 <p>pymysql 版本太高导致</p>
 <p>解决方法：</p>
 <p>将 pymysql 版本从 0.9.2 降级到 0.7.9，在 python2 和 python3 中均不再报错。</p>
+<p><code>pip install pymysql==0.7.9</code></p>
 <h1 id="语法错误"><a href="#语法错误" class="headerlink" title="语法错误"></a>语法错误</h1><p>如果在 INSERT 时遇到这个报错，需要检查 INOT 和 values 后的 () 最后一个元素是否多了 「，」。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`&#123;&#125;`</span> (<span class="string">`polish_backgroud`</span>, <span class="string">`change_tag`</span>) <span class="keyword">VALUES</span> (%s, %s)</span><br></pre></td></tr></table></figure>
 
@@ -639,7 +640,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">125.3k</span>
+    <span title="Site words total count">125.6k</span>
   
 </div>
 
