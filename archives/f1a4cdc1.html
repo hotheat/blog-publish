@@ -92,7 +92,7 @@
 <meta property="og:site_name" content="Hotheat">
 <meta property="og:description" content="记录 sqlalchemy 使用中遇到的一些问题">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-25T12:20:47.274Z">
+<meta property="og:updated_time" content="2019-12-06T16:02:19.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sqlalchemy 踩坑集锦">
 <meta name="twitter:description" content="记录 sqlalchemy 使用中遇到的一些问题">
@@ -401,7 +401,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  758
+                  1k
                 </span>
               
 
@@ -473,6 +473,15 @@
 <h1 id="数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里"><a href="#数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里" class="headerlink" title="数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里"></a>数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里</h1><p>在 query 之后出现一下报错</p>
 <p><code>SQLAlchemy LookupError: “DIVERSE” is not among the defined enum values</code></p>
 <p>这时需要修改数据库中的值或者修改 Table 中枚举类型字段值</p>
+<h1 id="在-SQLALCHEMY-BINDS-绑定不同数据库后，查询时仍然出现数据库中表不存在的情况"><a href="#在-SQLALCHEMY-BINDS-绑定不同数据库后，查询时仍然出现数据库中表不存在的情况" class="headerlink" title="在 SQLALCHEMY_BINDS 绑定不同数据库后，查询时仍然出现数据库中表不存在的情况"></a>在 SQLALCHEMY_BINDS 绑定不同数据库后，查询时仍然出现数据库中表不存在的情况</h1><p>例如，表 Student 和表 Salary 分别属于不同数据库 dbA 和 dbB，使用 SQLALCHEMY<em>BINDS 进行绑定，并且指定 _<em>bind_key</em></em> 后，将两个表按以下方式 join 后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query = Student.query.join(Salary, Student.id=Salary.student_id).filter(...)</span><br></pre></td></tr></table></figure>
+<p>会出现 <code>dbA.Salary</code> 不存在的 Bug。</p>
+<p>原因是虽然进行了 _<em>bind<em>key</em></em> 的绑定，但在查询时，由于表 Student 在前，整条查询语句默认的数据库是 Student 所在的 dbA，所以，找不到 dbB 中的 Salary，会出现 dbA.Salary 不存在的 Bug。</p>
+<p>解决思路有三个</p>
+<p>一是，属于不同数据库的表分别进行查询，最后将结果合并，而不使用 join 来连接两张表的结果</p>
+<p>二是，在 sql 中使用 join，使用 session.execute(sql) 得到查询结果</p>
+<p>三是，通过设定 schema 指定不同的数据库表，参考以下两个连接 <a href="https://stackoverflow.com/questions/44564369/join-tables-in-two-databases-using-sqlalchemy" target="_blank" rel="noopener">https://stackoverflow.com/questions/44564369/join-tables-in-two-databases-using-sqlalchemy</a> 和 <a href="https://stackoverflow.com/questions/11438352/many-to-many-multi-database-join-with-flask-sqlalchemy?rq=1" target="_blank" rel="noopener">https://stackoverflow.com/questions/11438352/many-to-many-multi-database-join-with-flask-sqlalchemy?rq=1</a></p>
+<p>第三种方法是比较麻烦的。</p>
 <p>参考文章：</p>
 <p><a href="http://einverne.github.io/post/2017/05/sqlalchemy-session.html" target="_blank" rel="noopener">http://einverne.github.io/post/2017/05/sqlalchemy-session.html</a></p>
 <p><a href="https://my.oschina.net/sukai/blog/879152" target="_blank" rel="noopener">https://my.oschina.net/sukai/blog/879152</a></p>
@@ -590,7 +599,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -601,7 +610,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">53</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -645,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#全局-Session-导致的-connection-go-away"><span class="nav-number">1.</span> <span class="nav-text">全局 Session 导致的 connection go away</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在利用-session-进行-update-或-add-后，查询不到记录的问题"><span class="nav-number">2.</span> <span class="nav-text">在利用 session 进行 update 或 add 后，查询不到记录的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里"><span class="nav-number">3.</span> <span class="nav-text">数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#全局-Session-导致的-connection-go-away"><span class="nav-number">1.</span> <span class="nav-text">全局 Session 导致的 connection go away</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在利用-session-进行-update-或-add-后，查询不到记录的问题"><span class="nav-number">2.</span> <span class="nav-text">在利用 session 进行 update 或 add 后，查询不到记录的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库中某个字段的值不在-sqlalchemy-Table-定义的枚举值里"><span class="nav-number">3.</span> <span class="nav-text">数据库中某个字段的值不在 sqlalchemy Table 定义的枚举值里</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-SQLALCHEMY-BINDS-绑定不同数据库后，查询时仍然出现数据库中表不存在的情况"><span class="nav-number">4.</span> <span class="nav-text">在 SQLALCHEMY_BINDS 绑定不同数据库后，查询时仍然出现数据库中表不存在的情况</span></a></li></ol></div>
             
 
           </div>
@@ -679,7 +688,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">125.6k</span>
+    <span title="Site words total count">126.4k</span>
   
 </div>
 
